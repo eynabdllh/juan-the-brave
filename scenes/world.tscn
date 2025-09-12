@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=4 uid="uid://cfgwjy4m0kynw"]
+[gd_scene load_steps=21 format=4 uid="uid://cfgwjy4m0kynw"]
 
 [ext_resource type="Texture2D" uid="uid://ubokohidmou7" path="res://art/tilesets/plains.png" id="1_k0juu"]
 [ext_resource type="Texture2D" uid="uid://dqikcd1mfbhw0" path="res://art/tilesets/grass.png" id="2_71j4m"]
@@ -228,6 +228,9 @@ sources/5 = SubResource("TileSetAtlasSource_jhx03")
 sources/6 = SubResource("TileSetAtlasSource_o8fc1")
 sources/7 = SubResource("TileSetAtlasSource_xo05s")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w7kh3"]
+size = Vector2(57, 40.5)
+
 [node name="world" type="Node2D"]
 y_sort_enabled = true
 
@@ -255,6 +258,18 @@ tile_map_data = PackedByteArray("AAANAAYAAwAAAAUAAAABAAkAAwAAAAUAAAAHAAEAAwAAAAU
 tile_set = SubResource("TileSet_q5onr")
 
 [node name="player" parent="." instance=ExtResource("9_7r4gi")]
+position = Vector2(6, 10)
 
-[node name="enemylevel1" parent="." instance=ExtResource("10_w7kh3")]
-position = Vector2(287, 146)
+[node name="enemylevel1" parent="." groups=["enemies"] instance=ExtResource("10_w7kh3")]
+position = Vector2(282, 145)
+
+[node name="collision" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="collision"]
+polygon = PackedVector2Array(4, 0, 83, -1, 166, 0, 164, -42, 221, -41, 222, 0, 368, 0, 368, 208, 0, 208, 1, -11, -20, 224, 396, 219, 383, -23, 136, -58)
+
+[node name="door_side" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="door_side"]
+position = Vector2(194, -20.25)
+shape = SubResource("RectangleShape2D_w7kh3")

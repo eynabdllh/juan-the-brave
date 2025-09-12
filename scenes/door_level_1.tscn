@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://dvbvkflvwjrdb"]
+
+[node name="door_level1" type="Node2D"]

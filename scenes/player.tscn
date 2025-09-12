@@ -222,7 +222,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_fjrip")
 }],
-"loop": true,
+"loop": false,
 "name": &"back_attack",
 "speed": 5.0
 }, {
@@ -299,7 +299,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ujl30")
 }],
-"loop": true,
+"loop": false,
 "name": &"front_attack",
 "speed": 5.0
 }, {
@@ -362,7 +362,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_giy8y")
 }],
-"loop": true,
+"loop": false,
 "name": &"side_attack",
 "speed": 5.0
 }, {
@@ -428,9 +428,7 @@ script = ExtResource("1_g2els")
 position = Vector2(0.5, 0.5)
 scale = Vector2(1.02083, 1.02083)
 sprite_frames = SubResource("SpriteFrames_apa73")
-animation = &"side_walk"
-frame = 3
-frame_progress = 0.272897
+animation = &"back_attack"
 offset = Vector2(0, -15)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -446,6 +444,22 @@ shape = SubResource("CircleShape2D_qhqgy")
 [node name="attack_cooldown" type="Timer" parent="."]
 wait_time = 0.5
 
+[node name="deal_attack_timer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(4, 4)
+limit_left = 0
+limit_top = 0
+limit_right = 365
+limit_bottom = 207
+limit_smoothed = true
+position_smoothing_enabled = true
+rotation_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+
 [connection signal="body_entered" from="player_hitbox" to="." method="_on_player_hit_box_body_entered"]
+[connection signal="body_entered" from="player_hitbox" to="." method="_on_player_hitbox_body_entered"]
 [connection signal="body_exited" from="player_hitbox" to="." method="_on_player_hit_box_body_exited"]
 [connection signal="timeout" from="attack_cooldown" to="." method="_on_attack_cooldown_timeout"]
