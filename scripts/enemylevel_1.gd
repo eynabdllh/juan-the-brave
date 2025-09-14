@@ -1,80 +1,114 @@
 extends CharacterBody2D
 
-# Using @export allows you to change the speed in the Godot Editor Inspector
 @export var speed = 40
+@export var attack_damage = 10
+@export var attack_rate = 1.5
+@export var knockback_speed = 250.0 # --- NEW ---
 
-var player_chase = false
 var player = null
-# This variable will remember the last direction the enemy was moving
-var last_animation = "front_walk"
-
 var health = 100
-var player_inattack_zone = false
-var can_take_damage = true
+var can_be_damaged = true
+var can_attack = true
+var is_attacking = false
+var is_knocked_back = false # --- NEW ---
 
 func _physics_process(delta):
-	deal_with_damage()
-	if player_chase and player != null:
-		# --- CHASE LOGIC ---
-		var direction = (player.position - position).normalized()
-		velocity = direction * speed
-		
-		# Determine which walk animation to play based on direction
-		if abs(direction.x) > abs(direction.y):
-			last_animation = "right_walk" if direction.x > 0 else "left_walk"
-		else:
-			last_animation = "front_walk" if direction.y > 0 else "back_walk"
-		
-		$AnimatedSprite2D.play(last_animation)
+	# If attacking or knocked back, pause all other logic
+	if is_attacking or is_knocked_back:
+		move_and_slide() # Still need to apply knockback velocity
+		return
 
+	var target_in_hitbox = find_player_in_hitbox()
+
+	# --- THE DEFINITIVE TARGETING FIX ---
+	# If we see a player in our attack box, they are now our main target.
+	if target_in_hitbox:
+		player = target_in_hitbox
+
+	# Logic: Attack if possible, otherwise chase if a target is known, otherwise idle.
+	if target_in_hitbox and can_attack:
+		attack_player()
+	elif player != null:
+		chase_player()
 	else:
-		# --- IDLE LOGIC ---
-		velocity = Vector2.ZERO # Stop moving
-		$AnimatedSprite2D.stop() # Stop the animation, freezing it on the current frame
-
-	# move_and_slide() handles the character's movement and collisions
+		idle()
+	
+	update_health()
 	move_and_slide()
 
-func _on_detection_area_body_entered(body: Node2D) -> void:
-	# It's good practice to check if the detected body is the player.
-	# For this to work, select your player node and add it to a group named "player".
-	if body.is_in_group("player"):
-		player = body
-		player_chase = true
+func find_player_in_hitbox() -> CharacterBody2D:
+	for body in $enemy_hitbox.get_overlapping_bodies():
+		if body.is_in_group("player"):
+			return body
+	return null
 
-func _on_detection_area_body_exited(body: Node2D) -> void:
-	# Check if the body that exited is the same one we were chasing
-	if body == player:
-		player = null
-		player_chase = false
-		
-		# Optional but highly recommended:
-		# When the player leaves, set a proper standing frame.
-		# This avoids having the enemy stop awkwardly mid-stride.
-		$AnimatedSprite2D.play(last_animation) # Select the last animation
-		$AnimatedSprite2D.set_frame(0)         # Go to its first frame
-		$AnimatedSprite2D.stop()               # and stop it.
+func attack_player():
+	velocity = Vector2.ZERO; is_attacking = true; can_attack = false
+	var direction = (player.global_position - global_position).normalized()
+	if abs(direction.x) > abs(direction.y):
+		$AnimatedSprite2D.play("right_attack" if direction.x > 0 else "left_attack")
+	else:
+		$AnimatedSprite2D.play("front_attack" if direction.y > 0 else "back_attack")
+	player.take_damage(attack_damage, self)
 
-func enemylevel_1():
-	pass
+# --- RENAMED & REPLACED deal_with_damage() ---
+func take_damage(amount, attacker):
+	if not can_be_damaged: return
+	
+	can_be_damaged = false
+	health -= amount
+	print("Enemy health: ", health)
+	
+	# --- NEW HURT EFFECTS ---
+	is_knocked_back = true
+	var knockback_direction = (global_position - attacker.global_position).normalized()
+	velocity = knockback_direction * knockback_speed
+	$KnockbackTimer.start(0.15)
+	
+	$HurtSound.play()
+	$AnimatedSprite2D.modulate = Color.RED
+	$HurtEffectTimer.start(0.2)
+	
+	$take_damage_cooldown.start()
+	
+	if health <= 0:
+		is_attacking = false # Prevent getting stuck in attack state on death
+		# You can add a death animation call here if you have one
+		# $AnimatedSprite2D.play("death")
+		queue_free()
 
-func _on_enemy_hitbox_body_entered(body: Node2D) -> void:
-	if body.has_method("player"):
-		player_inattack_zone = true
+func chase_player():
+	var direction = (player.position - position).normalized()
+	velocity = direction * speed
+	if abs(direction.x) > abs(direction.y):
+		$AnimatedSprite2D.play("right_walk" if direction.x > 0 else "left_walk")
+	else:
+		$AnimatedSprite2D.play("front_walk" if direction.y > 0 else "back_walk")
 
-func _on_enemy_hitbox_body_exited(body: Node2D) -> void:
-	if body.has_method("player"):
-		player_inattack_zone = false
+func idle():
+	velocity = Vector2.ZERO
+	if $AnimatedSprite2D.is_playing() and not "attack" in $AnimatedSprite2D.animation:
+		$AnimatedSprite2D.stop()
 
-func deal_with_damage():
-	if player_inattack_zone and global.player_current_attack == true:
-		if can_take_damage == true:
-			health = health - 20
-			$take_damage_cooldown.start()
-			can_take_damage = false
-			print("enemy health: ", health)
-			if health <= 0:
-				self.queue_free()
+func _on_animated_sprite_2d_animation_finished():
+	if "attack" in $AnimatedSprite2D.animation:
+		is_attacking = false
+		$EnemyAttackTimer.start(attack_rate)
 
-func _on_take_damage_cooldown_timeout() -> void:
-	can_take_damage = true
+func _on_detection_area_body_entered(body: Node2D):
+	if body.is_in_group("player"): player = body
+func _on_detection_area_body_exited(body: Node2D):
+	if body == player: player = null
+
+# --- NEW TIMEOUT FUNCTIONS ---
+func _on_hurt_effect_timer_timeout():
+	$AnimatedSprite2D.modulate = Color.WHITE
+
+func _on_knockback_timer_timeout():
+	is_knocked_back = false
+	velocity = Vector2.ZERO # Stop moving after knockback
+
+func _on_take_damage_cooldown_timeout(): can_be_damaged = true
+func _on_enemy_attack_timer_timeout(): can_attack = true
+func update_health(): $healthbar.value = health; $healthbar.visible = health < 100
+func enemylevel_1(): pass

@@ -1,9 +1,10 @@
-[gd_scene load_steps=58 format=3 uid="uid://j5u3diqcyydx"]
+[gd_scene load_steps=59 format=3 uid="uid://j5u3diqcyydx"]
 
 [ext_resource type="Script" uid="uid://c61ovtptjp27i" path="res://scripts/enemylevel_1.gd" id="1_i6rvr"]
-[ext_resource type="Texture2D" uid="uid://br23j3nusvetg" path="res://art/characters/MantisAttack.png" id="2_iimsh"]
-[ext_resource type="Texture2D" uid="uid://dun6l08a0nhfy" path="res://art/characters/MantisMove.png" id="3_dtpqq"]
-[ext_resource type="Texture2D" uid="uid://efxrv0lbt1ao" path="res://art/characters/mantis_death (2).png" id="4_iimsh"]
+[ext_resource type="Texture2D" uid="uid://br23j3nusvetg" path="res://assets/characters/MantisAttack.png" id="2_iimsh"]
+[ext_resource type="Texture2D" uid="uid://dun6l08a0nhfy" path="res://assets/characters/MantisMove.png" id="3_dtpqq"]
+[ext_resource type="Texture2D" uid="uid://efxrv0lbt1ao" path="res://assets/characters/mantis_death (2).png" id="4_iimsh"]
+[ext_resource type="AudioStream" uid="uid://dct6hhhf2ktyr" path="res://assets/music/enemy_damage.wav" id="5_dtpqq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i0qp0"]
 atlas = ExtResource("2_iimsh")
@@ -225,7 +226,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_64bak")
 }],
-"loop": true,
+"loop": false,
 "name": &"back_attack",
 "speed": 5.0
 }, {
@@ -288,7 +289,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_jbbty")
 }],
-"loop": true,
+"loop": false,
 "name": &"front_attack",
 "speed": 5.0
 }, {
@@ -331,7 +332,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ykg5d")
 }],
-"loop": true,
+"loop": false,
 "name": &"left_attack",
 "speed": 5.0
 }, {
@@ -374,7 +375,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_xqkh0")
 }],
-"loop": true,
+"loop": false,
 "name": &"right_attack",
 "speed": 5.0
 }, {
@@ -409,6 +410,7 @@ radius = 20.0
 y_sort_enabled = true
 texture_filter = 1
 position = Vector2(0, -12)
+collision_layer = 4
 script = ExtResource("1_i6rvr")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -427,6 +429,8 @@ position = Vector2(0, 4)
 shape = SubResource("CircleShape2D_gmrka")
 
 [node name="enemy_hitbox" type="Area2D" parent="." groups=["enemies"]]
+collision_layer = 0
+collision_mask = 2
 
 [node name="hitbox" type="CollisionShape2D" parent="enemy_hitbox"]
 position = Vector2(0, 2)
@@ -435,9 +439,37 @@ shape = SubResource("CircleShape2D_iimsh")
 [node name="take_damage_cooldown" type="Timer" parent="."]
 wait_time = 0.5
 
+[node name="healthbar" type="ProgressBar" parent="."]
+modulate = Color(1, 0.176287, 0.104907, 1)
+offset_left = -9.0
+offset_top = -17.0
+offset_right = 171.0
+offset_bottom = 10.0
+scale = Vector2(0.1, 0.1)
+value = 100.0
+show_percentage = false
+
+[node name="EnemyAttackTimer" type="Timer" parent="."]
+
+[node name="ForgetPlayerTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="HurtEffectTime" type="Timer" parent="."]
+one_shot = true
+
+[node name="KnockbackTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="HurtSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_dtpqq")
+
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="detection_area" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="detection_area" to="." method="_on_detection_area_body_exited"]
 [connection signal="body_entered" from="enemy_hitbox" to="." method="_on_enemy_hitbox_body_entered"]
 [connection signal="body_exited" from="enemy_hitbox" to="." method="_on_enemy_hitbox_body_exited"]
 [connection signal="timeout" from="take_damage_cooldown" to="." method="_on_take_damage_cooldown_timeout"]
+[connection signal="timeout" from="EnemyAttackTimer" to="." method="_on_enemy_attack_timer_timeout"]
+[connection signal="timeout" from="ForgetPlayerTimer" to="." method="_on_forget_player_timer_timeout"]
+[connection signal="timeout" from="HurtEffectTime" to="." method="_on_hurt_effect_time_timeout"]
+[connection signal="timeout" from="KnockbackTimer" to="." method="_on_knockback_timer_timeout"]

@@ -422,7 +422,7 @@ radius = 18.1108
 
 [node name="player" type="CharacterBody2D" groups=["player"]]
 y_sort_enabled = true
-collision_layer = 2
+collision_layer = 3
 script = ExtResource("1_g2els")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -492,15 +492,6 @@ one_shot = true
 [node name="HurtSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_qhqgy")
 
-[node name="KnockbackTimer" type="Timer" parent="."]
-one_shot = true
-
-[node name="AttackHitTimer" type="Timer" parent="."]
-one_shot = true
-
 [connection signal="timeout" from="attack_cooldown" to="." method="_on_attack_cooldown_timeout"]
-[connection signal="timeout" from="deal_attack_timer" to="." method="_on_deal_attack_timer_timeout"]
 [connection signal="timeout" from="regen" to="." method="_on_regen_timeout"]
 [connection signal="timeout" from="HurtEffectTimer" to="." method="_on_hurt_effect_timer_timeout"]
-[connection signal="timeout" from="KnockbackTimer" to="." method="_on_knockback_timer_timeout"]
-[connection signal="timeout" from="AttackHitTimer" to="." method="_on_attack_hit_timer_timeout"]
