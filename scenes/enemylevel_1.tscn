@@ -263,7 +263,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_aods3")
 }],
-"loop": true,
+"loop": false,
 "name": &"death",
 "speed": 5.0
 }, {
@@ -415,7 +415,7 @@ script = ExtResource("1_i6rvr")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_hhfxt")
-animation = &"back_attack"
+animation = &"death"
 
 [node name="detection_area" type="Area2D" parent="."]
 collision_layer = 2
@@ -454,7 +454,7 @@ show_percentage = false
 [node name="ForgetPlayerTimer" type="Timer" parent="."]
 one_shot = true
 
-[node name="HurtEffectTime" type="Timer" parent="."]
+[node name="HurtEffectTimer" type="Timer" parent="."]
 one_shot = true
 
 [node name="KnockbackTimer" type="Timer" parent="."]
@@ -471,5 +471,5 @@ stream = ExtResource("5_dtpqq")
 [connection signal="timeout" from="take_damage_cooldown" to="." method="_on_take_damage_cooldown_timeout"]
 [connection signal="timeout" from="EnemyAttackTimer" to="." method="_on_enemy_attack_timer_timeout"]
 [connection signal="timeout" from="ForgetPlayerTimer" to="." method="_on_forget_player_timer_timeout"]
-[connection signal="timeout" from="HurtEffectTime" to="." method="_on_hurt_effect_time_timeout"]
+[connection signal="timeout" from="HurtEffectTimer" to="." method="_on_hurt_effect_time_timeout"]
 [connection signal="timeout" from="KnockbackTimer" to="." method="_on_knockback_timer_timeout"]

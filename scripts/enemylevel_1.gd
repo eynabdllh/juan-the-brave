@@ -3,30 +3,32 @@ extends CharacterBody2D
 @export var speed = 40
 @export var attack_damage = 10
 @export var attack_rate = 1.5
-@export var knockback_speed = 250.0 # --- NEW ---
+@export var knockback_speed = 150.0
 
 var player = null
 var health = 100
 var can_be_damaged = true
 var can_attack = true
 var is_attacking = false
-var is_knocked_back = false # --- NEW ---
+var is_knocked_back = false
+var is_alive = true 
+var last_walk_animation = "front_walk"
 
+func _ready():
+	$AnimatedSprite2D.play(last_walk_animation)
+	$AnimatedSprite2D.stop()
+	
 func _physics_process(delta):
-	# If attacking or knocked back, pause all other logic
-	if is_attacking or is_knocked_back:
-		move_and_slide() # Still need to apply knockback velocity
+	if not is_alive or is_attacking or is_knocked_back:
+		move_and_slide()
 		return
 
 	var target_in_hitbox = find_player_in_hitbox()
-
-	# --- THE DEFINITIVE TARGETING FIX ---
-	# If we see a player in our attack box, they are now our main target.
+	
 	if target_in_hitbox:
 		player = target_in_hitbox
 
-	# Logic: Attack if possible, otherwise chase if a target is known, otherwise idle.
-	if target_in_hitbox and can_attack:
+	if player != null and target_in_hitbox and can_attack:
 		attack_player()
 	elif player != null:
 		chase_player()
@@ -44,46 +46,55 @@ func find_player_in_hitbox() -> CharacterBody2D:
 
 func attack_player():
 	velocity = Vector2.ZERO; is_attacking = true; can_attack = false
-	var direction = (player.global_position - global_position).normalized()
-	if abs(direction.x) > abs(direction.y):
-		$AnimatedSprite2D.play("right_attack" if direction.x > 0 else "left_attack")
-	else:
-		$AnimatedSprite2D.play("front_attack" if direction.y > 0 else "back_attack")
+	if "right_walk" in last_walk_animation: $AnimatedSprite2D.play("right_attack")
+	elif "left_walk" in last_walk_animation: $AnimatedSprite2D.play("left_attack")
+	elif "back_walk" in last_walk_animation: $AnimatedSprite2D.play("back_attack")
+	else: $AnimatedSprite2D.play("front_attack")
 	player.take_damage(attack_damage, self)
 
-# --- RENAMED & REPLACED deal_with_damage() ---
 func take_damage(amount, attacker):
-	if not can_be_damaged: return
+	if not can_be_damaged or not is_alive: return
 	
 	can_be_damaged = false
 	health -= amount
 	print("Enemy health: ", health)
 	
-	# --- NEW HURT EFFECTS ---
 	is_knocked_back = true
 	var knockback_direction = (global_position - attacker.global_position).normalized()
 	velocity = knockback_direction * knockback_speed
 	$KnockbackTimer.start(0.15)
 	
-	$HurtSound.play()
+	# We use a Tween to animate the color from red back to white over 0.4 seconds.
 	$AnimatedSprite2D.modulate = Color.RED
-	$HurtEffectTimer.start(0.2)
+	var tween = create_tween()
+	tween.tween_property($AnimatedSprite2D, "modulate", Color.WHITE, 0.4)
+	
+	if $HurtSound: $HurtSound.play()
 	
 	$take_damage_cooldown.start()
 	
 	if health <= 0:
-		is_attacking = false # Prevent getting stuck in attack state on death
-		# You can add a death animation call here if you have one
-		# $AnimatedSprite2D.play("death")
-		queue_free()
+		die()
+
+# --- DEATH FUNCTION ---
+func die():
+	is_alive = false
+	velocity = Vector2.ZERO # Stop all movement
+	# Disable collision so the player can walk through the dying enemy
+	$CollisionShape2D.set_deferred("disabled", true)
+	
+	$AnimatedSprite2D.play("death")
+	await $AnimatedSprite2D.animation_finished
+	queue_free()
 
 func chase_player():
 	var direction = (player.position - position).normalized()
 	velocity = direction * speed
 	if abs(direction.x) > abs(direction.y):
-		$AnimatedSprite2D.play("right_walk" if direction.x > 0 else "left_walk")
+		last_walk_animation = "right_walk" if direction.x > 0 else "left_walk"
 	else:
-		$AnimatedSprite2D.play("front_walk" if direction.y > 0 else "back_walk")
+		last_walk_animation = "front_walk" if direction.y > 0 else "back_walk"
+	$AnimatedSprite2D.play(last_walk_animation)
 
 func idle():
 	velocity = Vector2.ZERO
@@ -100,13 +111,9 @@ func _on_detection_area_body_entered(body: Node2D):
 func _on_detection_area_body_exited(body: Node2D):
 	if body == player: player = null
 
-# --- NEW TIMEOUT FUNCTIONS ---
-func _on_hurt_effect_timer_timeout():
-	$AnimatedSprite2D.modulate = Color.WHITE
-
 func _on_knockback_timer_timeout():
 	is_knocked_back = false
-	velocity = Vector2.ZERO # Stop moving after knockback
+	velocity = Vector2.ZERO
 
 func _on_take_damage_cooldown_timeout(): can_be_damaged = true
 func _on_enemy_attack_timer_timeout(): can_attack = true

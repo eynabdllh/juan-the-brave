@@ -273,6 +273,8 @@ visible = false
 polygon = PackedVector2Array(4, 0, 83, -1, 166, 0, 164, -42, 221, -41, 222, 0, 368, 0, 368, 208, 0, 208, 1, -11, -20, 224, 396, 219, 383, -23, 136, -58)
 
 [node name="door_side" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="door_side"]
 position = Vector2(194, -20.25)

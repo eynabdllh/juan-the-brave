@@ -268,6 +268,8 @@ polygon = PackedVector2Array(128, 80, 123, 94, 127, 102, 124, 112, 115, 112, 108
 position = Vector2(141, 200)
 
 [node name="door_exit" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="door_exit"]
 position = Vector2(146, 239)
