@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://dvbvkflvwjrdb"]
+[gd_scene load_steps=23 format=4 uid="uid://dvbvkflvwjrdb"]
 
 [ext_resource type="Script" uid="uid://noslk6bfhew7" path="res://scripts/door_side.gd" id="1_djo6v"]
 [ext_resource type="Texture2D" uid="uid://ubokohidmou7" path="res://assets/tilesets/plains.png" id="1_j7tj3"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://c0u8sabj0cixv" path="res://assets/tilesets/floors/carpet.png" id="7_af4fb"]
 [ext_resource type="Texture2D" uid="uid://bovyrgg6rtwh2" path="res://assets/tilesets/floors/wooden.png" id="8_3w5t1"]
 [ext_resource type="PackedScene" uid="uid://bq3bs7j40w5n7" path="res://scenes/player.tscn" id="9_dc3vs"]
+[ext_resource type="Script" uid="uid://davpjsk45soa4" path="res://scripts/door_next_level.gd" id="11_hbr7d"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jkuvt"]
 texture = ExtResource("1_j7tj3")
@@ -232,6 +233,9 @@ sources/7 = SubResource("TileSetAtlasSource_depgb")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hbr7d"]
 size = Vector2(32.1477, 51.9325)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_djo6v"]
+size = Vector2(26, 39)
+
 [node name="door_side" type="Node2D"]
 position = Vector2(6, -2)
 script = ExtResource("1_djo6v")
@@ -260,6 +264,7 @@ tile_map_data = PackedByteArray("AAAAAAAAAwAAAAUAAAAAAAIAAwAIAAYAAAAAAAUAAwAAAAU
 tile_set = SubResource("TileSet_ufimf")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
+visible = false
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 polygon = PackedVector2Array(128, 80, 123, 94, 127, 102, 124, 112, 115, 112, 108, 123, 107, 130, 109, 143, 118, 155, 110, 162, 111, 174, 107, 179, 112, 195, 124, 193, 126, 207, 114, 209, 114, 223, 185, 223, 183, 211, 178, 204, 177, 190, 179, 178, 188, 169, 183, 162, 177, 154, 176, 145, 173, 142, 172, 131, 175, 129, 172, 125, 172, 120, 167, 113, 162, 108, 161, 99, 163, 88, 163, 84, 160, 81, 152, 82, 132, 81, 137, -21, 362, -17, 337, 258, -29, 235, -14, -41, 133, -8)
@@ -276,5 +281,20 @@ position = Vector2(146, 239)
 scale = Vector2(1.57865, 1.07601)
 shape = SubResource("RectangleShape2D_hbr7d")
 
+[node name="NextLevelDoor" type="Area2D" parent="."]
+script = ExtResource("11_hbr7d")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NextLevelDoor"]
+position = Vector2(144, 84.5)
+shape = SubResource("RectangleShape2D_djo6v")
+
+[node name="ColorRect" type="ColorRect" parent="NextLevelDoor"]
+modulate = Color(0.979208, 0.15371, 0, 1)
+offset_left = 131.0
+offset_top = 65.0
+offset_right = 157.0
+offset_bottom = 104.0
+
 [connection signal="body_entered" from="door_exit" to="." method="_on_door_exit_body_entered"]
 [connection signal="body_exited" from="door_exit" to="." method="_on_door_exit_body_exited"]
+[connection signal="body_entered" from="NextLevelDoor" to="NextLevelDoor" method="_on_body_entered"]

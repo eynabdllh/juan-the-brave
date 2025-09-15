@@ -1,8 +1,9 @@
-[gd_scene load_steps=22 format=4 uid="uid://cfgwjy4m0kynw"]
+[gd_scene load_steps=28 format=4 uid="uid://cfgwjy4m0kynw"]
 
 [ext_resource type="Script" uid="uid://d1axf73jpi1u6" path="res://scripts/world.gd" id="1_e3hyu"]
 [ext_resource type="Texture2D" uid="uid://ubokohidmou7" path="res://assets/tilesets/plains.png" id="1_k0juu"]
 [ext_resource type="Texture2D" uid="uid://dqikcd1mfbhw0" path="res://assets/tilesets/grass.png" id="2_71j4m"]
+[ext_resource type="PackedScene" uid="uid://3548bd1yvet3" path="res://scenes/key.tscn" id="2_q5onr"]
 [ext_resource type="Texture2D" uid="uid://cygacchpj0lyy" path="res://assets/tilesets/fences.png" id="3_qfnet"]
 [ext_resource type="Texture2D" uid="uid://dc1ysfbbsw363" path="res://assets/objects/objects.png" id="4_i7141"]
 [ext_resource type="Texture2D" uid="uid://b7ienjjc1q2oi" path="res://assets/objects/chest_01.png" id="5_4mrxx"]
@@ -11,6 +12,9 @@
 [ext_resource type="Texture2D" uid="uid://bovyrgg6rtwh2" path="res://assets/tilesets/floors/wooden.png" id="8_e3hyu"]
 [ext_resource type="PackedScene" uid="uid://bq3bs7j40w5n7" path="res://scenes/player.tscn" id="9_7r4gi"]
 [ext_resource type="PackedScene" uid="uid://j5u3diqcyydx" path="res://scenes/enemylevel_1.tscn" id="10_w7kh3"]
+[ext_resource type="Shader" uid="uid://c0se7py3qjn2q" path="res://shaders/world.gdshader" id="13_jhx03"]
+[ext_resource type="Script" uid="uid://24wkpl4317uw" path="res://scripts/cloud_controller.gd" id="14_o8fc1"]
+[ext_resource type="Shader" uid="uid://dpk4soc1oa7ho" path="res://shaders/windy.gdshader" id="15_xo05s"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_e3hyu"]
 texture = ExtResource("1_k0juu")
@@ -73,6 +77,24 @@ texture = ExtResource("1_k0juu")
 1:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(8, -8, 8, 8, -4.77946, 3.50494, -5.09809, -8)
 3:5/0 = 0
 3:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(4.77946, -8, 8, 7.32851, -8, 8, -8, -8)
+0:8/0 = 0
+1:8/0 = 0
+2:8/0 = 0
+3:8/0 = 0
+4:8/0 = 0
+5:8/0 = 0
+0:9/0 = 0
+1:9/0 = 0
+2:9/0 = 0
+3:9/0 = 0
+4:9/0 = 0
+5:9/0 = 0
+0:10/0 = 0
+1:10/0 = 0
+2:10/0 = 0
+3:10/0 = 0
+4:10/0 = 0
+5:10/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_q5onr"]
 texture = ExtResource("2_71j4m")
@@ -233,9 +255,32 @@ sources/7 = SubResource("TileSetAtlasSource_lakw3")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w7kh3"]
 size = Vector2(57, 40.5)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o8fc1"]
+shader = ExtResource("13_jhx03")
+shader_parameter/cloud_color = Color(0, 0, 0, 0.25)
+shader_parameter/cloud_speed = 0.1
+shader_parameter/zoom = 3.91
+shader_parameter/pixel_size = 4.0
+shader_parameter/cloud_cover = 0.4
+shader_parameter/FBM_octaves = 6
+shader_parameter/screen_size = Vector2(0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xo05s"]
+shader = ExtResource("15_xo05s")
+shader_parameter/speed = 1.0
+shader_parameter/minStrength = 0.02
+shader_parameter/maxStrength = 0.05
+shader_parameter/strengthScale = 10.0
+shader_parameter/interval = 3.5
+shader_parameter/detail = 1.0
+shader_parameter/distortion = 0.0
+shader_parameter/heightOffset = 0.0
+shader_parameter/offset = 0.0
+
 [node name="world" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_e3hyu")
+key_scene = ExtResource("2_q5onr")
 
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true
@@ -263,11 +308,10 @@ tile_set = SubResource("TileSet_q5onr")
 [node name="player" parent="." instance=ExtResource("9_7r4gi")]
 position = Vector2(59, 90)
 
-[node name="enemylevel1" parent="." groups=["enemies"] instance=ExtResource("10_w7kh3")]
+[node name="mantis1" parent="." instance=ExtResource("10_w7kh3")]
 position = Vector2(254, 144)
 
 [node name="collision" type="StaticBody2D" parent="."]
-visible = false
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="collision"]
 polygon = PackedVector2Array(4, 0, 83, -1, 166, 0, 164, -42, 221, -41, 222, 0, 368, 0, 368, 208, 0, 208, 1, -11, -20, 224, 396, 219, 383, -23, 136, -58)
@@ -279,6 +323,31 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="door_side"]
 position = Vector2(194, -20.25)
 shape = SubResource("RectangleShape2D_w7kh3")
+
+[node name="mantis2" parent="." instance=ExtResource("10_w7kh3")]
+position = Vector2(102, 185)
+
+[node name="cloud" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_o8fc1")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 390.0
+offset_bottom = 222.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("14_o8fc1")
+
+[node name="TileMapShader" type="TileMap" parent="."]
+material = SubResource("ShaderMaterial_xo05s")
+format = 2
+
+[node name="ysort2" type="TileMapLayer" parent="TileMapShader"]
+y_sort_enabled = true
+texture_filter = 1
+use_parent_material = true
+tile_map_data = PackedByteArray("AAANAAYAAwAAAAUAAAABAAkAAwAAAAUAAAAHAAEAAwAAAAUAAAAVAAsAAwAGAAcAAAATAAQAAwAIAAYAAAAVAAMAAwAIAAYAAAAPAP3/AAABAAUAAAAPAPz/AAABAAUAAAAPAPv/AAABAAUAAAAPAPr/AAABAAUAAAAPAPn/AAABAAUAAAD8/wUAAwAAAAUAAAD9/wcAAwAGAAcAAAA=")
+tile_set = SubResource("TileSet_q5onr")
 
 [connection signal="body_entered" from="door_side" to="." method="_on_door_side_body_entered"]
 [connection signal="body_exited" from="door_side" to="." method="_on_door_side_body_exited"]
