@@ -13,7 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://bq3bs7j40w5n7" path="res://scenes/player.tscn" id="9_7r4gi"]
 [ext_resource type="PackedScene" uid="uid://j5u3diqcyydx" path="res://scenes/enemylevel_1.tscn" id="10_w7kh3"]
 [ext_resource type="Shader" uid="uid://c0se7py3qjn2q" path="res://shaders/world.gdshader" id="13_jhx03"]
-[ext_resource type="Script" uid="uid://24wkpl4317uw" path="res://scripts/cloud_controller.gd" id="14_o8fc1"]
+[ext_resource type="Script" path="res://scripts/cloud_controller.gd" id="14_o8fc1"]
 [ext_resource type="Shader" uid="uid://dpk4soc1oa7ho" path="res://shaders/windy.gdshader" id="15_xo05s"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_e3hyu"]
