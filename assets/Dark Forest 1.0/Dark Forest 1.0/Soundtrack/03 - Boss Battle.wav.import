@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cjdnewtbemc0"
+path="res://.godot/imported/03 - Boss Battle.wav-5d681079af92cd6c3023ae97cad14e06.sample"
+
+[deps]
+
+source_file="res://assets/Dark Forest 1.0/Dark Forest 1.0/Soundtrack/03 - Boss Battle.wav"
+dest_files=["res://.godot/imported/03 - Boss Battle.wav-5d681079af92cd6c3023ae97cad14e06.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

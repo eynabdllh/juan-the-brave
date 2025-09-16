@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cy1b6us2xqicb"
+path="res://.godot/imported/01- Dark Forest.mp3-5168af869d0ef72c580446ea41ed386c.mp3str"
+
+[deps]
+
+source_file="res://assets/Dark Forest 1.0/Dark Forest 1.0/Soundtrack/01- Dark Forest.mp3"
+dest_files=["res://.godot/imported/01- Dark Forest.mp3-5168af869d0ef72c580446ea41ed386c.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
