@@ -134,10 +134,10 @@ anchor_left = 0.486
 anchor_top = 0.518
 anchor_right = 0.486
 anchor_bottom = 0.518
-offset_left = -255.872
-offset_top = -229.664
-offset_right = 255.128
-offset_bottom = 229.336
+offset_left = -252.872
+offset_top = -222.664
+offset_right = 258.128
+offset_bottom = 236.336
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -172,12 +172,17 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_rtw2f")
 theme_override_styles/normal = SubResource("StyleBoxFlat_oa1go")
 text = "Back"
 
-[node name="AudioControl" type="HSlider" parent="Settings"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Settings"]
 layout_mode = 0
-offset_left = 35.0
-offset_top = 185.0
-offset_right = 458.0
-offset_bottom = 217.0
+offset_left = 78.0
+offset_top = 195.0
+offset_right = 443.0
+offset_bottom = 305.0
+theme_override_constants/separation = 24
+
+[node name="AudioControl" type="HSlider" parent="Settings/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 2
 theme_override_styles/slider = SubResource("StyleBoxLine_bqqt6")
 theme_override_styles/grabber_area = SubResource("StyleBoxLine_wu84c")
 theme_override_styles/grabber_area_highlight = SubResource("StyleBoxLine_8ln24")
@@ -187,19 +192,23 @@ value = 1.0
 script = ExtResource("4_wu84c")
 audio_bus_name = "Music"
 
-[node name="FullscreenControl" type="CheckButton" parent="Settings"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.489
-anchor_top = 0.583
-anchor_right = 0.489
-anchor_bottom = 0.583
-offset_left = -182.879
-offset_top = -34.597
-offset_right = 183.121
-offset_bottom = 34.403
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Label" type="Label" parent="Settings/VBoxContainer/AudioControl"]
+layout_mode = 0
+offset_top = -70.0
+offset_right = 362.0
+offset_bottom = -28.0
+theme_override_font_sizes/font_size = 30
+text = "Music"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Settings/VBoxContainer/AudioControl/Label"]
+layout_mode = 2
+offset_left = 3.0
+offset_top = -19.0
+offset_right = 368.0
+offset_bottom = 6.0
+
+[node name="FullscreenControl" type="CheckButton" parent="Settings/VBoxContainer"]
+layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Fullscreen"
 script = ExtResource("5_8ln24")
@@ -208,5 +217,5 @@ script = ExtResource("5_8ln24")
 [connection signal="pressed" from="MainButtons/option" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="MainButtons/exit" to="." method="_on_exit_pressed"]
 [connection signal="pressed" from="Settings/back" to="." method="_on_back_options_pressed"]
-[connection signal="value_changed" from="Settings/AudioControl" to="Settings/AudioControl" method="_on_value_changed"]
-[connection signal="toggled" from="Settings/FullscreenControl" to="." method="_on_fullscreen_control_toggled"]
+[connection signal="value_changed" from="Settings/VBoxContainer/AudioControl" to="Settings/VBoxContainer/AudioControl" method="_on_value_changed"]
+[connection signal="toggled" from="Settings/VBoxContainer/FullscreenControl" to="." method="_on_fullscreen_control_toggled"]
