@@ -40,14 +40,14 @@ void fragment() {
     // 2. ANIMATION & SCALING
     vec2 motion = vec2(TIME * cloud_speed, 0.0);
     vec2 final_uv = (pixelated_uv * zoom) + motion;
-    
+
     // 3. GENERATE CLOUD VALUE
     float cloud_value = fbm(final_uv);
-    
+
     // 4. DRAW THE CLOUDS (Using our new parameters)
     // The 'edge_softness' now controls the width of the fade, creating the blur effect.
     float cloud_alpha = smoothstep(density - edge_softness, density + edge_softness, cloud_value);
-    
+
     COLOR = cloud_color;
     COLOR.a *= cloud_alpha;
 }
