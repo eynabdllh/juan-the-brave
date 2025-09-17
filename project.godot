@@ -11,14 +11,14 @@ config_version=5
 [application]
 
 config/name="GameDev"
-run/main_scene="uid://cfgwjy4m0kynw"
+run/main_scene="uid://xlx480mlht4a"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://assets/icon.svg"
 
 [autoload]
 
 global="*res://scripts/global.gd"
-
+InteractionManager="*res://interaction/interactionManager.tscn"
 MainMenu="*res://scenes/main_menu.tscn"
 
 [display]
