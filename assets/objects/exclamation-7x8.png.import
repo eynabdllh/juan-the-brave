@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://rrkknh7dpu1v"
-path="res://.godot/imported/e_key.png-54e41d78cd51b5700683ea929b39d4ab.ctex"
+uid="uid://b8boox7ieb7y2"
+path="res://.godot/imported/exclamation-7x8.png-388428e07e914d39f3351b3982320541.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/objects/e_key.png"
-dest_files=["res://.godot/imported/e_key.png-54e41d78cd51b5700683ea929b39d4ab.ctex"]
+source_file="res://assets/objects/exclamation-7x8.png"
+dest_files=["res://.godot/imported/exclamation-7x8.png-388428e07e914d39f3351b3982320541.ctex"]
 
 [params]
 

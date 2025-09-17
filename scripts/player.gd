@@ -1,5 +1,9 @@
 extends CharacterBody2D
 
+var interact_prompt: AnimatedSprite2D
+var feedback_label: Label
+var feedback_timer: Timer
+
 @export var knockback_speed = 100.0
 var is_knocked_back = false
 
@@ -11,9 +15,27 @@ const speed = 100
 var current_dir = "front"
 
 func _ready():
+	interact_prompt = $InteractPrompt
+	feedback_label = $feedback_bubble/feedback_label # Correct path to the nested label
+	feedback_timer = $feedback_timer
+	
 	$AnimatedSprite2D.play("front_idle")
 	$regen.start()
+	interact_prompt.hide()
+	
+	# We hide the PARENT bubble, not just the label.
+	$feedback_bubble.hide() 
+	
+func show_monologue(message: String):
+	feedback_label.text = message
+	# We now show the PARENT bubble, which contains the label.
+	$feedback_bubble.show() 
+	feedback_timer.start(2.5)
 
+func _on_feedback_timer_timeout():
+	# We hide the PARENT bubble when the timer is done.
+	$feedback_bubble.hide()
+	
 func _physics_process(delta):
 	if is_knocked_back:
 		move_and_slide() 
@@ -29,6 +51,19 @@ func _physics_process(delta):
 		print("player has been killed")
 		self.queue_free()
 
+func show_interact_prompt():
+	interact_prompt.show()
+	# Play the pop-up animation once.
+	interact_prompt.play("pop_up")
+	# When it's finished, it will automatically switch to the idle loop.
+	await interact_prompt.animation_finished
+	# This check prevents a bug if the player leaves the area while the animation is playing.
+	if interact_prompt.visible:
+		interact_prompt.play("idle")
+
+func hide_interact_prompt():
+	interact_prompt.hide()
+	
 func handle_input():
 	if Input.is_action_just_pressed("attack") and not attack_ip:
 		attack()

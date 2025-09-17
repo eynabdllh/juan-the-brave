@@ -1,8 +1,9 @@
-[gd_scene load_steps=58 format=3 uid="uid://bq3bs7j40w5n7"]
+[gd_scene load_steps=68 format=3 uid="uid://bq3bs7j40w5n7"]
 
 [ext_resource type="Script" uid="uid://dcd24g8m5fo81" path="res://scripts/player.gd" id="1_g2els"]
 [ext_resource type="Texture2D" uid="uid://rwd4lgj61wfx" path="res://assets/characters/player.png" id="2_qhqgy"]
 [ext_resource type="AudioStream" uid="uid://bi3vti257fm2" path="res://assets/music/player_damage.mp3" id="3_qhqgy"]
+[ext_resource type="Texture2D" uid="uid://b8boox7ieb7y2" path="res://assets/objects/exclamation-7x8.png" id="4_dqkch"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dqkch"]
 atlas = ExtResource("2_qhqgy")
@@ -420,16 +421,89 @@ radius = 4.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_qhqgy"]
 radius = 18.1108
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_apa73"]
+atlas = ExtResource("4_dqkch")
+region = Rect2(35, 0, 7, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_74r1k"]
+atlas = ExtResource("4_dqkch")
+region = Rect2(0, 0, 7, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8svfe"]
+atlas = ExtResource("4_dqkch")
+region = Rect2(7, 0, 7, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2a3c5"]
+atlas = ExtResource("4_dqkch")
+region = Rect2(14, 0, 7, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_42b1b"]
+atlas = ExtResource("4_dqkch")
+region = Rect2(21, 0, 7, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h7ic4"]
+atlas = ExtResource("4_dqkch")
+region = Rect2(28, 0, 7, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_au7lq"]
+atlas = ExtResource("4_dqkch")
+region = Rect2(35, 0, 7, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nubpm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_apa73")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 2.5,
+"texture": SubResource("AtlasTexture_74r1k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8svfe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2a3c5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_42b1b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h7ic4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_au7lq")
+}],
+"loop": false,
+"name": &"pop_up",
+"speed": 5.0
+}]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dqkch"]
+bg_color = Color(0.165656, 0.165656, 0.165656, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.277607, 0.1912, 0.125635, 1)
+
 [node name="player" type="CharacterBody2D" groups=["player"]]
 y_sort_enabled = true
+position = Vector2(0, -2)
 collision_layer = 2
 script = ExtResource("1_g2els")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(0.5, 0.5)
+position = Vector2(1, 1)
 scale = Vector2(1.02083, 1.02083)
 sprite_frames = SubResource("SpriteFrames_apa73")
-animation = &"front_walk"
+animation = &"back_attack"
+frame = 3
+frame_progress = 1.0
 offset = Vector2(0, -15)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -453,12 +527,13 @@ wait_time = 0.5
 zoom = Vector2(4, 4)
 limit_left = 0
 limit_top = 0
-limit_right = 365
+limit_right = 286
 limit_bottom = 207
 limit_smoothed = true
 rotation_smoothing_enabled = true
 
 [node name="world_camera" type="Camera2D" parent="."]
+visible = false
 zoom = Vector2(4, 4)
 limit_left = 0
 limit_top = 0
@@ -493,9 +568,42 @@ one_shot = true
 [node name="AttackHitTimer" type="Timer" parent="."]
 one_shot = true
 
+[node name="feedback_timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="InteractPrompt" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -21)
+scale = Vector2(1.00293, 0.979347)
+sprite_frames = SubResource("SpriteFrames_nubpm")
+animation = &"pop_up"
+frame = 5
+frame_progress = 1.0
+speed_scale = 2.5
+
+[node name="feedback_bubble" type="PanelContainer" parent="."]
+visible = false
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -25.0
+offset_right = 3.0
+offset_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.39, 0.39)
+theme_override_styles/panel = SubResource("StyleBoxFlat_dqkch")
+
+[node name="feedback_label" type="Label" parent="feedback_bubble"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [connection signal="timeout" from="attack_cooldown" to="." method="_on_attack_cooldown_timeout"]
 [connection signal="timeout" from="deal_attack_timer" to="." method="_on_deal_attack_timer_timeout"]
 [connection signal="timeout" from="regen" to="." method="_on_regen_timeout"]
 [connection signal="timeout" from="HurtEffectTimer" to="." method="_on_hurt_effect_timer_timeout"]
 [connection signal="timeout" from="KnockbackTimer" to="." method="_on_knockback_timer_timeout"]
 [connection signal="timeout" from="AttackHitTimer" to="." method="_on_attack_hit_timer_timeout"]
+[connection signal="timeout" from="feedback_timer" to="." method="_on_feedback_timer_timeout"]

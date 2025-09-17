@@ -1,6 +1,12 @@
+<<<<<<< Updated upstream
 [gd_scene load_steps=3 format=3 uid="uid://b5xdmhctpc11l"]
 
 [ext_resource type="Script" path="res://scripts/inventory_ui.gd" id="1_tahbm"]
+=======
+[gd_scene load_steps=3 format=3 uid="uid://bpov77kuwgcyw"]
+
+[ext_resource type="Script" uid="uid://cen1det564q28" path="res://scripts/inventory_ui.gd" id="1_tahbm"]
+>>>>>>> Stashed changes
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ylkvr"]
 bg_color = Color(0.254902, 0.254902, 0.254902, 0.847059)
