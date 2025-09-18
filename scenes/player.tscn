@@ -467,6 +467,15 @@ limit_bottom = 1048
 limit_smoothed = true
 rotation_smoothing_enabled = true
 
+[node name="cemetery_camera" type="Camera2D" parent="."]
+zoom = Vector2(4, 4)
+limit_left = 0
+limit_top = 0
+limit_right = 1172
+limit_bottom = 1048
+limit_smoothed = true
+rotation_smoothing_enabled = true
+
 [node name="healthbar" type="ProgressBar" parent="."]
 modulate = Color(0.320798, 0.824011, 0, 1)
 self_modulate = Color(0.036968, 0.66636, 0.0347833, 1)

@@ -101,6 +101,7 @@ func _on_knockback_timer_timeout(): is_knocked_back = false
 func current_camera():
 	if global.current_scene == "world": $world_camera.enabled = true; $doorside_camera.enabled = false
 	elif global.current_scene == "door_side": $world_camera.enabled = false; $doorside_camera.enabled = true
+	elif global.current_scene == "map_2": $world_camera.enabled = false; $cemetery_camera.enabled = true
 
 func update_health():
 	$healthbar.value = health; $healthbar.visible = health < 100
