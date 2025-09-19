@@ -471,8 +471,8 @@ rotation_smoothing_enabled = true
 zoom = Vector2(4, 4)
 limit_left = 0
 limit_top = 0
-limit_right = 1172
-limit_bottom = 1048
+limit_right = 1387
+limit_bottom = 1425
 limit_smoothed = true
 rotation_smoothing_enabled = true
 
