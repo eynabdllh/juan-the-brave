@@ -537,8 +537,8 @@ visible = false
 zoom = Vector2(4, 4)
 limit_left = 0
 limit_top = 0
-limit_right = 365
-limit_bottom = 207
+limit_right = 1178
+limit_bottom = 1039
 limit_smoothed = true
 rotation_smoothing_enabled = true
 
