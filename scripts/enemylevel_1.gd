@@ -49,7 +49,7 @@ func _physics_process(delta):
 func die():
 	if not is_alive: return
 	is_alive = false
-	velocity = Vector2.ZERO
+	velocity = Vector2.ZERO	
 	$CollisionShape2D.set_deferred("disabled", true)
 	
 	# --- NEW: Add our unique name to the global list of killed enemies ---
@@ -57,6 +57,10 @@ func die():
 	
 	# Emit the signal, sending our global position with it.
 	emit_signal("died", global_position)
+	
+	# Ensure healthbar is visually empty before death animation
+	update_health() # force value to update to 0
+	await get_tree().process_frame
 	
 	$AnimatedSprite2D.play("death")
 	await $AnimatedSprite2D.animation_finished

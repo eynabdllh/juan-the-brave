@@ -12,18 +12,17 @@ var player_alive = true
 var attack_ip = false
 
 const speed = 100
-var current_dir = "front"
+var current_dir = "front_idle"
 
 func _ready():
 	interact_prompt = $InteractPrompt
-	feedback_label = $feedback_bubble/feedback_label # Correct path to the nested label
+	feedback_label = $feedback_bubble/feedback_label
 	feedback_timer = $feedback_timer
 	
 	$AnimatedSprite2D.play("front_idle")
 	$regen.start()
 	interact_prompt.hide()
 	
-	# We hide the PARENT bubble, not just the label.
 	$feedback_bubble.hide() 
 	
 func show_monologue(message: String):
@@ -136,6 +135,7 @@ func _on_knockback_timer_timeout(): is_knocked_back = false
 func current_camera():
 	if global.current_scene == "world": $world_camera.enabled = true; $doorside_camera.enabled = false
 	elif global.current_scene == "door_side": $world_camera.enabled = false; $doorside_camera.enabled = true
+	elif global.current_scene == "map_2": $world_camera.enabled = false; $cemetery_camera.enabled = true
 
 func update_health():
 	$healthbar.value = health; $healthbar.visible = health < 100
