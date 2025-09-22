@@ -5,8 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://dqikcd1mfbhw0" path="res://assets/tilesets/grass.png" id="2_dc3vs"]
 [ext_resource type="Texture2D" uid="uid://cygacchpj0lyy" path="res://assets/tilesets/fences.png" id="3_djo6v"]
 [ext_resource type="Texture2D" uid="uid://dc1ysfbbsw363" path="res://assets/objects/objects.png" id="4_hbr7d"]
-[ext_resource type="Texture2D" uid="uid://b7ienjjc1q2oi" path="res://assets/objects/chest_01.png" id="5_k4a78"]
-[ext_resource type="Texture2D" uid="uid://do40tpybtr81y" path="res://assets/objects/chest_02.png" id="6_5o52e"]
+[ext_resource type="Texture2D" uid="uid://b7ienjjc1q2oi" path="res://assets/objects/chest.png" id="5_k4a78"]
 [ext_resource type="Texture2D" uid="uid://c0u8sabj0cixv" path="res://assets/tilesets/floors/carpet.png" id="7_af4fb"]
 [ext_resource type="Texture2D" uid="uid://bovyrgg6rtwh2" path="res://assets/tilesets/floors/wooden.png" id="8_3w5t1"]
 [ext_resource type="PackedScene" uid="uid://bq3bs7j40w5n7" path="res://scenes/player.tscn" id="9_dc3vs"]
@@ -354,8 +353,10 @@ texture = ExtResource("5_k4a78")
 2:0/0 = 0
 3:0/0 = 0
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_3w5t1"]
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hf2si"]
-texture = ExtResource("6_5o52e")
+texture = SubResource("CompressedTexture2D_3w5t1")
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0

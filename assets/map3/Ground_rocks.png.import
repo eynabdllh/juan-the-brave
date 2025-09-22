@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b7ienjjc1q2oi"
-path="res://.godot/imported/chest_01.png-d3f30db57b35cece850a3b8cb3b69614.ctex"
+uid="uid://dfvq04856ga0p"
+path="res://.godot/imported/Ground_rocks.png-819813024b205e9e79537a5ebcf696b8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/objects/chest_01.png"
-dest_files=["res://.godot/imported/chest_01.png-d3f30db57b35cece850a3b8cb3b69614.ctex"]
+source_file="res://assets/map3/Ground_rocks.png"
+dest_files=["res://.godot/imported/Ground_rocks.png-819813024b205e9e79537a5ebcf696b8.ctex"]
 
 [params]
 

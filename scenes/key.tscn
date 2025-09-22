@@ -10,7 +10,7 @@ shader_parameter/glow_color = Color(1, 1, 0.7, 0.5)
 shader_parameter/speed = 2.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fttkb"]
-radius = 16.2162
+radius = 56.77
 
 [node name="Key" type="Area2D"]
 scale = Vector2(0.185, 0.185)
@@ -23,12 +23,10 @@ rotation = -0.785398
 texture = ExtResource("1_yk2u2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(-5.40541, 0)
 shape = SubResource("CircleShape2D_fttkb")
 
 [node name="InteractPrompt" type="Label" parent="."]
-visible = false
 offset_left = -54.0541
 offset_top = -37.8378
 offset_right = 56.9459
@@ -37,3 +35,4 @@ scale = Vector2(0.935, 0.935)
 text = "[E] TO PICK UP"
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

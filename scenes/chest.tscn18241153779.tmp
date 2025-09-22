@@ -1,0 +1,82 @@
+[gd_scene load_steps=10 format=3 uid="uid://caq5jwbsq3xj0"]
+
+[ext_resource type="Texture2D" uid="uid://b7ienjjc1q2oi" path="res://assets/objects/chest.png" id="1_oii8l"]
+[ext_resource type="Script" uid="uid://0ilqarfllfcs" path="res://scripts/chest.gd" id="1_sy5e1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sy5e1"]
+atlas = ExtResource("1_oii8l")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gqd3d"]
+atlas = ExtResource("1_oii8l")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yue2o"]
+atlas = ExtResource("1_oii8l")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yhylo"]
+atlas = ExtResource("1_oii8l")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w02o5"]
+atlas = ExtResource("1_oii8l")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ilhio"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sy5e1")
+}],
+"loop": true,
+"name": &"closed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gqd3d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yue2o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yhylo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w02o5")
+}],
+"loop": false,
+"name": &"open",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kg5gm"]
+radius = 11.0
+
+[node name="Chest" type="Area2D"]
+script = ExtResource("1_sy5e1")
+heal_amount = null
+potion_duration = null
+
+[node name="ChestSprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0.375, -3)
+scale = Vector2(0.953125, 0.96875)
+sprite_frames = SubResource("SpriteFrames_ilhio")
+animation = &"closed"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -2)
+shape = SubResource("CircleShape2D_kg5gm")
+
+[node name="InteractPrompt" type="Label" parent="."]
+visible = false
+offset_left = -10.0
+offset_top = -18.0
+offset_right = 84.0
+offset_bottom = 5.0
+scale = Vector2(0.237, 0.245)
+text = "[E] TO OPEN"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

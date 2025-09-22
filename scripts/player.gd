@@ -13,17 +13,17 @@ var attack_ip = false
 
 const speed = 100
 var current_dir = "front"
+@export var base_attack_damage: int = 20
 
 func _ready():
 	interact_prompt = $InteractPrompt
-	feedback_label = $feedback_bubble/feedback_label # Correct path to the nested label
+	feedback_label = $feedback_bubble/feedback_label
 	feedback_timer = $feedback_timer
 	
 	$AnimatedSprite2D.play("front_idle")
 	$regen.start()
 	interact_prompt.hide()
 	
-	# We hide the PARENT bubble, not just the label.
 	$feedback_bubble.hide() 
 	
 func show_monologue(message: String):
@@ -69,7 +69,8 @@ func handle_input():
 		attack()
 
 	var input_vector = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
-	velocity = input_vector.normalized() * speed
+	# Apply global speed multiplier buff if any
+	velocity = input_vector.normalized() * speed * (global.player_speed_mult if Engine.is_editor_hint() == false else 1.0)
 	play_anim()
 	
 func play_anim():
@@ -111,12 +112,16 @@ func attack():
 func _on_deal_attack_timer_timeout():
 	for body in $player_hitbox.get_overlapping_bodies():
 		if body != self and body.has_method("take_damage"):
-			body.take_damage(20, self)
+			var dmg = base_attack_damage + (global.player_damage_bonus if Engine.is_editor_hint() == false else 0)
+			body.take_damage(dmg, self)
 	
 	await $AnimatedSprite2D.animation_finished
 	attack_ip = false
 
 func take_damage(amount, attacker):
+	# Respect invincibility buff
+	if not Engine.is_editor_hint() and global.player_invincible:
+		return
 	if is_knocked_back: return
 	health -= amount
 	print("Player took damage, health is now: ", health)
@@ -130,12 +135,19 @@ func take_damage(amount, attacker):
 	$AnimatedSprite2D.modulate = Color.RED
 	$HurtEffectTimer.start(0.2)
 
+func heal(amount: int) -> void:
+	if health <= 0:
+		return
+	health = min(health + amount, 100)
+	update_health()
+
 func _on_hurt_effect_timer_timeout(): $AnimatedSprite2D.modulate = Color.WHITE
 func _on_knockback_timer_timeout(): is_knocked_back = false
 
 func current_camera():
 	if global.current_scene == "world": $world_camera.enabled = true; $doorside_camera.enabled = false
 	elif global.current_scene == "door_side": $world_camera.enabled = false; $doorside_camera.enabled = true
+	elif global.current_scene == "map_2": $world_camera.enabled = false; $cemetery_camera.enabled = true
 
 func update_health():
 	$healthbar.value = health; $healthbar.visible = health < 100

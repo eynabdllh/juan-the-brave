@@ -34,8 +34,8 @@ func _on_interaction_area_body_exited(body: Node2D):
 		player_in_range = null
 
 func go_to_next_level():
-	print("Entering next level!")
-	# get_tree().change_scene_to_file("res://scenes/cemetery.tscn")
+	print("Entering next level: map_2!")
+	global.go_to_map_2()
 
 func lock():
 	is_locked = true
@@ -51,3 +51,4 @@ func unlock():
 	await door_sprite.animation_finished
 	door_sprite.play("unlocked")
 	collision_shape.disabled = true	
+	go_to_next_level()

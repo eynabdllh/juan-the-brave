@@ -501,14 +501,30 @@ script = ExtResource("1_g2els")
 position = Vector2(1, 1)
 scale = Vector2(1.02083, 1.02083)
 sprite_frames = SubResource("SpriteFrames_apa73")
-animation = &"back_attack"
-frame = 3
-frame_progress = 1.0
+animation = &"front_idle"
 offset = Vector2(0, -15)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, -2)
 shape = SubResource("CircleShape2D_g2els")
+
+[node name="world_camera" type="Camera2D" parent="."]
+zoom = Vector2(4, 4)
+limit_left = 0
+limit_top = 0
+limit_right = 1178
+limit_bottom = 1039
+limit_smoothed = true
+rotation_smoothing_enabled = true
+
+[node name="cemetery_camera" type="Camera2D" parent="."]
+zoom = Vector2(4, 4)
+limit_left = 0
+limit_top = 0
+limit_right = 1168
+limit_bottom = 1440
+limit_smoothed = true
+rotation_smoothing_enabled = true
 
 [node name="player_hitbox" type="Area2D" parent="."]
 collision_mask = 7
@@ -532,23 +548,13 @@ limit_bottom = 207
 limit_smoothed = true
 rotation_smoothing_enabled = true
 
-[node name="world_camera" type="Camera2D" parent="."]
-visible = false
-zoom = Vector2(4, 4)
-limit_left = 0
-limit_top = 0
-limit_right = 1178
-limit_bottom = 1039
-limit_smoothed = true
-rotation_smoothing_enabled = true
-
 [node name="healthbar" type="ProgressBar" parent="."]
 modulate = Color(0.320798, 0.824011, 0, 1)
 self_modulate = Color(0.036968, 0.66636, 0.0347833, 1)
 offset_left = -8.0
-offset_top = -23.0
-offset_right = 172.0
-offset_bottom = 4.0
+offset_top = -20.0
+offset_right = 182.0
+offset_bottom = 7.0
 scale = Vector2(0.1, 0.1)
 show_percentage = false
 
@@ -572,16 +578,13 @@ one_shot = true
 one_shot = true
 
 [node name="InteractPrompt" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -21)
+position = Vector2(1, -26)
 scale = Vector2(1.00293, 0.979347)
 sprite_frames = SubResource("SpriteFrames_nubpm")
 animation = &"pop_up"
-frame = 5
-frame_progress = 1.0
 speed_scale = 2.5
 
 [node name="feedback_bubble" type="PanelContainer" parent="."]
-visible = false
 anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
