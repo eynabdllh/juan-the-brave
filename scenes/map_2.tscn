@@ -12,7 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://x1dt0xwegn7a" path="res://assets/Graveyard/Graveyard_TileSet.png" id="10_vceer"]
 [ext_resource type="Texture2D" uid="uid://bhywjnpd2jkqj" path="res://assets/Dark Forest 1.0/Dark Forest 1.0/Tiles/Interior House.png" id="10_xrvne"]
 [ext_resource type="Texture2D" uid="uid://dc1ysfbbsw363" path="res://assets/objects/objects.png" id="11_n63aa"]
-[ext_resource type="Texture2D" uid="uid://b7ienjjc1q2oi" path="res://assets/objects/chest_01.png" id="12_lkmhe"]
+[ext_resource type="Texture2D" uid="uid://b7ienjjc1q2oi" path="res://assets/objects/chest.png" id="12_lkmhe"]
 [ext_resource type="Texture2D" uid="uid://cn6c83ttiq386" path="res://assets/Dark Forest 1.0/Dark Forest 1.0/Tiles/Tiles 2.png" id="12_vceer"]
 [ext_resource type="Texture2D" uid="uid://cs7nx5fsds6ax" path="res://assets/Dark Forest 1.0/Dark Forest 1.0/Tiles/Runes.png" id="13_ve5e8"]
 [ext_resource type="Texture2D" uid="uid://m2esdftvv1t1" path="res://assets/mix/Water+.png" id="16_v3q87"]
@@ -5805,6 +5805,7 @@ position = Vector2(1000, 936)
 position = Vector2(1015, 518)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
+scale = Vector2(0.966854, 1)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 polygon = PackedVector2Array(0, -3, 0, 0, 257, 0, 257, -7, 333, -7, 333, 0, 1168, 0, 1168, 1440, 0, 1440, 0, 0, -1, 0, -47, 1498, 1230, 1466, 1216, -110)

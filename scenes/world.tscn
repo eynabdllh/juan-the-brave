@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=4 uid="uid://cfgwjy4m0kynw"]
+[gd_scene load_steps=47 format=4 uid="uid://cfgwjy4m0kynw"]
 
 [ext_resource type="Script" uid="uid://d1axf73jpi1u6" path="res://scripts/world.gd" id="1_e3hyu"]
 [ext_resource type="Texture2D" uid="uid://ubokohidmou7" path="res://assets/tilesets/plains.png" id="1_k0juu"]
@@ -6,9 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://3548bd1yvet3" path="res://scenes/key.tscn" id="2_q5onr"]
 [ext_resource type="Texture2D" uid="uid://cygacchpj0lyy" path="res://assets/tilesets/fences.png" id="3_qfnet"]
 [ext_resource type="Texture2D" uid="uid://dc1ysfbbsw363" path="res://assets/objects/objects.png" id="4_i7141"]
-[ext_resource type="Texture2D" uid="uid://b7ienjjc1q2oi" path="res://assets/objects/chest_01.png" id="5_4mrxx"]
+[ext_resource type="Texture2D" uid="uid://b7ienjjc1q2oi" path="res://assets/objects/chest.png" id="5_4mrxx"]
 [ext_resource type="Texture2D" uid="uid://dly8xr7mrkxl8" path="res://assets/mix/TX Struct.png" id="5_ctatt"]
-[ext_resource type="Texture2D" uid="uid://do40tpybtr81y" path="res://assets/objects/chest_02.png" id="6_7r4gi"]
 [ext_resource type="Texture2D" uid="uid://nvliexn5ic43" path="res://assets/Dark Forest 1.0/Dark Forest 1.0/Tiles/Dark.png" id="6_kpybi"]
 [ext_resource type="Texture2D" uid="uid://d2hne1r86cojf" path="res://assets/Dark Forest 1.0/Dark Forest 1.0/Tiles/Green.png" id="7_ctatt"]
 [ext_resource type="Texture2D" uid="uid://c0u8sabj0cixv" path="res://assets/tilesets/floors/carpet.png" id="7_w7kh3"]
@@ -24,6 +23,7 @@
 [ext_resource type="Shader" uid="uid://dpk4soc1oa7ho" path="res://shaders/windy.gdshader" id="15_xo05s"]
 [ext_resource type="Texture2D" uid="uid://m2esdftvv1t1" path="res://assets/mix/Water+.png" id="18_xgqkh"]
 [ext_resource type="Texture2D" uid="uid://x52ibacbpqga" path="res://assets/mix/TX Props.png" id="19_munwf"]
+[ext_resource type="PackedScene" uid="uid://caq5jwbsq3xj0" path="res://scenes/chest.tscn" id="24_ctatt"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ctatt"]
 texture = ExtResource("1_k0juu")
@@ -4775,8 +4775,11 @@ texture = ExtResource("5_4mrxx")
 2:0/0 = 0
 3:0/0 = 0
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_3w5t1"]
+load_path = "res://.godot/imported/chest_02.png-0cbe7d663ce0fbd4ef0913196247944e.ctex"
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_x2olw"]
-texture = ExtResource("6_7r4gi")
+texture = SubResource("CompressedTexture2D_3w5t1")
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0
@@ -5477,6 +5480,7 @@ offset_right = 1180.0
 offset_bottom = 1040.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.996368, 0.995856)
 script = ExtResource("14_o8fc1")
 
 [node name="Area2D" type="Area2D" parent="."]
@@ -5485,6 +5489,9 @@ position = Vector2(1178, 1039)
 [node name="collision" type="StaticBody2D" parent="."]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="collision"]
+
+[node name="Chest" parent="." instance=ExtResource("24_ctatt")]
+position = Vector2(456, 106)
 
 [connection signal="body_entered" from="door_side" to="." method="_on_door_side_body_entered"]
 [connection signal="body_exited" from="door_side" to="." method="_on_door_side_body_exited"]

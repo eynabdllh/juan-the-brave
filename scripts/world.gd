@@ -17,7 +17,13 @@ func _ready():
 		return
 		
 	for enemy in enemies:
-		enemy.died.connect(_on_enemy_defeated)
+		# Restore persisted position if we have one
+		var saved_pos = global.get_enemy_position(enemy.name)
+		if saved_pos != null:
+			enemy.global_position = saved_pos
+		# Always connect the death signal and bind this enemy's name so we know who died.
+		# Note: Bound args are appended AFTER emitted args in Godot 4, so handler signature is (enemy_position, enemy_name)
+		enemy.died.connect(_on_enemy_defeated.bind(enemy.name))
 		
 	print("Level started with ", total_enemies, " enemies.")
 	
@@ -32,10 +38,11 @@ func _ready():
 		print("Respawning dropped key at ", global.key_position)
 		spawn_key(global.key_position)
 
-func _on_enemy_defeated(enemy_position: Vector2):
+func _on_enemy_defeated(enemy_position: Vector2, enemy_name: String):
 	enemies_defeated += 1
 	print("Enemy defeated! ", enemies_defeated, "/", total_enemies)
-	
+	# Remove this enemy from persisted positions since it's dead now
+	global.clear_enemy_position(enemy_name)
 	if enemies_defeated >= total_enemies:
 		print("All enemies defeated! Spawning key.")
 		# store the drop so it persists if the player leaves the scene
@@ -60,4 +67,11 @@ func on_key_collected():
 func _on_door_side_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		print("Player has touched the door area. Transitioning to door_side scene.")
+		save_enemy_positions()
 		global.go_to_door_side()
+
+func save_enemy_positions():
+	# Snapshot all current alive enemy positions
+	for enemy in get_tree().get_nodes_in_group("enemies"):
+		if is_instance_valid(enemy):
+			global.set_enemy_position(enemy.name, enemy.global_position)

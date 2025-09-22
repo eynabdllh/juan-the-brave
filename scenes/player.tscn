@@ -582,8 +582,6 @@ position = Vector2(1, -26)
 scale = Vector2(1.00293, 0.979347)
 sprite_frames = SubResource("SpriteFrames_nubpm")
 animation = &"pop_up"
-frame = 5
-frame_progress = 1.0
 speed_scale = 2.5
 
 [node name="feedback_bubble" type="PanelContainer" parent="."]
