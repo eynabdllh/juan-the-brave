@@ -1,10 +1,10 @@
 [gd_scene load_steps=13 format=3 uid="uid://xlx480mlht4a"]
 
-[ext_resource type="Script" uid="uid://c1rcc3jhg6w2o" path="res://scenes/main_menu.gd" id="1_ekxnf"]
+[ext_resource type="Script" uid="uid://c1rcc3jhg6w2o" path="res://scripts/main_menu.gd" id="1_ekxnf"]
 [ext_resource type="Texture2D" uid="uid://mpfbggjloyrs" path="res://assets/background/main_menu.png" id="2_bqqt6"]
 [ext_resource type="AudioStream" uid="uid://cm2ljbfves4nx" path="res://assets/music/main_menu.mp3" id="3_bqqt6"]
-[ext_resource type="Script" uid="uid://cx7j1x63a26j3" path="res://scenes/audio_control.gd" id="4_wu84c"]
-[ext_resource type="Script" uid="uid://33iyc3sb1puf" path="res://scenes/fullscreen_control.gd" id="5_8ln24"]
+[ext_resource type="Script" uid="uid://cx7j1x63a26j3" path="res://scripts/audio_control.gd" id="4_wu84c"]
+[ext_resource type="Script" uid="uid://33iyc3sb1puf" path="res://scripts/fullscreen_control.gd" id="5_8ln24"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wu84c"]
 texture = ExtResource("2_bqqt6")
@@ -128,6 +128,7 @@ autoplay = true
 bus = &"Music"
 
 [node name="Settings" type="Panel" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.486
@@ -156,10 +157,11 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="back" type="Button" parent="Settings"]
+layout_mode = 0
 offset_left = 73.0
-offset_top = 379.0
+offset_top = 381.0
 offset_right = 422.0
-offset_bottom = 439.0
+offset_bottom = 441.0
 size_flags_vertical = 3
 theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/font_hover_color = Color(0, 0, 0, 1)

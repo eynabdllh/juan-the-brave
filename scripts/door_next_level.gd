@@ -1,54 +1,53 @@
-# door_next_level.gd (Final Interactive Version)
 extends StaticBody2D
+
+@export var locked_message = "It's locked. I need to find a key."
+@export var unlocked_message = "The door is now open, finally."
 
 @onready var door_sprite: AnimatedSprite2D = $DoorSprite
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 
 var is_locked = true
-var player_is_nearby = false # NEW: Tracks if the player is in range
+var player_in_range: CharacterBody2D = null
 
 func _ready():
-	# The door always starts locked. We no longer check for the key here.
 	lock()
 
-func _process(delta):
-	# Every frame, check if the player is nearby AND presses the interact key.
-	if player_is_nearby and Input.is_action_just_pressed("interact"):
-		# If they have the key, unlock the door.
+func _unhandled_input(event):
+	if player_in_range and event.is_action_pressed("interact"):
+		get_viewport().set_input_as_handled()
 		if global.player_has_key and is_locked:
 			unlock()
-		# If the door is already unlocked, transition to the next scene.
+		elif is_locked:
+			player_in_range.show_monologue(locked_message)
 		elif not is_locked:
 			go_to_next_level()
 
-# This signal is from the child InteractionArea.
 func _on_interaction_area_body_entered(body: Node2D):
 	if body.is_in_group("player"):
-		player_is_nearby = true
-		# You can add a prompt here, like a "!" above the player's head.
+		player_in_range = body
+		player_in_range.show_interact_prompt()
 
-# This signal is also from the child InteractionArea.
 func _on_interaction_area_body_exited(body: Node2D):
 	if body.is_in_group("player"):
-		player_is_nearby = false
-		# Hide the prompt here if you added one.
+		if player_in_range:
+			player_in_range.hide_interact_prompt()
+		player_in_range = null
 
 func go_to_next_level():
 	print("Entering next level!")
 	# get_tree().change_scene_to_file("res://scenes/cemetery.tscn")
-	pass
 
 func lock():
 	is_locked = true
 	door_sprite.play("locked")
 	collision_shape.disabled = false
-	print("Door is LOCKED.")
 
 func unlock():
 	is_locked = false
+	if player_in_range:
+		player_in_range.hide_interact_prompt()
+		player_in_range.show_monologue(unlocked_message)
 	door_sprite.play("opening")
 	await door_sprite.animation_finished
 	door_sprite.play("unlocked")
-	
-	collision_shape.disabled = true
-	print("Door is UNLOCKED.")
+	collision_shape.disabled = true	

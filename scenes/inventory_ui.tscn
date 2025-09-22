@@ -1,0 +1,56 @@
+[gd_scene load_steps=3 format=3 uid="uid://bpov77kuwgcyw"]
+
+[ext_resource type="Script" uid="uid://cen1det564q28" path="res://scripts/inventory_ui.gd" id="1_tahbm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ylkvr"]
+bg_color = Color(0.254902, 0.254902, 0.254902, 0.847059)
+
+[node name="InventoryUI" type="CanvasLayer"]
+script = ExtResource("1_tahbm")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Slot1" type="Panel" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ylkvr")
+
+[node name="ItemIcon" type="TextureRect" parent="MarginContainer/VBoxContainer/Slot1"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+stretch_mode = 5
+
+[node name="Slot2" type="Panel" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ylkvr")
+
+[node name="ItemIcon" type="TextureRect" parent="MarginContainer/VBoxContainer/Slot2"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+stretch_mode = 5
+
+[node name="Slot3" type="Panel" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ylkvr")
+
+[node name="ItemIcon" type="TextureRect" parent="MarginContainer/VBoxContainer/Slot3"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+stretch_mode = 5

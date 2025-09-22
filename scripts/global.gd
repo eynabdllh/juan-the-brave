@@ -1,5 +1,6 @@
-# global.gd (Definitive, Working Version)
 extends Node
+
+const KEY_TEXTURE = preload("res://assets/objects/key.png") 
 
 var player_current_attack = false	
 var current_scene = "world"
@@ -26,3 +27,9 @@ func go_to_door_side():
 func go_to_world():
 	current_scene = "world"
 	get_tree().change_scene_to_file("res://scenes/world.tscn")
+	
+func collect_key():
+	player_has_key = true
+	# --- MODIFIED: Tell the UI to add the key texture to slot 1 ---
+	InventoryUI.add_item(1, KEY_TEXTURE)
+	print("Key collected! Updating UI in slot 1.")

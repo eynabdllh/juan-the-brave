@@ -1,10 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://3548bd1yvet3"]
+[gd_scene load_steps=6 format=3 uid="uid://3548bd1yvet3"]
 
 [ext_resource type="Script" uid="uid://cwhtmco7br6nv" path="res://scripts/key.gd" id="1_fttkb"]
 [ext_resource type="Texture2D" uid="uid://vaj522st68nb" path="res://assets/objects/key.png" id="1_yk2u2"]
+[ext_resource type="Shader" uid="uid://sbrulpxh66ix" path="res://shaders/key.gdshader" id="2_wy8tx"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_fttkb"]
-size = Vector2(90, 80)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_brs3p"]
+shader = ExtResource("2_wy8tx")
+shader_parameter/glow_color = Color(1, 1, 0.7, 0.5)
+shader_parameter/speed = 2.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fttkb"]
+radius = 16.2162
 
 [node name="Key" type="Area2D"]
 scale = Vector2(0.185, 0.185)
@@ -12,10 +18,22 @@ collision_mask = 3
 script = ExtResource("1_fttkb")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_brs3p")
+rotation = -0.785398
 texture = ExtResource("1_yk2u2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-5, 1.07288e-06)
-shape = SubResource("RectangleShape2D_fttkb")
+visible = false
+position = Vector2(-5.40541, 0)
+shape = SubResource("CircleShape2D_fttkb")
+
+[node name="InteractPrompt" type="Label" parent="."]
+visible = false
+offset_left = -54.0541
+offset_top = -37.8378
+offset_right = 56.9459
+offset_bottom = -14.8378
+scale = Vector2(0.935, 0.935)
+text = "[E] TO PICK UP"
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
