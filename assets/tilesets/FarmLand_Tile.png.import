@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dnu416o1gqui"
-path="res://.godot/imported/Skeleton.png-7b1fa7b76669fb889c3441aca73f2344.ctex"
+uid="uid://cpry4gyr7d2p8"
+path="res://.godot/imported/FarmLand_Tile.png-d0e165b767eb2e14c14658877a4d7a3f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/characters/Skeleton.png"
-dest_files=["res://.godot/imported/Skeleton.png-7b1fa7b76669fb889c3441aca73f2344.ctex"]
+source_file="res://assets/tilesets/FarmLand_Tile.png"
+dest_files=["res://.godot/imported/FarmLand_Tile.png-d0e165b767eb2e14c14658877a4d7a3f.ctex"]
 
 [params]
 

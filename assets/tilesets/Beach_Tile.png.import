@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dnu416o1gqui"
-path="res://.godot/imported/Skeleton.png-7b1fa7b76669fb889c3441aca73f2344.ctex"
+uid="uid://dtold581a1uop"
+path="res://.godot/imported/Beach_Tile.png-3109e47b19bfb7f33a66cb295f655268.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/characters/Skeleton.png"
-dest_files=["res://.godot/imported/Skeleton.png-7b1fa7b76669fb889c3441aca73f2344.ctex"]
+source_file="res://assets/tilesets/Beach_Tile.png"
+dest_files=["res://.godot/imported/Beach_Tile.png-3109e47b19bfb7f33a66cb295f655268.ctex"]
 
 [params]
 

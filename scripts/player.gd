@@ -15,6 +15,10 @@ const speed = 100
 var current_dir = "front"
 @export var base_attack_damage: int = 20
 
+# Temporary visual FX state for invincibility (amulet)
+var _invincible_fx_active := false
+var _invincible_fx_tween: Tween
+
 func _ready():
 	interact_prompt = $InteractPrompt
 	feedback_label = $feedback_bubble/feedback_label
@@ -25,6 +29,14 @@ func _ready():
 	interact_prompt.hide()
 	
 	$feedback_bubble.hide() 
+	# Hide in-world healthbar (we use the top-left HUD instead)
+	if has_node("healthbar"):
+		$healthbar.hide()
+	# Initialize HUD health
+	if has_node("/root/global"):
+		var g = get_node("/root/global")
+		if g.has_method("set_player_health"):
+			g.set_player_health(health)
 	
 func show_monologue(message: String):
 	feedback_label.text = message
@@ -150,8 +162,39 @@ func current_camera():
 	elif global.current_scene == "map_2": $world_camera.enabled = false; $cemetery_camera.enabled = true
 
 func update_health():
-	$healthbar.value = health; $healthbar.visible = health < 100
+	$healthbar.value = health; $healthbar.visible = false
+	if has_node("/root/global"):
+		var g = get_node("/root/global")
+		if g.has_method("set_player_health"):
+			g.set_player_health(health)
 	
 func _on_regen_timeout():
 	if health > 0 and health < 100:
 		health = min(health + 5, 100)
+	
+# --- Visual FX for amulet/invincibility ---
+func start_invincible_fx(duration: float = 10.0) -> void:
+	if _invincible_fx_active:
+		return
+	_invincible_fx_active = true
+	# Pulse the sprite color between white and gold and slightly scale up/down
+	var spr := $AnimatedSprite2D
+	if is_instance_valid(_invincible_fx_tween):
+		_invincible_fx_tween.kill()
+	_invincible_fx_tween = create_tween()
+	_invincible_fx_tween.set_loops() # will be killed by stop_invincible_fx after duration
+	# Color pulse
+	_invincible_fx_tween.tween_property(spr, "modulate", Color(1.0, 0.95, 0.3), 0.3).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_invincible_fx_tween.tween_property(spr, "modulate", Color.WHITE, 0.3).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	# Scale pulse
+	_invincible_fx_tween.parallel().tween_property(spr, "scale", Vector2(1.06, 1.06), 0.3).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_invincible_fx_tween.tween_property(spr, "scale", Vector2.ONE, 0.3).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+
+func stop_invincible_fx() -> void:
+	if not _invincible_fx_active:
+		return
+	_invincible_fx_active = false
+	if is_instance_valid(_invincible_fx_tween):
+		_invincible_fx_tween.kill()
+	$AnimatedSprite2D.modulate = Color.WHITE
+	$AnimatedSprite2D.scale = Vector2.ONE

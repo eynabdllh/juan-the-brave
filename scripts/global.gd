@@ -2,6 +2,11 @@ extends Node
 
 const KEY_TEXTURE = preload("res://assets/objects/key.png") 
 
+# Signals so any HUD (for all players) can react
+signal key_changed(has_key: bool)
+signal enemies_progress_changed(defeated: int, total: int)
+signal player_health_changed(health: int)
+
 var player_current_attack = false	
 var current_scene = "world"
 
@@ -81,6 +86,11 @@ func go_to_map_2():
 	
 func collect_key():
 	player_has_key = true
-	# --- MODIFIED: Tell the UI to add the key texture to slot 1 ---
-	InventoryUI.add_item(1, KEY_TEXTURE)
-	print("Key collected! Updating UI in slot 1.")
+	emit_signal("key_changed", true)
+	print("Key collected!")
+
+func set_enemies_progress(defeated: int, total: int) -> void:
+	emit_signal("enemies_progress_changed", defeated, total)
+
+func set_player_health(value: int) -> void:
+	emit_signal("player_health_changed", value)
