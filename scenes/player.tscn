@@ -526,6 +526,15 @@ limit_bottom = 1440
 limit_smoothed = true
 rotation_smoothing_enabled = true
 
+[node name="myth_camera" type="Camera2D" parent="."]
+zoom = Vector2(4, 4)
+limit_left = 0
+limit_top = 0
+limit_right = 3846
+limit_bottom = 632
+limit_smoothed = true
+rotation_smoothing_enabled = true
+
 [node name="player_hitbox" type="Area2D" parent="."]
 collision_mask = 7
 
