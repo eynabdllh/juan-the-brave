@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dnu416o1gqui"
-path="res://.godot/imported/Skeleton.png-7b1fa7b76669fb889c3441aca73f2344.ctex"
+uid="uid://043f85wrpb0t"
+path="res://.godot/imported/Path_Tile.png-de61b2bbd58538d544b70fd86f5789e6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/characters/Skeleton.png"
-dest_files=["res://.godot/imported/Skeleton.png-7b1fa7b76669fb889c3441aca73f2344.ctex"]
+source_file="res://assets/tilesets/Path_Tile.png"
+dest_files=["res://.godot/imported/Path_Tile.png-de61b2bbd58538d544b70fd86f5789e6.ctex"]
 
 [params]
 

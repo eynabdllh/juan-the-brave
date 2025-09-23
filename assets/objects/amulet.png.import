@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dnu416o1gqui"
-path="res://.godot/imported/Skeleton.png-7b1fa7b76669fb889c3441aca73f2344.ctex"
+uid="uid://drd2pw5rupw51"
+path="res://.godot/imported/amulet.png-e78a073f147206e6a704d7828f9643f5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/characters/Skeleton.png"
-dest_files=["res://.godot/imported/Skeleton.png-7b1fa7b76669fb889c3441aca73f2344.ctex"]
+source_file="res://assets/objects/amulet.png"
+dest_files=["res://.godot/imported/amulet.png-e78a073f147206e6a704d7828f9643f5.ctex"]
 
 [params]
 

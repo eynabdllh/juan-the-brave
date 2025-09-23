@@ -1,0 +1,82 @@
+[gd_scene load_steps=7 format=3 uid="uid://52q3qvla7x8e"]
+
+[ext_resource type="Script" uid="uid://v8ro8jxjuqyc" path="res://scripts/status_hud.gd" id="1_script"]
+[ext_resource type="FontFile" uid="uid://ceqa1xt1morwi" path="res://assets/font/superstar_memesbruh03.ttf" id="2_ev5tf"]
+[ext_resource type="Texture2D" uid="uid://buoiwygi0ncs0" path="res://assets/characters/skull.png" id="2_skull"]
+[ext_resource type="Texture2D" uid="uid://vaj522st68nb" path="res://assets/objects/key.png" id="3_key"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nd6v1"]
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.407663, 0.244094, 0.110367, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+anti_aliasing_size = 3.407
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ev5tf"]
+bg_color = Color(0.376471, 0.368627, 0.403922, 0.878431)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="StatusHUD" type="CanvasLayer"]
+script = ExtResource("1_script")
+
+[node name="Root" type="MarginContainer" parent="."]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 463.0
+offset_bottom = 169.785
+theme_override_constants/margin_left = 15
+
+[node name="Health" type="VBoxContainer" parent="Root"]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="Root/Health"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ev5tf")
+theme_override_font_sizes/font_size = 22
+text = "Juan"
+
+[node name="Bar" type="ProgressBar" parent="Root/Health"]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_nd6v1")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ev5tf")
+step = 1.0
+value = 100.0
+show_percentage = false
+
+[node name="BottomRow" type="HBoxContainer" parent="Root"]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="Enemies" type="HBoxContainer" parent="Root/BottomRow"]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="Root/BottomRow/Enemies"]
+custom_minimum_size = Vector2(35, 35)
+layout_mode = 2
+texture = ExtResource("2_skull")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Root/BottomRow/Enemies"]
+layout_mode = 2
+text = "0/0"
+
+[node name="Key" type="HBoxContainer" parent="Root/BottomRow"]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="Root/BottomRow/Key"]
+modulate = Color(1, 1, 1, 0.35)
+custom_minimum_size = Vector2(35, 35)
+layout_mode = 2
+texture = ExtResource("3_key")
+expand_mode = 1
+stretch_mode = 5

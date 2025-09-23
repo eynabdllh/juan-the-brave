@@ -1,56 +1,182 @@
-[gd_scene load_steps=3 format=3 uid="uid://bpov77kuwgcyw"]
+[gd_scene load_steps=14 format=3 uid="uid://bpov77kuwgcyw"]
 
 [ext_resource type="Script" uid="uid://cen1det564q28" path="res://scripts/inventory_ui.gd" id="1_tahbm"]
+[ext_resource type="Texture2D" uid="uid://cwqbuwb2la8qe" path="res://assets/objects/monay.png" id="2_iradw"]
+[ext_resource type="Texture2D" uid="uid://drd2pw5rupw51" path="res://assets/objects/amulet.png" id="3_eifbp"]
+[ext_resource type="FontFile" uid="uid://ceqa1xt1morwi" path="res://assets/font/superstar_memesbruh03.ttf" id="3_uwj4j"]
+[ext_resource type="Texture2D" uid="uid://bqqtvtvs77q14" path="res://assets/ui/1.png" id="4_1dxi5"]
+[ext_resource type="Texture2D" uid="uid://cvlfypq4hvnqs" path="res://assets/objects/potion.png" id="4_2lmnb"]
+[ext_resource type="Texture2D" uid="uid://b1h6pqt2tr01j" path="res://assets/ui/2.png" id="6_dqfnd"]
+[ext_resource type="Texture2D" uid="uid://bxhj85kx8tnsg" path="res://assets/ui/3.png" id="8_ngbl7"]
+
+[sub_resource type="Theme" id="Theme_8wyaw"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ylkvr"]
 bg_color = Color(0.254902, 0.254902, 0.254902, 0.847059)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.648291, 0.454266, 0.177244, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cwdri"]
+texture = ExtResource("4_1dxi5")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rg5pf"]
+texture = ExtResource("6_dqfnd")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rmxcj"]
+texture = ExtResource("8_ngbl7")
 
 [node name="InventoryUI" type="CanvasLayer"]
 script = ExtResource("1_tahbm")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="Margin" type="MarginContainer" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -355.0
+offset_top = -1.0
+offset_right = -227.0
+offset_bottom = 51.0
+grow_horizontal = 0
+scale = Vector2(2.75, 2.75)
+pivot_offset = Vector2(0.615, 0)
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="Col" type="HBoxContainer" parent="Margin"]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = SubResource("Theme_8wyaw")
+theme_override_constants/separation = 6
 
-[node name="Slot1" type="Panel" parent="MarginContainer/VBoxContainer"]
+[node name="Slot1" type="Panel" parent="Margin/Col"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ylkvr")
 
-[node name="ItemIcon" type="TextureRect" parent="MarginContainer/VBoxContainer/Slot1"]
-visible = false
+[node name="Icon" type="TextureRect" parent="Margin/Col/Slot1"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = -5.0
+offset_top = -4.0
+offset_right = 1318.0
+offset_bottom = 1286.0
+scale = Vector2(0.031, 0.031)
+texture = ExtResource("2_iradw")
 stretch_mode = 5
 
-[node name="Slot2" type="Panel" parent="MarginContainer/VBoxContainer"]
+[node name="Count" type="Label" parent="Margin/Col/Slot1"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 18.0
+offset_right = 46.0
+offset_bottom = 41.0
+scale = Vector2(0.605, 0.605)
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Highlight" type="Panel" parent="Margin/Col/Slot1"]
+visible = false
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 32.0
+
+[node name="Label" type="Label" parent="Margin/Col/Slot1"]
+layout_mode = 0
+offset_left = -4.00415
+offset_top = -5.33679
+offset_right = 14.9959
+offset_bottom = 14.6632
+scale = Vector2(0.475, 0.475)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.158472, 0.158472, 0.158472, 1)
+theme_override_fonts/font = ExtResource("3_uwj4j")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_cwdri")
+horizontal_alignment = 1
+
+[node name="Slot2" type="Panel" parent="Margin/Col"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ylkvr")
 
-[node name="ItemIcon" type="TextureRect" parent="MarginContainer/VBoxContainer/Slot2"]
-visible = false
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="Icon" type="TextureRect" parent="Margin/Col/Slot2"]
+offset_left = -5.0
+offset_top = -4.0
+offset_right = 1318.0
+offset_bottom = 1190.0
+scale = Vector2(0.031, 0.031)
+texture = ExtResource("3_eifbp")
 stretch_mode = 5
 
-[node name="Slot3" type="Panel" parent="MarginContainer/VBoxContainer"]
+[node name="Count" type="Label" parent="Margin/Col/Slot2"]
+offset_left = 9.0
+offset_top = 18.0
+offset_right = 46.0
+offset_bottom = 41.0
+scale = Vector2(0.605, 0.605)
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Highlight" type="Panel" parent="Margin/Col/Slot2"]
+visible = false
+offset_right = 32.0
+offset_bottom = 32.0
+
+[node name="Label" type="Label" parent="Margin/Col/Slot2"]
+layout_mode = 0
+offset_left = -4.004
+offset_top = -4.819
+offset_right = 16.996
+offset_bottom = 18.181
+scale = Vector2(0.415, 0.415)
+theme_override_styles/normal = SubResource("StyleBoxTexture_rg5pf")
+
+[node name="Slot3" type="Panel" parent="Margin/Col"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ylkvr")
 
-[node name="ItemIcon" type="TextureRect" parent="MarginContainer/VBoxContainer/Slot3"]
-visible = false
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="Icon" type="TextureRect" parent="Margin/Col/Slot3"]
+offset_left = -5.0
+offset_top = -6.0
+offset_right = 1414.0
+offset_bottom = 1285.0
+scale = Vector2(0.031, 0.031)
+texture = ExtResource("4_2lmnb")
 stretch_mode = 5
+
+[node name="Count" type="Label" parent="Margin/Col/Slot3"]
+offset_left = 9.0
+offset_top = 18.0
+offset_right = 46.0
+offset_bottom = 41.0
+scale = Vector2(0.605, 0.605)
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Highlight" type="Panel" parent="Margin/Col/Slot3"]
+visible = false
+offset_right = 32.0
+offset_bottom = 32.0
+
+[node name="Label" type="Label" parent="Margin/Col/Slot3"]
+layout_mode = 0
+offset_left = -4.004
+offset_top = -4.819
+offset_right = 16.996
+offset_bottom = 18.181
+scale = Vector2(0.415, 0.415)
+theme_override_styles/normal = SubResource("StyleBoxTexture_rmxcj")

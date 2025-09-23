@@ -10,6 +10,7 @@ extends Area2D
 @export var heal_amount: int = 30
 @export var potion_duration: float = 15.0 # seconds for temporary buffs
 @export var chest_id: String = "" # Unique ID for persistence (defaults to node name if empty)
+@export var reward_override: String = "" # Optional: set to "potion"|"bread"|"amulet" to force the drop
 
 @onready var chest_sprite: AnimatedSprite2D = $ChestSprite
 @onready var prompt: Label = $InteractPrompt
@@ -90,17 +91,52 @@ func _open_chest() -> void:
 		chest_sprite.play("open") # stay on last frame
 	# Persist opened state
 	global.set_chest_opened(chest_id)
-	# Choose reward
-	var reward_idx = randi() % 3
-	match reward_idx:
-		0:
-			_apply_potion()
-		1:
-			_apply_bread()
-		2:
-			_apply_amulet()
+	# Choose reward and add to inventory (no auto-apply)
+	var item := _choose_reward()
+	var inv := get_node_or_null("/root/Inventory")
+	if inv:
+		inv.add_item(item, 1)
+		_show_loot_popup(item, inv.get_counts().get(item, 0))
+	else:
+		print("Chest: Inventory autoload not found. Cannot add ", item)
 	# Disable further interaction
 	if col: col.disabled = true
+
+# Pick reward string based on override or random
+func _choose_reward() -> String:
+	if reward_override in ["potion", "bread", "amulet"]:
+		return reward_override
+	var idx := randi() % 3
+	return ["potion", "bread", "amulet"][idx]
+
+# Show a small floating icon + count near chest
+func _show_loot_popup(item: String, new_count: int) -> void:
+	var icon: Texture2D = null
+	if Engine.has_singleton("Inventory") or true:
+		# Access static dict via autoload name
+		icon = Inventory.ICONS.get(item, null)
+	if icon == null:
+		return
+	var popup := Control.new()
+	popup.name = "LootPopup"
+	popup.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(popup)
+	popup.position = Vector2(0, -20)
+
+	var tex := TextureRect.new()
+	tex.texture = icon
+	tex.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	tex.custom_minimum_size = Vector2(18, 18)
+	popup.add_child(tex)
+
+	var label := Label.new()
+	label.text = "x%d" % int(max(new_count, 1))
+	label.position = Vector2(20, 0)
+	popup.add_child(label)
+
+	var tw := create_tween()
+	tw.tween_property(popup, "position", popup.position + Vector2(0, -24), 0.6)
+	tw.tween_callback(Callable(popup, "queue_free"))
 
 func _apply_potion() -> void:
 	# Random effect: damage up OR speed up OR invincibility
