@@ -1,18 +1,20 @@
-[gd_scene load_steps=26 format=4 uid="uid://xgt12br4wkyc"]
+[gd_scene load_steps=29 format=4 uid="uid://xgt12br4wkyc"]
 
-[ext_resource type="Texture2D" path="res://assets/map3/Ground_rocks.png" id="1_iqnx3"]
-[ext_resource type="Texture2D" path="res://assets/map3/objects1.png" id="2_xn387"]
-[ext_resource type="Texture2D" path="res://assets/map3/Animation1.png" id="3_an2rc"]
-[ext_resource type="Texture2D" path="res://assets/map3/Details.png" id="4_jl3j3"]
-[ext_resource type="Texture2D" path="res://assets/map3/objects2.png" id="5_0jfrf"]
-[ext_resource type="Texture2D" path="res://assets/map3/objects3.png" id="6_briq8"]
-[ext_resource type="Texture2D" path="res://assets/map3/tiles2.png" id="7_s0n5c"]
-[ext_resource type="Texture2D" path="res://assets/map3/tiles.png" id="8_7b4kn"]
-[ext_resource type="Texture2D" path="res://assets/map3/Water_coasts.png" id="9_82fti"]
+[ext_resource type="Texture2D" uid="uid://dfvq04856ga0p" path="res://assets/map3/Ground_rocks.png" id="1_iqnx3"]
+[ext_resource type="Texture2D" uid="uid://bklk7y21fcbl4" path="res://assets/map3/objects1.png" id="2_xn387"]
+[ext_resource type="Texture2D" uid="uid://bl4j2bfgvuxyr" path="res://assets/map3/Animation1.png" id="3_an2rc"]
+[ext_resource type="Texture2D" uid="uid://dlw43ugb1uvxs" path="res://assets/map3/Details.png" id="4_jl3j3"]
+[ext_resource type="Texture2D" uid="uid://3liccbmoflbd" path="res://assets/map3/objects2.png" id="5_0jfrf"]
+[ext_resource type="Texture2D" uid="uid://kxbm5f0avo0s" path="res://assets/map3/objects3.png" id="6_briq8"]
+[ext_resource type="Texture2D" uid="uid://bf6bnqdrxga8r" path="res://assets/map3/tiles2.png" id="7_s0n5c"]
+[ext_resource type="Texture2D" uid="uid://cjj7tc0o50mq3" path="res://assets/map3/tiles.png" id="8_7b4kn"]
+[ext_resource type="Texture2D" uid="uid://thwtxs5oi0iq" path="res://assets/map3/Water_coasts.png" id="9_82fti"]
 [ext_resource type="Texture2D" uid="uid://3tlxpciuy1ia" path="res://assets/objects/tile0.jpg" id="10_an2rc"]
 [ext_resource type="Shader" uid="uid://dpk4soc1oa7ho" path="res://shaders/windy.gdshader" id="10_krloe"]
 [ext_resource type="PackedScene" uid="uid://bq3bs7j40w5n7" path="res://scenes/player.tscn" id="12_jl3j3"]
 [ext_resource type="PackedScene" uid="uid://j5u3diqcyydx" path="res://scenes/enemylevel_1.tscn" id="13_jl3j3"]
+[ext_resource type="Shader" uid="uid://c0se7py3qjn2q" path="res://shaders/world.gdshader" id="14_briq8"]
+[ext_resource type="Script" uid="uid://24wkpl4317uw" path="res://scripts/cloud_controller.gd" id="15_s0n5c"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_s11mi"]
 texture = ExtResource("1_iqnx3")
@@ -8241,6 +8243,17 @@ shader_parameter/distortion = 0.0
 shader_parameter/heightOffset = 0.0
 shader_parameter/offset = 0.0
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7b4kn"]
+shader = ExtResource("14_briq8")
+shader_parameter/cloud_color = Color(0.639216, 0.639216, 0.639216, 0.384314)
+shader_parameter/cloud_speed = 0.1
+shader_parameter/zoom = 5.846
+shader_parameter/pixel_size = 5.075
+shader_parameter/FBM_octaves = 8
+shader_parameter/density = 0.671
+shader_parameter/edge_softness = 0.1
+shader_parameter/screen_size = Vector2(0, 0)
+
 [node name="Map3" type="Node2D"]
 position = Vector2(-2217, -3)
 
@@ -8304,3 +8317,17 @@ position = Vector2(3700, 413)
 
 [node name="enemylevel7" parent="." instance=ExtResource("13_jl3j3")]
 position = Vector2(3724, 55)
+
+[node name="cloud" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_7b4kn")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2209.0
+offset_top = 6.0
+offset_right = 3828.0
+offset_bottom = 672.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.996368, 0.995856)
+script = ExtResource("15_s0n5c")
