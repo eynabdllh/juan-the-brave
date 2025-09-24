@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=4 uid="uid://222sdfeb63kg"]
+[gd_scene load_steps=42 format=4 uid="uid://222sdfeb63kg"]
 
 [ext_resource type="Texture2D" uid="uid://ubokohidmou7" path="res://assets/tilesets/plains.png" id="1_xrvne"]
 [ext_resource type="Texture2D" uid="uid://dqikcd1mfbhw0" path="res://assets/tilesets/grass.png" id="2_vceer"]
@@ -20,6 +20,8 @@
 [ext_resource type="Shader" uid="uid://dpk4soc1oa7ho" path="res://shaders/windy.gdshader" id="18_w2whb"]
 [ext_resource type="PackedScene" uid="uid://bq3bs7j40w5n7" path="res://scenes/player.tscn" id="19_ynela"]
 [ext_resource type="PackedScene" uid="uid://pqev0pylwnbw" path="res://scenes/skeleton.tscn" id="20_vceer"]
+[ext_resource type="PackedScene" uid="uid://bpov77kuwgcyw" path="res://scenes/inventory_ui.tscn" id="21_oyq3d"]
+[ext_resource type="PackedScene" uid="uid://52q3qvla7x8e" path="res://scenes/status_hud.tscn" id="22_m5rp5"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_73udw"]
 texture = ExtResource("1_xrvne")
@@ -5790,3 +5792,7 @@ polygon = PackedVector2Array(0, -3, 0, 0, 257, 0, 257, -7, 333, -7, 333, 0, 1168
 
 [node name="skeleton" parent="." instance=ExtResource("20_vceer")]
 position = Vector2(473, 71)
+
+[node name="InventoryUI" parent="." instance=ExtResource("21_oyq3d")]
+
+[node name="StatusHUD" parent="." instance=ExtResource("22_m5rp5")]
