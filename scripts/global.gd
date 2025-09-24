@@ -2,6 +2,11 @@ extends Node
 
 const KEY_TEXTURE = preload("res://assets/objects/key.png") 
 
+# Signals so any HUD (for all players) can react
+signal key_changed(has_key: bool)
+signal enemies_progress_changed(defeated: int, total: int)
+signal player_health_changed(health: int)
+
 var player_current_attack = false	
 var current_scene = "world"
 
@@ -42,6 +47,38 @@ func go_to_world():
 	current_scene = "world"
 	get_tree().change_scene_to_file("res://scenes/world.tscn")
 
+# --- Player buff state (used by chest rewards and player.gd) ---
+var player_speed_mult: float = 1.0
+var player_damage_bonus: int = 0
+var player_invincible: bool = false
+
+func reset_buffs():
+	player_speed_mult = 1.0
+	player_damage_bonus = 0
+	player_invincible = false
+
+# --- Persistent world state ---
+# Tracks which chests have been opened across scene loads
+var chest_opened: Dictionary = {}
+# Tracks enemy positions across scene loads (only for enemies still alive)
+var enemy_positions: Dictionary = {}
+
+func set_chest_opened(id: String) -> void:
+	chest_opened[id] = true
+
+func is_chest_opened(id: String) -> bool:
+	return chest_opened.get(id, false)
+
+func set_enemy_position(enemy_name: String, pos: Vector2) -> void:
+	enemy_positions[enemy_name] = pos
+
+func get_enemy_position(enemy_name: String) -> Variant:
+	return enemy_positions.get(enemy_name, null)
+
+func clear_enemy_position(enemy_name: String) -> void:
+	if enemy_positions.has(enemy_name):
+		enemy_positions.erase(enemy_name)
+
 # --- NEW: Transition to map_2 ---
 func go_to_map_2():
 	current_scene = "map_2"
@@ -49,6 +86,11 @@ func go_to_map_2():
 	
 func collect_key():
 	player_has_key = true
-	# --- MODIFIED: Tell the UI to add the key texture to slot 1 ---
-	InventoryUI.add_item(1, KEY_TEXTURE)
-	print("Key collected! Updating UI in slot 1.")
+	emit_signal("key_changed", true)
+	print("Key collected!")
+
+func set_enemies_progress(defeated: int, total: int) -> void:
+	emit_signal("enemies_progress_changed", defeated, total)
+
+func set_player_health(value: int) -> void:
+	emit_signal("player_health_changed", value)

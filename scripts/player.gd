@@ -12,7 +12,12 @@ var player_alive = true
 var attack_ip = false
 
 const speed = 100
-var current_dir = "front_idle"
+var current_dir = "front"
+@export var base_attack_damage: int = 20
+
+# Temporary visual FX state for invincibility (amulet)
+var _invincible_fx_active := false
+var _invincible_fx_tween: Tween
 
 func _ready():
 	interact_prompt = $InteractPrompt
@@ -24,6 +29,14 @@ func _ready():
 	interact_prompt.hide()
 	
 	$feedback_bubble.hide() 
+	# Hide in-world healthbar (we use the top-left HUD instead)
+	if has_node("healthbar"):
+		$healthbar.hide()
+	# Initialize HUD health
+	if has_node("/root/global"):
+		var g = get_node("/root/global")
+		if g.has_method("set_player_health"):
+			g.set_player_health(health)
 	
 func show_monologue(message: String):
 	feedback_label.text = message
@@ -68,7 +81,8 @@ func handle_input():
 		attack()
 
 	var input_vector = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
-	velocity = input_vector.normalized() * speed
+	# Apply global speed multiplier buff if any
+	velocity = input_vector.normalized() * speed * (global.player_speed_mult if Engine.is_editor_hint() == false else 1.0)
 	play_anim()
 	
 func play_anim():
@@ -110,12 +124,16 @@ func attack():
 func _on_deal_attack_timer_timeout():
 	for body in $player_hitbox.get_overlapping_bodies():
 		if body != self and body.has_method("take_damage"):
-			body.take_damage(20, self)
+			var dmg = base_attack_damage + (global.player_damage_bonus if Engine.is_editor_hint() == false else 0)
+			body.take_damage(dmg, self)
 	
 	await $AnimatedSprite2D.animation_finished
 	attack_ip = false
 
 func take_damage(amount, attacker):
+	# Respect invincibility buff
+	if not Engine.is_editor_hint() and global.player_invincible:
+		return
 	if is_knocked_back: return
 	health -= amount
 	print("Player took damage, health is now: ", health)
@@ -129,6 +147,12 @@ func take_damage(amount, attacker):
 	$AnimatedSprite2D.modulate = Color.RED
 	$HurtEffectTimer.start(0.2)
 
+func heal(amount: int) -> void:
+	if health <= 0:
+		return
+	health = min(health + amount, 100)
+	update_health()
+
 func _on_hurt_effect_timer_timeout(): $AnimatedSprite2D.modulate = Color.WHITE
 func _on_knockback_timer_timeout(): is_knocked_back = false
 
@@ -138,8 +162,39 @@ func current_camera():
 	elif global.current_scene == "map_2": $world_camera.enabled = false; $cemetery_camera.enabled = true
 
 func update_health():
-	$healthbar.value = health; $healthbar.visible = health < 100
+	$healthbar.value = health; $healthbar.visible = false
+	if has_node("/root/global"):
+		var g = get_node("/root/global")
+		if g.has_method("set_player_health"):
+			g.set_player_health(health)
 	
 func _on_regen_timeout():
 	if health > 0 and health < 100:
 		health = min(health + 5, 100)
+	
+# --- Visual FX for amulet/invincibility ---
+func start_invincible_fx(duration: float = 10.0) -> void:
+	if _invincible_fx_active:
+		return
+	_invincible_fx_active = true
+	# Pulse the sprite color between white and gold and slightly scale up/down
+	var spr := $AnimatedSprite2D
+	if is_instance_valid(_invincible_fx_tween):
+		_invincible_fx_tween.kill()
+	_invincible_fx_tween = create_tween()
+	_invincible_fx_tween.set_loops() # will be killed by stop_invincible_fx after duration
+	# Color pulse
+	_invincible_fx_tween.tween_property(spr, "modulate", Color(1.0, 0.95, 0.3), 0.3).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_invincible_fx_tween.tween_property(spr, "modulate", Color.WHITE, 0.3).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	# Scale pulse
+	_invincible_fx_tween.parallel().tween_property(spr, "scale", Vector2(1.06, 1.06), 0.3).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_invincible_fx_tween.tween_property(spr, "scale", Vector2.ONE, 0.3).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+
+func stop_invincible_fx() -> void:
+	if not _invincible_fx_active:
+		return
+	_invincible_fx_active = false
+	if is_instance_valid(_invincible_fx_tween):
+		_invincible_fx_tween.kill()
+	$AnimatedSprite2D.modulate = Color.WHITE
+	$AnimatedSprite2D.scale = Vector2.ONE

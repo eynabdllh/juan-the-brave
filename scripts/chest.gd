@@ -1,0 +1,178 @@
+extends Area2D
+
+# Interactable Chest that grants one of several rewards when opened.
+# Node expectations (under this Area2D):
+# - AnimatedSprite2D named "ChestSprite" with animations: "closed", "open"
+# - CollisionShape2D named "CollisionShape2D"
+# - Label named "InteractPrompt" with text like "[E] OPEN"
+# This script assumes the Player is in group "player" and has methods used below.
+
+@export var heal_amount: int = 30
+@export var potion_duration: float = 15.0 # seconds for temporary buffs
+@export var chest_id: String = "" # Unique ID for persistence (defaults to node name if empty)
+@export var reward_override: String = "" # Optional: set to "potion"|"bread"|"amulet" to force the drop
+
+@onready var chest_sprite: AnimatedSprite2D = $ChestSprite
+@onready var prompt: Label = $InteractPrompt
+@onready var col: CollisionShape2D = $CollisionShape2D
+
+var player_in_range: CharacterBody2D = null
+var opened := false
+
+func _ready():
+	if chest_id == "":
+		chest_id = name
+	
+	monitoring = true
+	monitorable = true
+	# Ensure masks/layers are set (mask 2 to detect player on layer 2). Adjust if your project uses different layers.
+	set_collision_mask_value(2, true)
+	
+	if prompt:
+		prompt.hide()
+	# If this chest was already opened before, restore opened state and skip interaction
+	if global.is_chest_opened(chest_id):
+		opened = true
+		if col: col.disabled = true
+		if chest_sprite and chest_sprite.sprite_frames and chest_sprite.sprite_frames.has_animation("open"):
+			chest_sprite.play("open")
+			if prompt: prompt.hide()
+		return
+	else:
+		if chest_sprite and chest_sprite.sprite_frames and chest_sprite.sprite_frames.has_animation("closed"):
+			chest_sprite.play("closed")
+	
+	# If the player is already inside when the chest spawns, show prompt immediately
+	await get_tree().process_frame
+	for body in get_overlapping_bodies():
+		if body.is_in_group("player"):
+			player_in_range = body
+			if player_in_range.has_method("show_interact_prompt"):
+				player_in_range.show_interact_prompt()
+			if prompt:
+				prompt.show()
+			break
+
+func _unhandled_input(event: InputEvent) -> void:	
+	if opened:
+		return
+	if player_in_range and event.is_action_pressed("interact"):
+		get_viewport().set_input_as_handled()
+		_open_chest()
+
+func _on_body_entered(body: Node2D) -> void:
+	if opened:
+		return
+	if body.is_in_group("player"):
+		# Debug: confirm overlap works
+		print("Chest: player entered interaction area")
+		player_in_range = body
+		if player_in_range.has_method("show_interact_prompt"):
+			player_in_range.show_interact_prompt()
+		if prompt: prompt.show()
+
+func _on_body_exited(body: Node2D) -> void:
+	if body.is_in_group("player"):
+		print("Chest: player exited interaction area")
+		if player_in_range and player_in_range.has_method("hide_interact_prompt"):
+			player_in_range.hide_interact_prompt()
+		player_in_range = null
+		if prompt: prompt.hide()
+
+func _open_chest() -> void:
+	opened = true
+	if prompt: prompt.hide()
+	if player_in_range and player_in_range.has_method("hide_interact_prompt"):
+		player_in_range.hide_interact_prompt()
+	# Play opening anim
+	if chest_sprite and chest_sprite.sprite_frames and chest_sprite.sprite_frames.has_animation("open"):
+		chest_sprite.play("open")
+		await chest_sprite.animation_finished
+		chest_sprite.play("open") # stay on last frame
+	# Persist opened state
+	global.set_chest_opened(chest_id)
+	# Choose reward and add to inventory (no auto-apply)
+	var item := _choose_reward()
+	var inv := get_node_or_null("/root/Inventory")
+	if inv:
+		inv.add_item(item, 1)
+		_show_loot_popup(item, inv.get_counts().get(item, 0))
+	else:
+		print("Chest: Inventory autoload not found. Cannot add ", item)
+	# Disable further interaction
+	if col: col.disabled = true
+
+# Pick reward string based on override or random
+func _choose_reward() -> String:
+	if reward_override in ["potion", "bread", "amulet"]:
+		return reward_override
+	var idx := randi() % 3
+	return ["potion", "bread", "amulet"][idx]
+
+# Show a small floating icon + count near chest
+func _show_loot_popup(item: String, new_count: int) -> void:
+	var icon: Texture2D = null
+	if Engine.has_singleton("Inventory") or true:
+		# Access static dict via autoload name
+		icon = Inventory.ICONS.get(item, null)
+	if icon == null:
+		return
+	var popup := Control.new()
+	popup.name = "LootPopup"
+	popup.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(popup)
+	popup.position = Vector2(0, -20)
+
+	var tex := TextureRect.new()
+	tex.texture = icon
+	tex.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	tex.custom_minimum_size = Vector2(18, 18)
+	popup.add_child(tex)
+
+	var label := Label.new()
+	label.text = "x%d" % int(max(new_count, 1))
+	label.position = Vector2(20, 0)
+	popup.add_child(label)
+
+	var tw := create_tween()
+	tw.tween_property(popup, "position", popup.position + Vector2(0, -24), 0.6)
+	tw.tween_callback(Callable(popup, "queue_free"))
+
+func _apply_potion() -> void:
+	# Random effect: damage up OR speed up OR invincibility
+	var effect = randi() % 3
+	match effect:
+		0:
+			# Damage up
+			global.player_damage_bonus = 20 # +20 damage
+			_show_player_msg("Albularyo's Potion: Damage Up!")
+			_reset_after(potion_duration, func(): global.player_damage_bonus = 0)
+		1:
+			# Speed up
+			global.player_speed_mult = 1.6
+			_show_player_msg("Albularyo's Potion: Speed Up!")
+			_reset_after(potion_duration, func(): global.player_speed_mult = 1.0)
+		2:
+			# Invincible
+			global.player_invincible = true
+			_show_player_msg("Albularyo's Potion: Invincible!")
+			_reset_after(potion_duration, func(): global.player_invincible = false)
+
+func _apply_bread() -> void:
+	if player_in_range and player_in_range.has_method("heal"):
+		player_in_range.heal(heal_amount)
+		_show_player_msg("Tinapay: +%d HP" % heal_amount)
+
+func _apply_amulet() -> void:
+	global.player_invincible = true
+	_show_player_msg("Anting-anting: Protected!")
+	_reset_after(15.0, func(): global.player_invincible = false)
+
+func _reset_after(seconds: float, cb: Callable) -> void:
+	var t := get_tree().create_timer(seconds)
+	await t.timeout
+	cb.call()
+
+func _show_player_msg(msg: String) -> void:
+	if player_in_range and player_in_range.has_method("show_monologue"):
+		player_in_range.show_monologue(msg)
