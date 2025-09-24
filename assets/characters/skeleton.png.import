@@ -2,8 +2,12 @@
 
 importer="texture"
 type="CompressedTexture2D"
+uid="uid://b0aail7t6i7c7"
+path="res://.godot/imported/skeleton.png-215cebd399e542f68f7bfaf5eb1266de.ctex"
+=======
 uid="uid://dnu416o1gqui"
 path="res://.godot/imported/Skeleton.png-7b1fa7b76669fb889c3441aca73f2344.ctex"
+
 metadata={
 "vram_texture": false
 }
