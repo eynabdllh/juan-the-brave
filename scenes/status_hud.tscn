@@ -5,24 +5,19 @@
 [ext_resource type="Texture2D" uid="uid://buoiwygi0ncs0" path="res://assets/characters/skull.png" id="2_skull"]
 [ext_resource type="Texture2D" uid="uid://vaj522st68nb" path="res://assets/objects/key.png" id="3_key"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nd6v1"]
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.407663, 0.244094, 0.110367, 1)
-corner_radius_top_left = 1
-corner_radius_top_right = 1
-corner_radius_bottom_right = 1
-corner_radius_bottom_left = 1
-anti_aliasing_size = 3.407
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar_bg"]
+bg_color = Color(0.1, 0.1, 0.12, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ev5tf"]
-bg_color = Color(0.376471, 0.368627, 0.403922, 0.878431)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar_fill"]
+bg_color = Color(0.2, 0.65, 0.3, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
 
 [node name="StatusHUD" type="CanvasLayer"]
 script = ExtResource("1_script")
@@ -44,10 +39,10 @@ theme_override_font_sizes/font_size = 22
 text = "Juan"
 
 [node name="Bar" type="ProgressBar" parent="Root/Health"]
-custom_minimum_size = Vector2(200, 30)
+custom_minimum_size = Vector2(200, 25)
 layout_mode = 2
-theme_override_styles/background = SubResource("StyleBoxFlat_nd6v1")
-theme_override_styles/fill = SubResource("StyleBoxFlat_ev5tf")
+theme_override_styles/background = SubResource("StyleBoxFlat_bar_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_bar_fill")
 step = 1.0
 value = 100.0
 show_percentage = false
@@ -74,9 +69,33 @@ text = "0/0"
 layout_mode = 2
 
 [node name="Icon" type="TextureRect" parent="Root/BottomRow/Key"]
-modulate = Color(1, 1, 1, 0.35)
+modulate = Color(1, 1, 1, 0.2)
 custom_minimum_size = Vector2(35, 35)
 layout_mode = 2
 texture = ExtResource("3_key")
 expand_mode = 1
 stretch_mode = 5
+
+[node name="Buffs" type="HBoxContainer" parent="Root/BottomRow"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="BuffTemplate" type="HBoxContainer" parent="Root/BottomRow/Buffs"]
+visible = false
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="Root/BottomRow/Buffs/BuffTemplate"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Root/BottomRow/Buffs/BuffTemplate"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.615686, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.476172, 0.351956, 0.18882, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 0
+text = "Effect 10s"

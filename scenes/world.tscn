@@ -5456,7 +5456,7 @@ tile_set = SubResource("TileSet_q5onr")
 position = Vector2(-9, 29)
 
 [node name="mantis1" parent="." instance=ExtResource("10_w7kh3")]
-position = Vector2(254, 144)
+position = Vector2(394, 192)
 
 [node name="door_side" type="Area2D" parent="."]
 position = Vector2(-113, 1073)
@@ -5468,7 +5468,7 @@ position = Vector2(322, -1090)
 shape = SubResource("RectangleShape2D_w7kh3")
 
 [node name="mantis2" parent="." instance=ExtResource("10_w7kh3")]
-position = Vector2(112, 187)
+position = Vector2(255, 223)
 
 [node name="cloud" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_o8fc1")
@@ -5492,11 +5492,20 @@ position = Vector2(1178, 1039)
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="collision"]
 
 [node name="Chest" parent="." instance=ExtResource("24_ctatt")]
-position = Vector2(456, 106)
+position = Vector2(124, 116)
+
+[node name="Chest2" parent="." instance=ExtResource("24_ctatt")]
+position = Vector2(101, 147)
 
 [node name="InventoryUI" parent="." instance=ExtResource("25_xgqkh")]
 
 [node name="StatusHUD" parent="." instance=ExtResource("26_munwf")]
+
+[node name="Chest4" parent="." instance=ExtResource("24_ctatt")]
+position = Vector2(93, 79)
+
+[node name="Chest3" parent="." instance=ExtResource("24_ctatt")]
+position = Vector2(61, 113)
 
 [connection signal="body_entered" from="door_side" to="." method="_on_door_side_body_entered"]
 [connection signal="body_exited" from="door_side" to="." method="_on_door_side_body_exited"]

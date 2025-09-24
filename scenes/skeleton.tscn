@@ -1,7 +1,7 @@
 [gd_scene load_steps=15 format=3 uid="uid://pqev0pylwnbw"]
 
 [ext_resource type="Script" uid="uid://cmw1vhe5xbsm7" path="res://scripts/skeleton.gd" id="1_bnirc"]
-[ext_resource type="Texture2D" uid="uid://dnu416o1gqui" path="res://assets/characters/Skeleton.png" id="1_pbvs3"]
+[ext_resource type="Texture2D" uid="uid://bbrcm0x3g74f5" path="res://assets/characters/Skeleton.png" id="1_pbvs3"]
 [ext_resource type="Script" uid="uid://dnjnsdcbvwe1g" path="res://scripts/healthbar.gd" id="3_5pgwy"]
 [ext_resource type="AudioStream" uid="uid://dct6hhhf2ktyr" path="res://assets/music/enemy_damage.wav" id="4_ssl1b"]
 

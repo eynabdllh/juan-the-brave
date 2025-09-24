@@ -66,7 +66,9 @@ script = ExtResource("1_sy5e1")
 position = Vector2(0.375, -3)
 scale = Vector2(0.953125, 0.96875)
 sprite_frames = SubResource("SpriteFrames_ilhio")
-animation = &"closed"
+animation = &"open"
+frame = 3
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
@@ -88,6 +90,9 @@ text = "[E] TO OPEN"
 y_sort_enabled = true
 position = Vector2(0.5, -1)
 shape = SubResource("RectangleShape2D_sy5e1")
+
+[node name="PopupAnchor" type="Node2D" parent="."]
+position = Vector2(-28, -12)
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
