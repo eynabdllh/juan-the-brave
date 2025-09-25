@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c34i66suf5310"
-path="res://.godot/imported/ghost.png-40c1f6d2ffbb1ea50b52af40a3b613e5.ctex"
+uid="uid://dlic23jfvvf1q"
+path="res://.godot/imported/Zombie_Big_Side_Second-Attack-Sheet15.png-1949da096dc69340ee19d9b93972e6c9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/characters/ghost.png"
-dest_files=["res://.godot/imported/ghost.png-40c1f6d2ffbb1ea50b52af40a3b613e5.ctex"]
+source_file="res://assets/characters/enemies/zombie/Zombie_Big_Side_Second-Attack-Sheet15.png"
+dest_files=["res://.godot/imported/Zombie_Big_Side_Second-Attack-Sheet15.png-1949da096dc69340ee19d9b93972e6c9.ctex"]
 
 [params]
 

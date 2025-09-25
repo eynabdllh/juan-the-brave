@@ -23,9 +23,9 @@
 [ext_resource type="Shader" uid="uid://dpk4soc1oa7ho" path="res://shaders/windy.gdshader" id="15_xo05s"]
 [ext_resource type="Texture2D" uid="uid://m2esdftvv1t1" path="res://assets/mix/Water+.png" id="18_xgqkh"]
 [ext_resource type="Texture2D" uid="uid://x52ibacbpqga" path="res://assets/mix/TX Props.png" id="19_munwf"]
-[ext_resource type="PackedScene" path="res://scenes/chest.tscn" id="24_ctatt"]
+[ext_resource type="PackedScene" uid="uid://caq5jwbsq3xj0" path="res://scenes/chest.tscn" id="24_ctatt"]
 [ext_resource type="PackedScene" uid="uid://bpov77kuwgcyw" path="res://scenes/inventory_ui.tscn" id="25_xgqkh"]
-[ext_resource type="PackedScene" path="res://scenes/status_hud.tscn" id="26_munwf"]
+[ext_resource type="PackedScene" uid="uid://52q3qvla7x8e" path="res://scenes/status_hud.tscn" id="26_munwf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ctatt"]
 texture = ExtResource("1_k0juu")

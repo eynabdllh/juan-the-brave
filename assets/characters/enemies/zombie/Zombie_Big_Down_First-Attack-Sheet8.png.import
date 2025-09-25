@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dun6l08a0nhfy"
-path="res://.godot/imported/MantisMove.png-14cc61d37efe7a83355a7c03c1526814.ctex"
+uid="uid://ctx573us7a782"
+path="res://.godot/imported/Zombie_Big_Down_First-Attack-Sheet8.png-cc2721e9793033ea26e59db176f9acd4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/characters/MantisMove.png"
-dest_files=["res://.godot/imported/MantisMove.png-14cc61d37efe7a83355a7c03c1526814.ctex"]
+source_file="res://assets/characters/enemies/zombie/Zombie_Big_Down_First-Attack-Sheet8.png"
+dest_files=["res://.godot/imported/Zombie_Big_Down_First-Attack-Sheet8.png-cc2721e9793033ea26e59db176f9acd4.ctex"]
 
 [params]
 

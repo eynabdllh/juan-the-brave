@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bv0ndcceg48aq"
-path="res://.godot/imported/Generated Image September 12, 2025 - 9_49AM.png-f77fc335c47c2980de00ec6287d05e27.ctex"
+uid="uid://c2qk0xa37euvd"
+path="res://.godot/imported/Zombie_Big_Up_First-Attack-Sheet8.png-aeebb654daca0970c77c2afda9de8012.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/characters/Generated Image September 12, 2025 - 9_49AM.png"
-dest_files=["res://.godot/imported/Generated Image September 12, 2025 - 9_49AM.png-f77fc335c47c2980de00ec6287d05e27.ctex"]
+source_file="res://assets/characters/enemies/zombie/Zombie_Big_Up_First-Attack-Sheet8.png"
+dest_files=["res://.godot/imported/Zombie_Big_Up_First-Attack-Sheet8.png-aeebb654daca0970c77c2afda9de8012.ctex"]
 
 [params]
 

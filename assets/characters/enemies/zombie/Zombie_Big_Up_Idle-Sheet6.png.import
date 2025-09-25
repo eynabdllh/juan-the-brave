@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b3ecyqpfd4x4k"
-path="res://.godot/imported/Mantis.png-17bec7b395ce11daee0251c7488c5b86.ctex"
+uid="uid://bxjbvg7rco364"
+path="res://.godot/imported/Zombie_Big_Up_Idle-Sheet6.png-c5c5da5895b118d815feffee3972db22.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/characters/Mantis.png"
-dest_files=["res://.godot/imported/Mantis.png-17bec7b395ce11daee0251c7488c5b86.ctex"]
+source_file="res://assets/characters/enemies/zombie/Zombie_Big_Up_Idle-Sheet6.png"
+dest_files=["res://.godot/imported/Zombie_Big_Up_Idle-Sheet6.png-c5c5da5895b118d815feffee3972db22.ctex"]
 
 [params]
 

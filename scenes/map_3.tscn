@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=4 uid="uid://xgt12br4wkyc"]
+[gd_scene load_steps=28 format=4 uid="uid://xgt12br4wkyc"]
 
 [ext_resource type="Texture2D" uid="uid://dfvq04856ga0p" path="res://assets/map3/Ground_rocks.png" id="1_iqnx3"]
 [ext_resource type="Texture2D" uid="uid://bklk7y21fcbl4" path="res://assets/map3/objects1.png" id="2_xn387"]
@@ -12,7 +12,6 @@
 [ext_resource type="Texture2D" uid="uid://3tlxpciuy1ia" path="res://assets/objects/tile0.jpg" id="10_an2rc"]
 [ext_resource type="Shader" uid="uid://dpk4soc1oa7ho" path="res://shaders/windy.gdshader" id="10_krloe"]
 [ext_resource type="PackedScene" uid="uid://bq3bs7j40w5n7" path="res://scenes/player.tscn" id="12_jl3j3"]
-[ext_resource type="PackedScene" uid="uid://j5u3diqcyydx" path="res://scenes/enemylevel_1.tscn" id="13_jl3j3"]
 [ext_resource type="Shader" uid="uid://c0se7py3qjn2q" path="res://shaders/world.gdshader" id="14_briq8"]
 [ext_resource type="Script" uid="uid://24wkpl4317uw" path="res://scripts/cloud_controller.gd" id="15_s0n5c"]
 
@@ -8255,7 +8254,7 @@ shader_parameter/edge_softness = 0.1
 shader_parameter/screen_size = Vector2(0, 0)
 
 [node name="Map3" type="Node2D"]
-position = Vector2(-2217, -3)
+position = Vector2(-2221, -13)
 
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true
@@ -8296,27 +8295,6 @@ position = Vector2(3838, 632)
 
 [node name="player" parent="." instance=ExtResource("12_jl3j3")]
 position = Vector2(2241, 397)
-
-[node name="enemylevel1" parent="." instance=ExtResource("13_jl3j3")]
-position = Vector2(2397, 206)
-
-[node name="enemylevel2" parent="." instance=ExtResource("13_jl3j3")]
-position = Vector2(2737, 516)
-
-[node name="enemylevel3" parent="." instance=ExtResource("13_jl3j3")]
-position = Vector2(3327, 402)
-
-[node name="enemylevel4" parent="." instance=ExtResource("13_jl3j3")]
-position = Vector2(3161, 189)
-
-[node name="enemylevel5" parent="." instance=ExtResource("13_jl3j3")]
-position = Vector2(2799, 88)
-
-[node name="enemylevel6" parent="." instance=ExtResource("13_jl3j3")]
-position = Vector2(3700, 413)
-
-[node name="enemylevel7" parent="." instance=ExtResource("13_jl3j3")]
-position = Vector2(3724, 55)
 
 [node name="cloud" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_7b4kn")
