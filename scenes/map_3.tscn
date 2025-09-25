@@ -8292,7 +8292,7 @@ tile_map_data = PackedByteArray("AAARAAMAAgAAAAAAAAAVABAAAgAAAAAAAAA5ABIAAgAAAAA
 tile_set = SubResource("TileSet_6dpta")
 
 [node name="Area2D" type="Area2D" parent="."]
-position = Vector2(3838, 632)
+position = Vector2(3831, 673)
 
 [node name="player" parent="." instance=ExtResource("12_jl3j3")]
 position = Vector2(2241, 397)
@@ -8331,3 +8331,9 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.996368, 0.995856)
 script = ExtResource("15_s0n5c")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+position = Vector2(242, 796)
+polygon = PackedVector2Array(2028, -893, 1963, -786, 3554, -800, 3568, -430, 3585, -92, 3554, -144, 1963, -147, 1969, -786, 1890, -210, 1966, -54, 2311, -51, 3617, -50, 3640, -455, 3589, -855)
