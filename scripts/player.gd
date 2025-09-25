@@ -15,6 +15,13 @@ const speed = 100
 var current_dir = "front"
 @export var base_attack_damage: int = 20
 
+# Per-instance input bindings (so P2 can use arrow keys)
+@export var action_left: String = "ui_left"
+@export var action_right: String = "ui_right"
+@export var action_up: String = "ui_up"
+@export var action_down: String = "ui_down"
+@export var use_local_camera: bool = true
+
 # Temporary visual FX state for invincibility (amulet)
 var _invincible_fx_active := false
 var _invincible_fx_tween: Tween
@@ -22,25 +29,29 @@ var _speed_trail: GPUParticles2D
 var _speed_trail_active := false
 
 func _ready():
-	interact_prompt = $InteractPrompt
-	feedback_label = $feedback_bubble/feedback_label
-	feedback_timer = $feedback_timer
-	
-	$AnimatedSprite2D.play("front_idle")
-	$regen.start()
-	interact_prompt.hide()
-	
-	$feedback_bubble.hide() 
-	# Hide in-world healthbar (we use the top-left HUD instead)
-	if has_node("healthbar"):
-		$healthbar.hide()
-	# Initialize HUD health
-	if has_node("/root/global"):
-		var g = get_node("/root/global")
-		if g.has_method("set_player_health"):
-			g.set_player_health(health)
-	# Prepare speed trail (created lazily on first use)
-	
+    interact_prompt = $InteractPrompt
+    feedback_label = $feedback_bubble/feedback_label
+    feedback_timer = $feedback_timer
+    
+    $AnimatedSprite2D.play("front_idle")
+    $regen.start()
+    interact_prompt.hide()
+    
+    $feedback_bubble.hide() 
+    # Hide in-world healthbar (we use the top-left HUD instead)
+    if has_node("healthbar"):
+        $healthbar.hide()
+    # Initialize HUD health
+    if has_node("/root/global"):
+        var g = get_node("/root/global")
+        if g.has_method("set_player_health"):
+            g.set_player_health(health)
+    # If this is Player 2, also update the secondary HUD bar directly
+    var hud := get_tree().root.get_node_or_null("StatusHUD")
+    if hud and self.name == "player2" and hud.has_method("set_player2_health"):
+        hud.set_player2_health(health)
+    # Prepare speed trail (created lazily on first use)
+    
 func show_monologue(message: String):
 	feedback_label.text = message
 	# We now show the PARENT bubble, which contains the label.
@@ -83,12 +94,12 @@ func handle_input():
 	if Input.is_action_just_pressed("attack") and not attack_ip:
 		attack()
 
-	var input_vector = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
-	# Apply global speed multiplier buff if any
-	velocity = input_vector.normalized() * speed * (global.player_speed_mult if Engine.is_editor_hint() == false else 1.0)
-	_update_speed_trail_direction()
-	play_anim()
-	
+    var input_vector = Input.get_vector(action_left, action_right, action_up, action_down)
+    # Apply global speed multiplier buff if any
+    velocity = input_vector.normalized() * speed * (global.player_speed_mult if Engine.is_editor_hint() == false else 1.0)
+    _update_speed_trail_direction()
+    play_anim()
+    
 func play_anim():
 	var anim = $AnimatedSprite2D
 	
@@ -126,16 +137,18 @@ func attack():
 	$deal_attack_timer.start()
 
 func _on_deal_attack_timer_timeout():
-	# Safety: only deal damage if we're actually in an attack window
-	if not attack_ip:
-		return
-	for body in $player_hitbox.get_overlapping_bodies():
-		if body != self and body.has_method("take_damage"):
-			var dmg = base_attack_damage + (global.player_damage_bonus if Engine.is_editor_hint() == false else 0)
-			body.take_damage(dmg, self)
-	
-	await $AnimatedSprite2D.animation_finished
-	attack_ip = false
+    for body in $player_hitbox.get_overlapping_bodies():
+        # Prevent friendly fire: never damage other players
+        if body == self:
+            continue
+        if body.is_in_group("player"):
+            continue
+        if body.has_method("take_damage"):
+            var dmg = base_attack_damage + (global.player_damage_bonus if Engine.is_editor_hint() == false else 0)
+            body.take_damage(dmg, self)
+    
+    await $AnimatedSprite2D.animation_finished
+    attack_ip = false
 
 func take_damage(amount, attacker):
 	# Respect invincibility buff
@@ -165,17 +178,26 @@ func _on_hurt_effect_timer_timeout(): $AnimatedSprite2D.modulate = Color.WHITE
 func _on_knockback_timer_timeout(): is_knocked_back = false
 
 func current_camera():
-	if global.current_scene == "world": $world_camera.enabled = true; $doorside_camera.enabled = false
-	elif global.current_scene == "door_side": $world_camera.enabled = false; $doorside_camera.enabled = true
-	elif global.current_scene == "map_2": $world_camera.enabled = false; $cemetery_camera.enabled = true
+    if not use_local_camera:
+        if has_node("world_camera"): $world_camera.enabled = false
+        if has_node("doorside_camera"): $doorside_camera.enabled = false
+        if has_node("cemetery_camera"): $cemetery_camera.enabled = false
+        return
+    if global.current_scene == "world": $world_camera.enabled = true; $doorside_camera.enabled = false
+    elif global.current_scene == "door_side": $world_camera.enabled = false; $doorside_camera.enabled = true
+    elif global.current_scene == "map_2": $world_camera.enabled = false; $cemetery_camera.enabled = true
 
 func update_health():
-	$healthbar.value = health; $healthbar.visible = false
-	if has_node("/root/global"):
-		var g = get_node("/root/global")
-		if g.has_method("set_player_health"):
-			g.set_player_health(health)
-	
+    $healthbar.value = health; $healthbar.visible = false
+    if has_node("/root/global"):
+        var g = get_node("/root/global")
+        if g.has_method("set_player_health"):
+            g.set_player_health(health)
+    # Update P2 HUD if applicable
+    var hud := get_tree().root.get_node_or_null("StatusHUD")
+    if hud and self.name == "player2" and hud.has_method("set_player2_health"):
+        hud.set_player2_health(health)
+
 # --- Speed trail API (used by potion "Speed Up") ---
 func start_speed_trail(duration: float = 15.0) -> void:
 	if _speed_trail_active:

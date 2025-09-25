@@ -92,67 +92,70 @@ func use_selected() -> void:
 
 # --- Effect implementations ---
 func _apply_bread():
-	# Heal to full
-	var player := _get_player()
-	if player and player.has_method("heal") and player.has_method("update_health"):
-		var missing := 100 - int(player.health)
-		if missing > 0:
-			player.heal(missing)
-			if has_node("/root/global"):
-				get_node("/root/global").heal_applied.emit(missing)
+    # Heal all local players to full
+    var players := _get_players()
+    for p in players:
+        if p and p.has_method("heal") and p.has_method("update_health"):
+            var missing := 100 - int(p.health)
+            if missing > 0:
+                p.heal(missing)
+                if has_node("/root/global"):
+                    get_node("/root/global").heal_applied.emit(missing)
 
 func _apply_amulet():
-	global.player_invincible = true
-	var p := _get_player()
-	if p and p.has_method("start_invincible_fx"):
-		p.start_invincible_fx(amulet_duration)
-	if has_node("/root/global"):
-		get_node("/root/global").start_buff("amulet", amulet_duration, "Invincible")
-	# Wait until the global buff actually ends (supports extension)
-	while has_node("/root/global") and get_node("/root/global").is_buff_active("amulet"):
-		await get_tree().process_frame
-	global.player_invincible = false
-	if p and p.has_method("stop_invincible_fx"):
-		p.stop_invincible_fx()
-	# end handled by global tick
+    global.player_invincible = true
+    var players := _get_players()
+    for p in players:
+        if p and p.has_method("start_invincible_fx"):
+            p.start_invincible_fx(amulet_duration)
+    if has_node("/root/global"):
+        get_node("/root/global").start_buff("amulet", amulet_duration, "Invincible")
+    # Wait until the global buff actually ends (supports extension)
+    while has_node("/root/global") and get_node("/root/global").is_buff_active("amulet"):
+        await get_tree().process_frame
+    global.player_invincible = false
+    for p in players:
+        if p and p.has_method("stop_invincible_fx"):
+            p.stop_invincible_fx()
+    # end handled by global tick
 
 func _apply_potion():
-	# Random: damage up OR speed up OR invincible
-	var effect := randi() % 3
-	match effect:
-		0:
-			global.player_damage_bonus = 20
-			if has_node("/root/global"):
-				get_node("/root/global").start_buff("potion_damage", potion_duration, "Damage Up")
-			# Wait while this specific buff is active (supports extension)
-			while has_node("/root/global") and get_node("/root/global").is_buff_active("potion_damage"):
-				await get_tree().process_frame
-			global.player_damage_bonus = 0
-		1:
-			global.player_speed_mult = 1.6
-			if has_node("/root/global"):
-				get_node("/root/global").start_buff("potion_speed", potion_duration, "Speed Up")
-			var p := _get_player()
-			if p and p.has_method("start_speed_trail"):
-				print("Inventory: starting speed trail for ", potion_duration, "s")
-				p.start_speed_trail(potion_duration)
-			# Wait while buff is active (supports extension)
-			while has_node("/root/global") and get_node("/root/global").is_buff_active("potion_speed"):
-				await get_tree().process_frame
-			global.player_speed_mult = 1.0
-			if p and p.has_method("stop_speed_trail"):
-				p.stop_speed_trail()
-		2:
-			global.player_invincible = true
-			if has_node("/root/global"):
-				get_node("/root/global").start_buff("potion_invincible", potion_duration, "Invincible")
-			while has_node("/root/global") and get_node("/root/global").is_buff_active("potion_invincible"):
-				await get_tree().process_frame
-			global.player_invincible = false
+    # Random: damage up OR speed up OR invincible
+    var effect := randi() % 3
+    match effect:
+        0:
+            global.player_damage_bonus = 20
+            if has_node("/root/global"):
+                get_node("/root/global").start_buff("potion_damage", potion_duration, "Damage Up")
+            # Wait while this specific buff is active (supports extension)
+            while has_node("/root/global") and get_node("/root/global").is_buff_active("potion_damage"):
+                await get_tree().process_frame
+            global.player_damage_bonus = 0
+        1:
+            global.player_speed_mult = 1.6
+            if has_node("/root/global"):
+                get_node("/root/global").start_buff("potion_speed", potion_duration, "Speed Up")
+            var players := _get_players()
+            for p in players:
+                if p and p.has_method("start_speed_trail"):
+                    p.start_speed_trail(potion_duration)
+            # Wait while buff is active (supports extension)
+            while has_node("/root/global") and get_node("/root/global").is_buff_active("potion_speed"):
+                await get_tree().process_frame
+            global.player_speed_mult = 1.0
+            for p in players:
+                if p and p.has_method("stop_speed_trail"):
+                    p.stop_speed_trail()
+        2:
+            global.player_invincible = true
+            if has_node("/root/global"):
+                get_node("/root/global").start_buff("potion_invincible", potion_duration, "Invincible")
+            while has_node("/root/global") and get_node("/root/global").is_buff_active("potion_invincible"):
+                await get_tree().process_frame
+            global.player_invincible = false
 
-func _get_player() -> Node:
-	var list := get_tree().get_nodes_in_group("player")
-	return list[0] if list.size() > 0 else null
+func _get_players() -> Array:
+    return get_tree().get_nodes_in_group("player")
 
 func get_counts() -> Dictionary:
 	return counts.duplicate()
