@@ -25,7 +25,7 @@ script = ExtResource("1_script")
 [node name="Root" type="MarginContainer" parent="."]
 offset_left = 8.0
 offset_top = 8.0
-offset_right = 463.0
+offset_right = 508.0
 offset_bottom = 169.785
 theme_override_constants/margin_left = 15
 
