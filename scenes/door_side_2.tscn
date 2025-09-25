@@ -2339,6 +2339,7 @@ shader_parameter/edge_softness = 0.1
 shader_parameter/screen_size = Vector2(0, 0)
 
 [node name="door_side1" type="Node2D"]
+y_sort_enabled = true
 position = Vector2(-2, -37)
 
 [node name="TileMap" type="TileMap" parent="."]

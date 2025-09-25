@@ -8006,6 +8006,7 @@ shader_parameter/edge_softness = 0.1
 shader_parameter/screen_size = Vector2(0, 0)
 
 [node name="house2" type="Node2D"]
+y_sort_enabled = true
 
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true
