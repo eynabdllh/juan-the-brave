@@ -19,9 +19,12 @@
 [ext_resource type="Texture2D" uid="uid://x52ibacbpqga" path="res://assets/mix/TX Props.png" id="17_clys3"]
 [ext_resource type="Shader" uid="uid://dpk4soc1oa7ho" path="res://shaders/windy.gdshader" id="18_w2whb"]
 [ext_resource type="PackedScene" uid="uid://bq3bs7j40w5n7" path="res://scenes/player.tscn" id="19_ynela"]
+
 [ext_resource type="PackedScene" uid="uid://pqev0pylwnbw" path="res://scenes/skeleton.tscn" id="20_vceer"]
+[ext_resource type="PackedScene" path="res://scenes/skeleton.tscn" id="20_vceer"]
 [ext_resource type="PackedScene" uid="uid://bpov77kuwgcyw" path="res://scenes/inventory_ui.tscn" id="21_oyq3d"]
-[ext_resource type="PackedScene" uid="uid://52q3qvla7x8e" path="res://scenes/status_hud.tscn" id="22_m5rp5"]
+[ext_resource type="PackedScene" path="res://scenes/status_hud.tscn" id="22_m5rp5"]
+
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_73udw"]
 texture = ExtResource("1_xrvne")
@@ -1018,8 +1021,8 @@ texture = ExtResource("7_6kap0")
 16:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-12.7007, 2.54013, -11.0072, 21.1678, -0.84671, 22.2967, 9.8783, 22.2967, 13.2651, 1.41118, 8, -8, -7.05592, -12.7007)
 19:1/size_in_atlas = Vector2i(3, 5)
 19:1/0 = 0
-19:1/0/y_sort_origin = 38
-19:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-22.8612, 0.282238, -22.2967, 16.652, -21.1678, 36.973, 22.2967, 37.5375, 22.8612, 4.23355, 22.8612, -16.652, 1.41119, -33.5862, -21.7322, -23.9901)
+19:1/0/y_sort_origin = 36
+19:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-20.5, 1.5, -0.5, -34.5, 21.5, -1.5, 19.5, 38.5, -23.5, 38.5)
 23:2/size_in_atlas = Vector2i(2, 3)
 23:2/0 = 0
 23:2/0/y_sort_origin = 20
