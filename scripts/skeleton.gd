@@ -1,16 +1,15 @@
-# enemylevel_1.gd (Definitive, Working Version)
 extends CharacterBody2D
 
 # --- THE CRITICAL FIX: The signal MUST declare what data it will send ---
 signal died(enemy_position)
 
-@export var speed = 40
-@export var attack_damage = 10
-@export var attack_rate = 1.5
-@export var knockback_speed = 150.0
+@export var speed = 55 # medium tier: a bit faster than mantis
+@export var attack_damage = 12 # medium tier damage
+@export var attack_rate = 1.2 # attacks slightly more often
+@export var knockback_speed = 140.0
 
 var player = null
-var health = 100
+var health = 70
 var can_be_damaged = true
 var can_attack = true
 var is_attacking = false
@@ -28,6 +27,10 @@ func _ready():
 
 	$AnimatedSprite2D.play(last_walk_animation)
 	$AnimatedSprite2D.stop()
+	# Make the healthbar look full even if HP is less than 100
+	if has_node("healthbar"):
+		$healthbar.max_value = health
+		$healthbar.value = health
 
 func _physics_process(delta):
 	# (The rest of the script is now correct, no changes needed in the main loop)
@@ -72,11 +75,16 @@ func find_player_in_hitbox() -> CharacterBody2D:
 		if body.is_in_group("player"): return body
 	return null
 func attack_player():
-	velocity = Vector2.ZERO; is_attacking = true; can_attack = false
-	if "right_walk" in last_walk_animation: $AnimatedSprite2D.play("right_attack")
-	elif "left_walk" in last_walk_animation: $AnimatedSprite2D.play("left_attack")
-	elif "back_walk" in last_walk_animation: $AnimatedSprite2D.play("back_attack")
-	else: $AnimatedSprite2D.play("front_attack")
+	velocity = Vector2.ZERO
+	is_attacking = true
+	can_attack = false
+	if "side" in last_walk_animation:
+		$AnimatedSprite2D.play("side_attack")
+		$AnimatedSprite2D.flip_h = player and player.position.x < position.x
+	elif "back" in last_walk_animation:
+		$AnimatedSprite2D.play("back_attack")
+	else:
+		$AnimatedSprite2D.play("front_attack")
 	player.take_damage(attack_damage, self)
 func take_damage(amount, attacker):
 	if not can_be_damaged or not is_alive: return
@@ -91,15 +99,28 @@ func take_damage(amount, attacker):
 	$take_damage_cooldown.start()
 	if health <= 0: die()
 func chase_player():
-	var direction = (player.position - position).normalized(); velocity = direction * speed
+	var direction = (player.position - position).normalized()
+	velocity = direction * speed
 	if abs(direction.x) > abs(direction.y):
-		last_walk_animation = "right_walk" if direction.x > 0 else "left_walk"
+		last_walk_animation = "side_walk"
+		$AnimatedSprite2D.flip_h = direction.x < 0
 	else:
 		last_walk_animation = "front_walk" if direction.y > 0 else "back_walk"
 	$AnimatedSprite2D.play(last_walk_animation)
 func idle():
 	velocity = Vector2.ZERO
-	if $AnimatedSprite2D.is_playing() and not "attack" in $AnimatedSprite2D.animation: $AnimatedSprite2D.stop()
+	# Ensure a visible idle frame is shown; prefer direction-specific idles if available
+	var anim := $AnimatedSprite2D
+	if anim:
+		if "side" in last_walk_animation:
+			anim.play("side_idle")
+			anim.stop()
+		elif "back" in last_walk_animation:
+			anim.play("back_idle")
+			anim.stop()
+		else:
+			anim.play("front_idle")
+			anim.stop()
 func _on_animated_sprite_2d_animation_finished():
 	if "attack" in $AnimatedSprite2D.animation: is_attacking = false; $EnemyAttackTimer.start(attack_rate)
 func _on_detection_area_body_entered(body: Node2D):

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ca6nmvdm3nbqi"
-path="res://.godot/imported/slime.png-de9d74cc81ac94d75d54e0dcde12082d.ctex"
+uid="uid://bnhrovi0fr4s7"
+path="res://.godot/imported/Aswang-Mage.png-143c95934a581b7b728e144030ead9e4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/characters/slime.png"
-dest_files=["res://.godot/imported/slime.png-de9d74cc81ac94d75d54e0dcde12082d.ctex"]
+source_file="res://assets/characters/enemies/Aswang-Mage.png"
+dest_files=["res://.godot/imported/Aswang-Mage.png-143c95934a581b7b728e144030ead9e4.ctex"]
 
 [params]
 

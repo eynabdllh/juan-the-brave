@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=4 uid="uid://222sdfeb63kg"]
+[gd_scene load_steps=44 format=4 uid="uid://222sdfeb63kg"]
 
 [ext_resource type="Texture2D" uid="uid://ubokohidmou7" path="res://assets/tilesets/plains.png" id="1_xrvne"]
 [ext_resource type="Texture2D" uid="uid://dqikcd1mfbhw0" path="res://assets/tilesets/grass.png" id="2_vceer"]
@@ -22,6 +22,9 @@
 [ext_resource type="PackedScene" uid="uid://pqev0pylwnbw" path="res://scenes/skeleton.tscn" id="20_vceer"]
 [ext_resource type="PackedScene" uid="uid://bpov77kuwgcyw" path="res://scenes/inventory_ui.tscn" id="21_oyq3d"]
 [ext_resource type="PackedScene" uid="uid://52q3qvla7x8e" path="res://scenes/status_hud.tscn" id="22_m5rp5"]
+
+[ext_resource type="Script" uid="uid://bguy5lx5ehe7" path="res://scripts/map_2.gd" id="23_map2"]
+[ext_resource type="PackedScene" uid="uid://4vobs5t2g7d8" path="res://scenes/zombie.tscn" id="24_1m8sb"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_73udw"]
 texture = ExtResource("1_xrvne")
@@ -5480,6 +5483,7 @@ shader_parameter/heightOffset = 0.0
 shader_parameter/offset = 0.0
 
 [node name="Map2" type="Node2D"]
+script = ExtResource("23_map2")
 
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true
@@ -5531,11 +5535,11 @@ position = Vector2(1173, 1451)
 position = Vector2(290, 20)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(-6, -5)
 scale = Vector2(0.966854, 1)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
-position = Vector2(6.20569, 2)
-polygon = PackedVector2Array(0, -3, 0, 0, 257, 0, 257, -7, 333, -7, 333, 0, 1168, 0, 1168, 1440, 0, 1440, 0, 0, -1, 0, -47, 1498, 1230, 1466, 1216, -110)
+polygon = PackedVector2Array(6.20569, -1, 6.20569, 5, 276.153, 5, 276.153, -1, 347.519, -1, 347.519, 5, 1214.25, 5, 1214.25, 1445, 5.17141, 1445, 6.20569, 1444, 6.20569, 5, -4.13713, 5, -7.23998, 1466, 1224.59, 1465, 1235.97, 1463, 1229.76, -8, 601.952, -17, 189.274, -17)
 
 [node name="skeleton" parent="." instance=ExtResource("20_vceer")]
 position = Vector2(473, 71)
@@ -5543,3 +5547,6 @@ position = Vector2(473, 71)
 [node name="InventoryUI" parent="." instance=ExtResource("21_oyq3d")]
 
 [node name="StatusHUD" parent="." instance=ExtResource("22_m5rp5")]
+
+[node name="zombie" parent="." instance=ExtResource("24_1m8sb")]
+position = Vector2(178, 243)

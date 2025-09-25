@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cqsgnuhlredw"
-path="res://.godot/imported/mantis_death.png-6b57ae51c795cc06e5d5ac1507e01f11.ctex"
+uid="uid://b3ecyqpfd4x4k"
+path="res://.godot/imported/Mantis.png-5b9d1a8b67a28d103a9c4c3eaaa53ce4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/characters/mantis_death.png"
-dest_files=["res://.godot/imported/mantis_death.png-6b57ae51c795cc06e5d5ac1507e01f11.ctex"]
+source_file="res://assets/characters/enemies/mantis/Mantis.png"
+dest_files=["res://.godot/imported/Mantis.png-5b9d1a8b67a28d103a9c4c3eaaa53ce4.ctex"]
 
 [params]
 

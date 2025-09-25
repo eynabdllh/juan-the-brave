@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://br23j3nusvetg"
-path="res://.godot/imported/MantisAttack.png-5feca06a230457b1a443a910497f9df8.ctex"
+uid="uid://la03w3wiq5qm"
+path="res://.godot/imported/Imp Sprite Sheet.png-87e59d1759d1c08f76b332477c2cc5a6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/characters/MantisAttack.png"
-dest_files=["res://.godot/imported/MantisAttack.png-5feca06a230457b1a443a910497f9df8.ctex"]
+source_file="res://assets/characters/enemies/Imp Sprite Sheet.png"
+dest_files=["res://.godot/imported/Imp Sprite Sheet.png-87e59d1759d1c08f76b332477c2cc5a6.ctex"]
 
 [params]
 
