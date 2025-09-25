@@ -1,4 +1,4 @@
-[gd_scene load_steps=154 format=3 uid="uid://4vobs5t2g7d8"]
+[gd_scene load_steps=154 format=3 uid="uid://caauswebu6usd"]
 
 [ext_resource type="Texture2D" uid="uid://bpkreutot65l5" path="res://assets/characters/enemies/zombie/Zombie_Big_Up_Second-Attack-Sheet15.png" id="1_3fthk"]
 [ext_resource type="Script" uid="uid://bh15b5sic8rpq" path="res://scripts/zombie.gd" id="1_f78au"]

@@ -1,6 +1,6 @@
-[gd_scene load_steps=36 format=3 uid="uid://b5ht6mgh65khd"]
+[gd_scene load_steps=36 format=3 uid="uid://fxncxbncjpyy"]
 
-[ext_resource type="Script" uid="uid://th1vy41se78p" path="res://scripts/aswang.gd" id="1_vhsid"]
+[ext_resource type="Script" path="res://scripts/aswang.gd" id="1_vhsid"]
 [ext_resource type="Texture2D" uid="uid://65wh4i74swig" path="res://assets/characters/enemies/Ghoul Sprite Sheet.png" id="2_1tr5p"]
 [ext_resource type="AudioStream" uid="uid://dct6hhhf2ktyr" path="res://assets/music/enemy_damage.wav" id="4_1igbi"]
 
@@ -232,7 +232,7 @@ radius = 9.05539
 [sub_resource type="CircleShape2D" id="CircleShape2D_iuiie"]
 radius = 20.0
 
-[node name="aswang" type="CharacterBody2D"]
+[node name="aswang" type="CharacterBody2D" groups=["enemies"]]
 script = ExtResource("1_vhsid")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -284,3 +284,12 @@ one_shot = true
 
 [node name="HurtSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_1igbi")
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="body_entered" from="detection_area" to="." method="_on_detection_area_body_entered"]
+[connection signal="body_exited" from="detection_area" to="." method="_on_detection_area_body_exited"]
+[connection signal="timeout" from="take_damage_cooldown" to="." method="_on_take_damage_cooldown_timeout"]
+[connection signal="timeout" from="EnemyAttackTimer" to="." method="_on_enemy_attack_timer_timeout"]
+[connection signal="timeout" from="ForgetPlayerTimer" to="." method="_on_forget_player_timer_timeout"]
+[connection signal="timeout" from="HurtEffectTimer" to="." method="_on_hurt_effect_timer_timeout"]
+[connection signal="timeout" from="KnockbackTimer" to="." method="_on_knockback_timer_timeout"]
