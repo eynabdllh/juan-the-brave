@@ -594,7 +594,6 @@ sprite_frames = SubResource("SpriteFrames_or4ql")
 animation = &"locked"
 
 [node name="InteractionArea" type="Area2D" parent="NextLevelDoor"]
-visible = false
 position = Vector2(141, 104)
 collision_layer = 8
 collision_mask = 2
@@ -605,10 +604,9 @@ scale = Vector2(1.13504, 2.01626)
 shape = SubResource("RectangleShape2D_3w5t1")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
-visible = false
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
-polygon = PackedVector2Array(128, 80, 123, 94, 127, 102, 124, 112, 115, 112, 108, 123, 107, 130, 109, 143, 118, 155, 110, 162, 111, 174, 107, 179, 112, 195, 124, 193, 126, 207, 114, 209, 114, 223, 185, 223, 183, 211, 178, 204, 177, 190, 179, 178, 188, 169, 183, 162, 177, 154, 176, 145, 173, 142, 172, 131, 175, 129, 172, 125, 172, 120, 167, 113, 162, 108, 161, 99, 163, 88, 163, 84, 160, 81, 152, 82, 132, 81, 137, -21, 362, -17, 337, 258, -29, 235, -14, -41, 133, -8)
+polygon = PackedVector2Array(128, 80, 123, 94, 127, 102, 124, 112, 115, 112, 108, 123, 107, 130, 109, 143, 118, 155, 110, 162, 111, 174, 107, 179, 112, 195, 124, 193, 126, 207, 114, 209, 119, 295, 174, 296, 183, 211, 178, 204, 177, 190, 179, 178, 188, 169, 183, 162, 177, 154, 176, 145, 173, 142, 172, 131, 175, 129, 172, 125, 172, 120, 167, 113, 162, 108, 161, 99, 163, 88, 163, 84, 160, 81, 152, 82, 132, 81, 137, -21, 362, -17, 310, 328, -21, 328, -14, -41, 133, -8)
 
 [node name="player" parent="." instance=ExtResource("9_dc3vs")]
 position = Vector2(143, 200)

@@ -11,15 +11,15 @@ const ORDER := ["potion", "bread", "amulet"]
 
 # Item icons (used by UI/popup callers if they want)
 const ICONS := {
-    "potion": preload("res://assets/objects/potion.png"),
-    "bread": preload("res://assets/objects/monay.png"),
-    "amulet": preload("res://assets/objects/amulet.png"),
+	"potion": preload("res://assets/objects/potion.png"),
+	"bread": preload("res://assets/objects/monay.png"),
+	"amulet": preload("res://assets/objects/amulet.png"),
 }
 
 var counts := {
-    "potion": 0,
-    "bread": 0,
-    "amulet": 0,
+	"potion": 0,
+	"bread": 0,
+	"amulet": 0,
 }
 
 # Config
@@ -30,65 +30,65 @@ var selected_index := 0
 var _last_use_ms := 0
 
 func _ready():
-    randomize()
-    # Announce initial selection for UI
-    emit_signal("selection_changed", selected_index)
-    # We will use _input with Input singleton; no need for _unhandled_input.
+	randomize()
+	# Announce initial selection for UI
+	emit_signal("selection_changed", selected_index)
+	# We will use _input with Input singleton; no need for _unhandled_input.
 
 func _input(event: InputEvent) -> void:
-    # Process hotkeys once per press using the Input singleton
-    if Input.is_action_just_pressed("use_slot_1"):
-        print("Inventory: use_slot_1 pressed")
-        set_selected_index(0)
-        _debounced_use_selected()
-    elif Input.is_action_just_pressed("use_slot_2"):
-        print("Inventory: use_slot_2 pressed")
-        set_selected_index(1)
-        _debounced_use_selected()
-    elif Input.is_action_just_pressed("use_slot_3"):
-        print("Inventory: use_slot_3 pressed")
-        set_selected_index(2)
-        _debounced_use_selected()
+	# Process hotkeys once per press using the Input singleton
+	if Input.is_action_just_pressed("use_slot_1"):
+		print("Inventory: use_slot_1 pressed")
+		set_selected_index(0)
+		_debounced_use_selected()
+	elif Input.is_action_just_pressed("use_slot_2"):
+		print("Inventory: use_slot_2 pressed")
+		set_selected_index(1)
+		_debounced_use_selected()
+	elif Input.is_action_just_pressed("use_slot_3"):
+		print("Inventory: use_slot_3 pressed")
+		set_selected_index(2)
+		_debounced_use_selected()
 
 func _debounced_use_selected() -> void:
-    var now := Time.get_ticks_msec()
-    if now - _last_use_ms < 150:
-        return
-    _last_use_ms = now
-    use_selected()
+	var now := Time.get_ticks_msec()
+	if now - _last_use_ms < 150:
+		return
+	_last_use_ms = now
+	use_selected()
 
 func set_selected_index(i: int) -> void:
-    selected_index = clamp(i, 0, ORDER.size() - 1)
-    emit_signal("selection_changed", selected_index)
+	selected_index = clamp(i, 0, ORDER.size() - 1)
+	emit_signal("selection_changed", selected_index)
 
 func add_item(item: String, amount: int = 1) -> void:
-    if not counts.has(item):
-        return
-    counts[item] += amount
-    emit_signal("item_added", item, counts[item])
+	if not counts.has(item):
+		return
+	counts[item] += amount
+	emit_signal("item_added", item, counts[item])
 
 func can_use(item: String) -> bool:
-    return counts.get(item, 0) > 0
+	return counts.get(item, 0) > 0
 
 func use_item(item: String) -> void:
-    if not can_use(item):
-        print("Inventory: cannot use ", item, " (count=", counts.get(item, 0), ")")
-        return
-    match item:
-        "potion":
-            _apply_potion()
-        "bread":
-            _apply_bread()
-        "amulet":
-            print("Inventory: applying amulet")
-            _apply_amulet()
-    # decrement after successful application
-    counts[item] -= 1
-    emit_signal("item_used", item, counts[item])
+	if not can_use(item):
+		print("Inventory: cannot use ", item, " (count=", counts.get(item, 0), ")")
+		return
+	match item:
+		"potion":
+			_apply_potion()
+		"bread":
+			_apply_bread()
+		"amulet":
+			print("Inventory: applying amulet")
+			_apply_amulet()
+	# decrement after successful application
+	counts[item] -= 1
+	emit_signal("item_used", item, counts[item])
 
 func use_selected() -> void:
-    var item : String= ORDER[selected_index]
-    use_item(item)
+	var item : String= ORDER[selected_index]
+	use_item(item)
 
 # --- Effect implementations ---
 func _apply_bread():
@@ -158,4 +158,4 @@ func _get_players() -> Array:
     return get_tree().get_nodes_in_group("player")
 
 func get_counts() -> Dictionary:
-    return counts.duplicate()
+	return counts.duplicate()

@@ -17,6 +17,7 @@ var _buff_widgets := {} # name -> {container, label, info}
 func _ready():
 	# Static config
 	player_name.text = "Juan"
+
 	# Initialize options UI to reflect current state
 	if is_instance_valid(_fullscreen_toggle):
 		_fullscreen_toggle.button_pressed = (DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN)
@@ -102,7 +103,9 @@ func _on_heal_applied(amount: int) -> void:
 	lbl.modulate = Color(0.3, 1.0, 0.3)
 	$Root/Health.add_child(lbl)
 	# Position to the right of the bar
-	var bar := $Root/Health/BarRow/Bar
+
+	var bar := $Root/Health/Bar
+
 	lbl.position = bar.position + Vector2(bar.size.x + 8, 0)
 	var tw := create_tween()
 	tw.tween_property(lbl, "position", lbl.position + Vector2(0, -12), 0.8)
@@ -151,3 +154,4 @@ func _unhandled_input(event: InputEvent) -> void:
 		var key := event as InputEventKey
 		if key.keycode == KEY_ESCAPE:
 			_on_options_back_pressed()
+

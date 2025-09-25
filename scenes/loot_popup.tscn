@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cf7rysx1ranfb"]
 
-[ext_resource type="Script" uid="uid://ceb5xixv6fh52" path="res://scripts/loot_popup.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/loot_popup.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://drd2pw5rupw51" path="res://assets/objects/amulet.png" id="2_8wcw7"]
 
 [node name="LootPopup" type="Control"]

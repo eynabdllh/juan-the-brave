@@ -5,12 +5,12 @@ extends CharacterBody2D
 signal died(enemy_position)
 
 @export var speed = 40
-@export var attack_damage = 10
-@export var attack_rate = 1.5
-@export var knockback_speed = 150.0
+@export var attack_damage = 8
+@export var attack_rate = 1.6
+@export var knockback_speed = 140.0
 
 var player = null
-var health = 100
+var health = 40
 var can_be_damaged = true
 var can_attack = true
 var is_attacking = false
@@ -28,6 +28,10 @@ func _ready():
 
 	$AnimatedSprite2D.play(last_walk_animation)
 	$AnimatedSprite2D.stop()
+	# Make the healthbar look full even if HP is less than 100
+	if has_node("healthbar"):
+		$healthbar.max_value = health
+		$healthbar.value = health
 
 func _physics_process(delta):
 	# (The rest of the script is now correct, no changes needed in the main loop)

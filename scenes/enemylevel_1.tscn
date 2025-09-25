@@ -1,9 +1,9 @@
 [gd_scene load_steps=59 format=3 uid="uid://j5u3diqcyydx"]
 
 [ext_resource type="Script" uid="uid://c61ovtptjp27i" path="res://scripts/enemylevel_1.gd" id="1_i6rvr"]
-[ext_resource type="Texture2D" uid="uid://br23j3nusvetg" path="res://assets/characters/MantisAttack.png" id="2_iimsh"]
-[ext_resource type="Texture2D" uid="uid://dun6l08a0nhfy" path="res://assets/characters/MantisMove.png" id="3_dtpqq"]
-[ext_resource type="Texture2D" uid="uid://efxrv0lbt1ao" path="res://assets/characters/mantis_death (2).png" id="4_iimsh"]
+[ext_resource type="Texture2D" uid="uid://br23j3nusvetg" path="res://assets/characters/enemies/mantis/MantisAttack.png" id="2_iimsh"]
+[ext_resource type="Texture2D" uid="uid://dun6l08a0nhfy" path="res://assets/characters/enemies/mantis/MantisMove.png" id="3_dtpqq"]
+[ext_resource type="Texture2D" uid="uid://efxrv0lbt1ao" path="res://assets/characters/enemies/mantis/mantis_death (2).png" id="4_iimsh"]
 [ext_resource type="AudioStream" uid="uid://dct6hhhf2ktyr" path="res://assets/music/enemy_damage.wav" id="5_dtpqq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i0qp0"]
@@ -415,7 +415,7 @@ script = ExtResource("1_i6rvr")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_hhfxt")
-animation = &"death"
+animation = &"right_walk"
 
 [node name="detection_area" type="Area2D" parent="."]
 collision_layer = 2

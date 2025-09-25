@@ -28,7 +28,7 @@ script = ExtResource("1_script")
 mouse_filter = 2
 offset_left = 8.0
 offset_top = 8.0
-offset_right = 463.0
+offset_right = 508.0
 offset_bottom = 169.785
 theme_override_constants/margin_left = 15
 

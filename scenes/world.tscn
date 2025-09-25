@@ -4508,9 +4508,11 @@ texture = ExtResource("11_0nbtd")
 54:62/0 = 0
 5:35/size_in_atlas = Vector2i(6, 6)
 5:35/0 = 0
-5:35/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -3.66908, 9.20149, 2.94343, 13.2651, 3.66908, 5.3625, 14.9586, -5.3625, 16.0875)
+5:35/0/y_sort_origin = 13
+5:35/0/physics_layer_0/polygon_0/points = PackedVector2Array(-22.579, 16.3697, -33.8684, 15.8053, -29.3526, -14.1118, -8.46711, -31.6105, 16.9342, -33.304, 33.304, -10.725, 38.3842, 5.08027, 34.4329, 18.0632, 14.6763, 34.4329, -14.1118, 37.2553)
 5:42/size_in_atlas = Vector2i(6, 5)
 5:42/0 = 0
+5:42/0/physics_layer_0/polygon_0/points = PackedVector2Array(-22.579, 16.3697, -33.8684, 15.8053, -29.3526, -14.1118, -8.46711, -31.6105, 16.9342, -33.304, 33.304, -10.725, 38.3842, 5.08027, 34.4329, 18.0632, 14.6763, 34.4329, -14.1118, 37.2553)
 47:46/size_in_atlas = Vector2i(3, 3)
 47:46/0 = 0
 47:46/0/y_sort_origin = 20
@@ -5182,7 +5184,7 @@ shader_parameter/screen_size = Vector2(0, 0)
 
 [node name="world" type="Node2D"]
 y_sort_enabled = true
-position = Vector2(39, 1)
+position = Vector2(38, 1)
 script = ExtResource("1_e3hyu")
 key_scene = ExtResource("2_q5onr")
 
@@ -5226,7 +5228,7 @@ tile_set = SubResource("TileSet_q5onr")
 position = Vector2(-9, 29)
 
 [node name="mantis1" parent="." instance=ExtResource("10_w7kh3")]
-position = Vector2(394, 192)
+position = Vector2(469, 421)
 
 [node name="door_side" type="Area2D" parent="."]
 position = Vector2(-113, 1073)
@@ -5238,7 +5240,7 @@ position = Vector2(322, -1090)
 shape = SubResource("RectangleShape2D_w7kh3")
 
 [node name="mantis2" parent="." instance=ExtResource("10_w7kh3")]
-position = Vector2(255, 223)
+position = Vector2(568, 194)
 
 [node name="cloud" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_o8fc1")
@@ -5255,27 +5257,79 @@ scale = Vector2(0.996368, 0.995856)
 script = ExtResource("14_o8fc1")
 
 [node name="Area2D" type="Area2D" parent="."]
-position = Vector2(1178, 1039)
+position = Vector2(1213, 440)
 
 [node name="collision" type="StaticBody2D" parent="."]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="collision"]
 
 [node name="Chest" parent="." instance=ExtResource("24_ctatt")]
-position = Vector2(124, 116)
+position = Vector2(289, 475)
 
 [node name="Chest2" parent="." instance=ExtResource("24_ctatt")]
-position = Vector2(101, 147)
+position = Vector2(316, 280)
 
 [node name="InventoryUI" parent="." instance=ExtResource("25_xgqkh")]
 
 [node name="StatusHUD" parent="." instance=ExtResource("26_munwf")]
 
 [node name="Chest4" parent="." instance=ExtResource("24_ctatt")]
-position = Vector2(93, 79)
+position = Vector2(161, 69)
 
 [node name="Chest3" parent="." instance=ExtResource("24_ctatt")]
-position = Vector2(61, 113)
+position = Vector2(82, 294)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(13, -4)
+scale = Vector2(0.966854, 1)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-52.7484, -3, -52.7484, 3, 176.862, 3, 176.862, -31, 228.576, -30, 228.576, 3, 1191.49, 4, 1190.46, 554, 1204.94, 554, 1204.94, 574, 1189.42, 575, 1189.42, 1027, 158.245, 1031, 156.177, 1043, 12.4114, 1042, 10.3428, 1028, -52.7484, 1030, -53.7827, 2, -61.0227, 3, -72.3998, 1089, 1246.31, 1073, 1235.97, -34, 235.816, -51, 159.279, -50)
+
+[node name="Chest5" parent="." instance=ExtResource("24_ctatt")]
+position = Vector2(733, 464)
+
+[node name="Chest6" parent="." instance=ExtResource("24_ctatt")]
+position = Vector2(622, 59)
+
+[node name="Chest7" parent="." instance=ExtResource("24_ctatt")]
+position = Vector2(1089, 149)
+
+[node name="Chest8" parent="." instance=ExtResource("24_ctatt")]
+position = Vector2(1146, 351)
+
+[node name="Chest9" parent="." instance=ExtResource("24_ctatt")]
+position = Vector2(419, 942)
+
+[node name="Chest10" parent="." instance=ExtResource("24_ctatt")]
+position = Vector2(935, 773)
+
+[node name="Chest11" parent="." instance=ExtResource("24_ctatt")]
+position = Vector2(804, 974)
+
+[node name="Chest12" parent="." instance=ExtResource("24_ctatt")]
+position = Vector2(-1, 769)
+
+[node name="enemylevel1" parent="." instance=ExtResource("10_w7kh3")]
+position = Vector2(635, 640)
+
+[node name="enemylevel2" parent="." instance=ExtResource("10_w7kh3")]
+position = Vector2(949, 310)
+
+[node name="enemylevel3" parent="." instance=ExtResource("10_w7kh3")]
+position = Vector2(100, 833)
+
+[node name="enemylevel4" parent="." instance=ExtResource("10_w7kh3")]
+position = Vector2(874, 865)
+
+[node name="enemylevel5" parent="." instance=ExtResource("10_w7kh3")]
+position = Vector2(154, 480)
+
+[node name="enemylevel6" parent="." instance=ExtResource("10_w7kh3")]
+position = Vector2(1091, 620)
+
+[node name="enemylevel7" parent="." instance=ExtResource("10_w7kh3")]
+position = Vector2(521, 943)
 
 [connection signal="body_entered" from="door_side" to="." method="_on_door_side_body_entered"]
 [connection signal="body_exited" from="door_side" to="." method="_on_door_side_body_exited"]
