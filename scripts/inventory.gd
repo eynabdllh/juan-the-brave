@@ -27,23 +27,35 @@ var potion_duration := 15.0 # seconds
 var amulet_duration := 10.0 # seconds
 
 var selected_index := 0
+var _last_use_ms := 0
 
 func _ready():
     randomize()
     # Announce initial selection for UI
     emit_signal("selection_changed", selected_index)
+    # We will use _input with Input singleton; no need for _unhandled_input.
 
-func _unhandled_input(event: InputEvent) -> void:
-    # Process hotkeys even if the HUD is not loaded
-    if event.is_action_pressed("use_slot_1"):
+func _input(event: InputEvent) -> void:
+    # Process hotkeys once per press using the Input singleton
+    if Input.is_action_just_pressed("use_slot_1"):
+        print("Inventory: use_slot_1 pressed")
         set_selected_index(0)
-        use_selected()
-    elif event.is_action_pressed("use_slot_2"):
+        _debounced_use_selected()
+    elif Input.is_action_just_pressed("use_slot_2"):
+        print("Inventory: use_slot_2 pressed")
         set_selected_index(1)
-        use_selected()
-    elif event.is_action_pressed("use_slot_3"):
+        _debounced_use_selected()
+    elif Input.is_action_just_pressed("use_slot_3"):
+        print("Inventory: use_slot_3 pressed")
         set_selected_index(2)
-        use_selected()
+        _debounced_use_selected()
+
+func _debounced_use_selected() -> void:
+    var now := Time.get_ticks_msec()
+    if now - _last_use_ms < 150:
+        return
+    _last_use_ms = now
+    use_selected()
 
 func set_selected_index(i: int) -> void:
     selected_index = clamp(i, 0, ORDER.size() - 1)
@@ -60,6 +72,7 @@ func can_use(item: String) -> bool:
 
 func use_item(item: String) -> void:
     if not can_use(item):
+        print("Inventory: cannot use ", item, " (count=", counts.get(item, 0), ")")
         return
     match item:
         "potion":
@@ -67,6 +80,7 @@ func use_item(item: String) -> void:
         "bread":
             _apply_bread()
         "amulet":
+            print("Inventory: applying amulet")
             _apply_amulet()
     # decrement after successful application
     counts[item] -= 1
@@ -84,17 +98,23 @@ func _apply_bread():
         var missing := 100 - int(player.health)
         if missing > 0:
             player.heal(missing)
+            if has_node("/root/global"):
+                get_node("/root/global").heal_applied.emit(missing)
 
 func _apply_amulet():
     global.player_invincible = true
     var p := _get_player()
     if p and p.has_method("start_invincible_fx"):
         p.start_invincible_fx(amulet_duration)
-    var t := get_tree().create_timer(amulet_duration)
-    await t.timeout
+    if has_node("/root/global"):
+        get_node("/root/global").start_buff("amulet", amulet_duration, "Invincible")
+    # Wait until the global buff actually ends (supports extension)
+    while has_node("/root/global") and get_node("/root/global").is_buff_active("amulet"):
+        await get_tree().process_frame
     global.player_invincible = false
     if p and p.has_method("stop_invincible_fx"):
         p.stop_invincible_fx()
+    # end handled by global tick
 
 func _apply_potion():
     # Random: damage up OR speed up OR invincible
@@ -102,18 +122,32 @@ func _apply_potion():
     match effect:
         0:
             global.player_damage_bonus = 20
-            var t0 := get_tree().create_timer(potion_duration)
-            await t0.timeout
+            if has_node("/root/global"):
+                get_node("/root/global").start_buff("potion_damage", potion_duration, "Damage Up")
+            # Wait while this specific buff is active (supports extension)
+            while has_node("/root/global") and get_node("/root/global").is_buff_active("potion_damage"):
+                await get_tree().process_frame
             global.player_damage_bonus = 0
         1:
             global.player_speed_mult = 1.6
-            var t1 := get_tree().create_timer(potion_duration)
-            await t1.timeout
+            if has_node("/root/global"):
+                get_node("/root/global").start_buff("potion_speed", potion_duration, "Speed Up")
+            var p := _get_player()
+            if p and p.has_method("start_speed_trail"):
+                print("Inventory: starting speed trail for ", potion_duration, "s")
+                p.start_speed_trail(potion_duration)
+            # Wait while buff is active (supports extension)
+            while has_node("/root/global") and get_node("/root/global").is_buff_active("potion_speed"):
+                await get_tree().process_frame
             global.player_speed_mult = 1.0
+            if p and p.has_method("stop_speed_trail"):
+                p.stop_speed_trail()
         2:
             global.player_invincible = true
-            var t2 := get_tree().create_timer(potion_duration)
-            await t2.timeout
+            if has_node("/root/global"):
+                get_node("/root/global").start_buff("potion_invincible", potion_duration, "Invincible")
+            while has_node("/root/global") and get_node("/root/global").is_buff_active("potion_invincible"):
+                await get_tree().process_frame
             global.player_invincible = false
 
 func _get_player() -> Node:

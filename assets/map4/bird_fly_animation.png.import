@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dnu416o1gqui"
-path="res://.godot/imported/skeleton.png-215cebd399e542f68f7bfaf5eb1266de.ctex"
+uid="uid://by12y5ynpaymo"
+path="res://.godot/imported/bird_fly_animation.png-a94cb390ab5b0632b83f518536cf6566.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/characters/skeleton.png"
-dest_files=["res://.godot/imported/skeleton.png-215cebd399e542f68f7bfaf5eb1266de.ctex"]
+source_file="res://assets/map4/bird_fly_animation.png"
+dest_files=["res://.godot/imported/bird_fly_animation.png-a94cb390ab5b0632b83f518536cf6566.ctex"]
 
 [params]
 

@@ -6,6 +6,10 @@ const KEY_TEXTURE = preload("res://assets/objects/key.png")
 signal key_changed(has_key: bool)
 signal enemies_progress_changed(defeated: int, total: int)
 signal player_health_changed(health: int)
+signal buff_started(name: String, duration: float, info: String)
+signal buff_ended(name: String)
+signal heal_applied(amount: int)
+signal buff_tick(name: String, remaining_seconds: int)
 
 var player_current_attack = false	
 var current_scene = "world"
@@ -30,6 +34,59 @@ func add_killed_enemy(enemy_name):
 # it can be respawned when re-entering the scene.
 var key_dropped: bool = false
 var key_position: Vector2 = Vector2.ZERO
+
+# --- Authoritative buff timer state for real-time countdowns ---
+var _buffs := {} # name -> { end_ms:int, info:String }
+var _buff_timer: Timer
+
+func _ready():
+	# Lightweight ticker to update HUD countdowns. 4 Hz is fine for 1s display.
+	_buff_timer = Timer.new()
+	_buff_timer.one_shot = false
+	_buff_timer.wait_time = 0.25
+	add_child(_buff_timer)
+	_buff_timer.timeout.connect(_on_buff_timer_timeout)
+	_buff_timer.start()
+
+func start_buff(name: String, duration: float, info: String) -> void:
+	var now := Time.get_ticks_msec()
+	var add_ms := int(duration * 1000.0)
+	if _buffs.has(name):
+		var end_ms: int = int(_buffs[name]["end_ms"])
+		# Extend from current remaining end time (or now if already expired edge case)
+		end_ms = max(end_ms, now) + add_ms
+		_buffs[name]["end_ms"] = end_ms
+		_buffs[name]["info"] = info
+		# Fire a tick immediately so HUD updates the new remaining
+		var remaining_sec := int(ceil(max(0, end_ms - now) / 1000.0))
+		emit_signal("buff_tick", name, remaining_sec)
+	else:
+		var end_ms_new := now + add_ms
+		_buffs[name] = {"end_ms": end_ms_new, "info": info}
+		emit_signal("buff_started", name, duration, info)
+
+func _on_buff_timer_timeout() -> void:
+	if _buffs.is_empty():
+		return
+	var now: int = Time.get_ticks_msec()
+	var to_remove: Array = []
+	for name in _buffs.keys():
+		var end_ms: int = int(_buffs[name]["end_ms"])
+		var remaining_ms: int = int(max(0, end_ms - now))
+		var remaining_sec: int = int(ceil(remaining_ms / 1000.0))
+		emit_signal("buff_tick", name, remaining_sec)
+		if remaining_ms <= 0:
+			to_remove.append(name)
+	for n in to_remove:
+		_buffs.erase(n)
+		emit_signal("buff_ended", n)
+
+func is_buff_active(name: String) -> bool:
+	if not _buffs.has(name):
+		return false
+	var now := Time.get_ticks_msec()
+	var end_ms: int = int(_buffs[name]["end_ms"])
+	return end_ms > now
 
 func set_key_dropped(pos: Vector2) -> void:
 	key_dropped = true

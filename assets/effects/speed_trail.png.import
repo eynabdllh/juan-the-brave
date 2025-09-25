@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ovt4ulpgvwk0"
-path="res://.godot/imported/dust_particles_01.png-4846ac1e478aa89ec8766dae03170a1e.ctex"
+path="res://.godot/imported/speed_trail.png-62350040c88119e82f7135d4effc94e6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/particles/dust_particles_01.png"
-dest_files=["res://.godot/imported/dust_particles_01.png-4846ac1e478aa89ec8766dae03170a1e.ctex"]
+source_file="res://assets/effects/speed_trail.png"
+dest_files=["res://.godot/imported/speed_trail.png-62350040c88119e82f7135d4effc94e6.ctex"]
 
 [params]
 

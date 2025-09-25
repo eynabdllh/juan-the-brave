@@ -111,32 +111,31 @@ func _choose_reward() -> String:
 
 # Show a small floating icon + count near chest
 func _show_loot_popup(item: String, new_count: int) -> void:
-	var icon: Texture2D = null
-	if Engine.has_singleton("Inventory") or true:
-		# Access static dict via autoload name
-		icon = Inventory.ICONS.get(item, null)
-	if icon == null:
+	var icon: Texture2D = Inventory.ICONS.get(item, null)
+	var item_name := ""
+	match item:
+		"potion": item_name = "Potion"
+		"bread": item_name = "Bread"
+		"amulet": item_name = "Amulet"
+		_:
+			item_name = item.capitalize()
+
+	var scene: PackedScene = load("res://scenes/loot_popup.tscn")
+	if scene == null:
 		return
-	var popup := Control.new()
+	var popup: Control = scene.instantiate()
 	popup.name = "LootPopup"
-	popup.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(popup)
-	popup.position = Vector2(0, -20)
-
-	var tex := TextureRect.new()
-	tex.texture = icon
-	tex.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	tex.custom_minimum_size = Vector2(18, 18)
-	popup.add_child(tex)
-
-	var label := Label.new()
-	label.text = "x%d" % int(max(new_count, 1))
-	label.position = Vector2(20, 0)
-	popup.add_child(label)
-
-	var tw := create_tween()
-	tw.tween_property(popup, "position", popup.position + Vector2(0, -24), 0.6)
-	tw.tween_callback(Callable(popup, "queue_free"))
+	# Prefer a local anchor if present so you can adjust in the editor
+	var anchor := get_node_or_null("PopupAnchor")
+	if anchor and anchor is Node2D:
+		popup.global_position = (anchor as Node2D).global_position
+	else:
+		popup.global_position = global_position + Vector2(0, -20)
+	popup.set_anchors_preset(Control.PRESET_CENTER)
+	var text := "%s x%d" % [item_name, int(max(new_count, 1))]
+	popup.call_deferred("setup", icon, text)
+	popup.call_deferred("play_and_free")
 
 func _apply_potion() -> void:
 	# Random effect: damage up OR speed up OR invincibility

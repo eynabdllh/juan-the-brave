@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dnu416o1gqui"
-path="res://.godot/imported/skeleton.png-215cebd399e542f68f7bfaf5eb1266de.ctex"
+uid="uid://b6pjups5f7epd"
+path="res://.godot/imported/Trees_animation.png-ff5d863ac29de814870168f779191d99.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/characters/skeleton.png"
-dest_files=["res://.godot/imported/skeleton.png-215cebd399e542f68f7bfaf5eb1266de.ctex"]
+source_file="res://assets/map4/Trees_animation.png"
+dest_files=["res://.godot/imported/Trees_animation.png-ff5d863ac29de814870168f779191d99.ctex"]
 
 [params]
 
