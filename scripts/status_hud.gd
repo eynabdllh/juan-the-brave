@@ -154,4 +154,3 @@ func _unhandled_input(event: InputEvent) -> void:
 		var key := event as InputEventKey
 		if key.keycode == KEY_ESCAPE:
 			_on_options_back_pressed()
-

@@ -5272,6 +5272,7 @@ position = Vector2(316, 280)
 [node name="InventoryUI" parent="." instance=ExtResource("25_xgqkh")]
 
 [node name="StatusHUD" parent="." instance=ExtResource("26_munwf")]
+layer = 1
 
 [node name="Chest4" parent="." instance=ExtResource("24_ctatt")]
 position = Vector2(161, 69)

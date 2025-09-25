@@ -8318,7 +8318,6 @@ script = ExtResource("15_s0n5c")
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
-
 position = Vector2(242, 803)
 polygon = PackedVector2Array(2028, -893, 1979, -790, 3563, -790, 3565, -432, 3563, -150, 3555, -150, 1979, -151, 1979, -790, 1890, -210, 1966, -54, 2311, -51, 3617, -50, 3640, -455, 3589, -855)
 
@@ -8391,4 +8390,3 @@ position = Vector2(3751, 285)
 [node name="InventoryUI" parent="." instance=ExtResource("17_82fti")]
 
 [node name="StatusHUD" parent="." instance=ExtResource("18_krloe")]
-

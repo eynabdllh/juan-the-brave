@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://52q3qvla7x8e"]
+[gd_scene load_steps=8 format=3 uid="uid://52q3qvla7x8e"]
 
 [ext_resource type="Script" uid="uid://v8ro8jxjuqyc" path="res://scripts/status_hud.gd" id="1_script"]
 [ext_resource type="FontFile" uid="uid://ceqa1xt1morwi" path="res://assets/font/superstar_memesbruh03.ttf" id="2_ev5tf"]
@@ -25,11 +25,11 @@ layer = 100
 script = ExtResource("1_script")
 
 [node name="Root" type="MarginContainer" parent="."]
-mouse_filter = 2
 offset_left = 8.0
 offset_top = 8.0
 offset_right = 508.0
 offset_bottom = 169.785
+mouse_filter = 2
 theme_override_constants/margin_left = 15
 
 [node name="Health" type="VBoxContainer" parent="Root"]
@@ -56,14 +56,11 @@ value = 100.0
 show_percentage = false
 
 [node name="OptionsButton" type="MenuButton" parent="Root/Health/BarRow"]
-layout_mode = 2
-text = "Options"
-tooltip_text = "Open options"
-flat = false
-focus_mode = 0
 custom_minimum_size = Vector2(28, 25)
-mouse_filter = 0
-disabled = false
+layout_mode = 2
+tooltip_text = "Open options"
+text = "Options"
+flat = false
 
 [node name="BottomRow" type="HBoxContainer" parent="Root"]
 layout_mode = 2
@@ -97,6 +94,26 @@ stretch_mode = 5
 [node name="Buffs" type="HBoxContainer" parent="Root/BottomRow"]
 layout_mode = 2
 theme_override_constants/separation = 8
+
+[node name="BuffTemplate" type="HBoxContainer" parent="Root/BottomRow/Buffs"]
+visible = false
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="Root/BottomRow/Buffs/BuffTemplate"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Root/BottomRow/Buffs/BuffTemplate"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.615686, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.476172, 0.351956, 0.18882, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 0
+text = "Effect 10s"
 
 [node name="HealthP2" type="VBoxContainer" parent="Root"]
 visible = false
@@ -138,7 +155,6 @@ text = "0/0"
 
 [node name="OptionsPanel" type="Panel" parent="."]
 visible = false
-mouse_filter = 0
 offset_left = 20.0
 offset_top = 20.0
 offset_right = 260.0
@@ -192,29 +208,8 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color(0, 0, 0, 0.35)
-mouse_filter = 0
-
-[node name="BuffTemplate" type="HBoxContainer" parent="Root/BottomRow/Buffs"]
-visible = false
-layout_mode = 2
-
-[node name="Icon" type="TextureRect" parent="Root/BottomRow/Buffs/BuffTemplate"]
-custom_minimum_size = Vector2(60, 60)
-layout_mode = 2
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Label" type="Label" parent="Root/BottomRow/Buffs/BuffTemplate"]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.615686, 0, 1)
-theme_override_colors/font_shadow_color = Color(0.476172, 0.351956, 0.18882, 1)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_constants/shadow_offset_x = 2
-theme_override_constants/shadow_offset_y = 1
-theme_override_constants/shadow_outline_size = 0
-text = "Effect 10s"
 
 [connection signal="pressed" from="Root/Health/BarRow/OptionsButton" to="." method="_on_options_button_pressed"]
+[connection signal="toggled" from="OptionsPanel/VBox/Fullscreen" to="." method="_on_fullscreen_toggled"]
 [connection signal="pressed" from="OptionsPanel/VBox/Resume" to="." method="_on_options_resume_pressed"]
 [connection signal="pressed" from="OptionsPanel/VBox/ExitGame" to="." method="_on_options_exit_pressed"]
-[connection signal="toggled" from="OptionsPanel/VBox/Fullscreen" to="." method="_on_fullscreen_toggled"]
