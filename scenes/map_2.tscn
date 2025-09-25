@@ -22,6 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://pqev0pylwnbw" path="res://scenes/skeleton.tscn" id="20_vceer"]
 [ext_resource type="PackedScene" uid="uid://bpov77kuwgcyw" path="res://scenes/inventory_ui.tscn" id="21_oyq3d"]
 [ext_resource type="PackedScene" uid="uid://52q3qvla7x8e" path="res://scenes/status_hud.tscn" id="22_m5rp5"]
+
 [ext_resource type="Script" uid="uid://bguy5lx5ehe7" path="res://scripts/map_2.gd" id="23_map2"]
 [ext_resource type="PackedScene" uid="uid://4vobs5t2g7d8" path="res://scenes/zombie.tscn" id="24_1m8sb"]
 
