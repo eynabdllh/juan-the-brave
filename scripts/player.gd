@@ -46,6 +46,10 @@ func _ready():
         var g = get_node("/root/global")
         if g.has_method("set_player_health"):
             g.set_player_health(health)
+    # If this is Player 2, also update the secondary HUD bar directly
+    var hud := get_tree().root.get_node_or_null("StatusHUD")
+    if hud and self.name == "player2" and hud.has_method("set_player2_health"):
+        hud.set_player2_health(health)
     # Prepare speed trail (created lazily on first use)
     
 func show_monologue(message: String):
@@ -134,7 +138,12 @@ func attack():
 
 func _on_deal_attack_timer_timeout():
     for body in $player_hitbox.get_overlapping_bodies():
-        if body != self and body.has_method("take_damage"):
+        # Prevent friendly fire: never damage other players
+        if body == self:
+            continue
+        if body.is_in_group("player"):
+            continue
+        if body.has_method("take_damage"):
             var dmg = base_attack_damage + (global.player_damage_bonus if Engine.is_editor_hint() == false else 0)
             body.take_damage(dmg, self)
     
@@ -183,6 +192,10 @@ func update_health():
         var g = get_node("/root/global")
         if g.has_method("set_player_health"):
             g.set_player_health(health)
+    # Update P2 HUD if applicable
+    var hud := get_tree().root.get_node_or_null("StatusHUD")
+    if hud and self.name == "player2" and hud.has_method("set_player2_health"):
+        hud.set_player2_health(health)
     
 # --- Speed trail API (used by potion "Speed Up") ---
 func start_speed_trail(duration: float = 15.0) -> void:
