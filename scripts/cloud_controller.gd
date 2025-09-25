@@ -1,7 +1,7 @@
 # cloud_controller.gd
 extends ColorRect
 
-func _process(delta):
+func _process(_delta):
 	# This line takes the shader material...
 	# ...and sets its "screen_size" parameter...
 	# ...to the actual size of the game window's viewport.

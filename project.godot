@@ -22,6 +22,8 @@ global="*res://scripts/global.gd"
 InteractionManager="*res://interaction/interactionManager.tscn"
 MainMenu="*res://scenes/main_menu.tscn"
 InventoryUI="*res://scripts/inventory_ui.gd"
+MultiplayerManager="*res://scripts/multiplayer_manager.gd"
+MultiplayerAutoload="*res://scripts/multiplayer_autoload.gd"
 
 [display]
 

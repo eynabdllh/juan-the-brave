@@ -1,0 +1,16 @@
+[gd_scene load_steps=8 format=3 uid="uid://bq3bs7j40w5n8"]
+
+[ext_resource type="PackedScene" uid="uid://bq3bs7j40w5n7" path="res://scenes/player.tscn" id="1_ruby"]
+[ext_resource type="Script" path="res://scripts/ruby_player.gd" id="2_ruby"]
+[ext_resource type="Texture2D" path="res://assets/Dark Forest 1.0/Dark Forest 1.0/Character Ruby 0.6/No Sword/Idle/Ruby Idle-Sheet.png" id="3_ruby_idle"]
+[ext_resource type="Texture2D" path="res://assets/Dark Forest 1.0/Dark Forest 1.0/Character Ruby 0.6/No Sword/Run/Ruby Run-Sheet.png" id="4_ruby_run"]
+[ext_resource type="Texture2D" path="res://assets/Dark Forest 1.0/Dark Forest 1.0/Character Ruby 0.6/No Sword/Attack (punch)/Ruby Punch-Sheet.png" id="5_ruby_attack"]
+[ext_resource type="Texture2D" path="res://assets/Dark Forest 1.0/Dark Forest 1.0/Character Ruby 0.6/With Sword/Dash/Dash-Sheet.png" id="6_ruby_dash"]
+[ext_resource type="Texture2D" path="res://assets/Dark Forest 1.0/Dark Forest 1.0/Character Ruby 0.6/No Sword/Damage/Ruby Death-Sheet.png" id="7_ruby_damage"]
+
+[node name="ruby_player" instance=ExtResource("1_ruby")]
+script = ExtResource("2_ruby")
+
+[node name="AnimatedSprite2D" parent="." index="0"]
+# Ruby will use her own sprite animations
+# The sprite frames will need to be set up in the editor or via code

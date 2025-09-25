@@ -23,13 +23,13 @@ func _ready():
 	# --- NEW: Check if this enemy was already killed ---
 	if global.killed_enemies.has(self.name):
 		# If our name is in the global list of dead enemies, remove ourself instantly.
-		queue_free()
+		call_deferred("queue_free")
 		return # Stop further processing for this dead enemy
 
 	$AnimatedSprite2D.play(last_walk_animation)
 	$AnimatedSprite2D.stop()
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	# (The rest of the script is now correct, no changes needed in the main loop)
 	if not is_alive or is_attacking or is_knocked_back:
 		move_and_slide()
@@ -60,12 +60,12 @@ func die():
 	
 	$AnimatedSprite2D.play("death")
 	await $AnimatedSprite2D.animation_finished
-	queue_free()
+	call_deferred("queue_free")
 
 # (All other functions are correct, no changes needed)
 func find_player_in_hitbox() -> CharacterBody2D:
 	for body in $enemy_hitbox.get_overlapping_bodies():
-		if body.is_in_group("player"): return body
+		if body.is_in_group("players"): return body  # Updated to match networked players
 	return null
 func attack_player():
 	velocity = Vector2.ZERO; is_attacking = true; can_attack = false
@@ -99,7 +99,7 @@ func idle():
 func _on_animated_sprite_2d_animation_finished():
 	if "attack" in $AnimatedSprite2D.animation: is_attacking = false; $EnemyAttackTimer.start(attack_rate)
 func _on_detection_area_body_entered(body: Node2D):
-	if body.is_in_group("player"): player = body
+	if body.is_in_group("players"): player = body  # Updated to match networked players
 func _on_detection_area_body_exited(body: Node2D):
 	if body == player: player = null
 func _on_knockback_timer_timeout():

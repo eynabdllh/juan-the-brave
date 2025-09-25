@@ -1,0 +1,70 @@
+# Multiplayer Scene Template
+# This file shows the exact node structure needed for the multiplayer scenes
+
+## multiplayer_lobby.tscn Structure:
+Node2D (name: "MultiplayerLobby")
+├── script: res://scripts/multiplayer_manager.gd
+├── MultiplayerSpawner (name: "MultiplayerSpawner")
+│   └── Spawn Path: NodePath(".")
+├── MultiplayerSynchronizer (name: "MultiplayerSynchronizer") 
+│   ├── Root Path: NodePath(".")
+│   └── Replication Interval: 0.05
+└── CanvasLayer (name: "UI")
+    └── Control (name: "MainContainer")
+        ├── anchor_left: 0.5
+        ├── anchor_top: 0.5  
+        ├── anchor_right: 0.5
+        ├── anchor_bottom: 0.5
+        ├── offset_left: -200
+        ├── offset_top: -150
+        ├── offset_right: 200
+        ├── offset_bottom: 150
+        └── VBoxContainer (name: "VBox")
+            ├── Label (name: "StatusLabel")
+            │   ├── text: "Ready to connect"
+            │   ├── horizontal_alignment: 1 (CENTER)
+            │   └── autowrap_mode: 2 (WORD_SMART)
+            ├── HSeparator
+            ├── HBoxContainer (name: "ButtonContainer")
+            │   ├── Button (name: "HostButton")
+            │   │   └── text: "Host Game"
+            │   └── Button (name: "JoinButton")
+            │       └── text: "Join Game"
+            └── LineEdit (name: "IPInput")
+                ├── placeholder_text: "Enter Host IP Address"
+                └── text: "127.0.0.1"
+
+## networked_player.tscn Structure:
+# Copy your existing player.tscn and modify:
+
+CharacterBody2D (name: "NetworkedPlayer")
+├── script: res://scripts/networked_player.gd  # CHANGE THIS
+├── MultiplayerSynchronizer (name: "MultiplayerSynchronizer")  # ADD THIS
+│   ├── Root Path: NodePath(".")
+│   └── Replication Interval: 0.05
+├── AnimatedSprite2D (existing)
+├── CollisionShape2D (existing)
+├── [... all other existing child nodes ...]
+└── [... keep all existing structure ...]
+
+## Key Configuration Points:
+
+1. MultiplayerSpawner in lobby scene:
+   - Must have Spawn Path set to "." (current node)
+   - Spawnable scenes will be set via script
+
+2. MultiplayerSynchronizer nodes:
+   - Set replication interval to 0.05 (20 FPS)
+   - Root path should be "." for both scenes
+
+3. UI Layout:
+   - Use anchors for responsive design
+   - Center the UI container on screen
+   - Make status label large enough for long messages
+
+4. Script Assignment:
+   - Lobby root node: multiplayer_manager.gd
+   - Player root node: networked_player.gd
+
+5. Export Variables:
+   - In lobby scene inspector, assign networked_player.tscn to Player Scene property

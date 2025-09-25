@@ -5412,6 +5412,13 @@ position = Vector2(39, 1)
 script = ExtResource("1_e3hyu")
 key_scene = ExtResource("2_q5onr")
 
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath(".")
+spawn_limit = 10
+
+[node name="SpawnPoint" type="Node2D" parent="."]
+position = Vector2(59, 90)
+
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true
 position = Vector2(10, -1)

@@ -108,6 +108,20 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_rtw2f")
 theme_override_styles/normal = SubResource("StyleBoxFlat_oa1go")
 text = "Option"
 
+[node name="multiplayer" type="Button" parent="MainButtons"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/hover = SubResource("StyleBoxFlat_8ln24")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_rtw2f")
+theme_override_styles/normal = SubResource("StyleBoxFlat_oa1go")
+text = "Multiplayer"
+
 [node name="exit" type="Button" parent="MainButtons"]
 layout_mode = 2
 size_flags_vertical = 3
@@ -217,6 +231,7 @@ script = ExtResource("5_8ln24")
 
 [connection signal="pressed" from="MainButtons/play" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="MainButtons/option" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="MainButtons/multiplayer" to="." method="_on_multiplayer_pressed"]
 [connection signal="pressed" from="MainButtons/exit" to="." method="_on_exit_pressed"]
 [connection signal="pressed" from="Settings/back" to="." method="_on_back_options_pressed"]
 [connection signal="value_changed" from="Settings/VBoxContainer/AudioControl" to="Settings/VBoxContainer/AudioControl" method="_on_value_changed"]

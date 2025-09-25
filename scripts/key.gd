@@ -39,4 +39,4 @@ func collect_key():
 	global.collect_key()
 	
 	# The key disappears
-	queue_free()
+	call_deferred("queue_free")
