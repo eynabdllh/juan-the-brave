@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=4 uid="uid://d4lklloy2ljxv"]
+[gd_scene load_steps=34 format=4 uid="uid://wekf58royodb"]
 
 [ext_resource type="Texture2D" uid="uid://by12y5ynpaymo" path="res://assets/map4/bird_fly_animation.png" id="1_kuiki"]
 [ext_resource type="Texture2D" uid="uid://b2lngrjtnw23o" path="res://assets/map4/bird_jump_animation.png" id="2_4buge"]
@@ -15,7 +15,7 @@
 [ext_resource type="Shader" uid="uid://c0se7py3qjn2q" path="res://shaders/world.gdshader" id="12_aqy83"]
 [ext_resource type="Script" uid="uid://24wkpl4317uw" path="res://scripts/cloud_controller.gd" id="13_fk82e"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_c1biu"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4buge"]
 texture = ExtResource("1_kuiki")
 1:1/0 = 0
 2:1/0 = 0
@@ -249,7 +249,7 @@ texture = ExtResource("1_kuiki")
 25:60/0 = 0
 26:60/0 = 0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_d1cae"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ifqr2"]
 texture = ExtResource("2_4buge")
 1:0/0 = 0
 3:0/0 = 0
@@ -381,7 +381,7 @@ texture = ExtResource("2_4buge")
 37:5/0 = 0
 39:5/0 = 0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2lktt"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gwav1"]
 texture = ExtResource("3_ifqr2")
 0:0/0 = 0
 1:0/0 = 0
@@ -588,7 +588,7 @@ texture = ExtResource("3_ifqr2")
 15:11/0 = 0
 16:11/0 = 0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ifqr2"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_13f2m"]
 texture = ExtResource("4_4buge")
 1:1/0 = 0
 2:1/0 = 0
@@ -862,7 +862,7 @@ texture = ExtResource("4_4buge")
 6:13/0 = 0
 6:13/0/y_sort_origin = 15
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tbtcb"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jjxlj"]
 texture = ExtResource("4_gwav1")
 1:0/0 = 0
 3:0/0 = 0
@@ -1018,7 +1018,7 @@ texture = ExtResource("4_gwav1")
 4:33/0 = 0
 5:33/0 = 0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5aoim"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6lgpx"]
 texture = ExtResource("5_13f2m")
 0:0/0 = 0
 1:0/0 = 0
@@ -1359,7 +1359,7 @@ texture = ExtResource("5_13f2m")
 16:17/0 = 0
 19:17/0 = 0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2yljg"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_x8ljh"]
 texture = ExtResource("6_jjxlj")
 0:0/0 = 0
 1:0/0 = 0
@@ -3178,7 +3178,7 @@ texture = ExtResource("6_jjxlj")
 34:64/0 = 0
 35:64/0 = 0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1nsve"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_s4g2s"]
 texture = ExtResource("7_6lgpx")
 11:6/0 = 0
 12:6/0 = 0
@@ -3516,14 +3516,14 @@ texture = ExtResource("7_6lgpx")
 [sub_resource type="TileSet" id="TileSet_w86sr"]
 physics_layer_0/collision_layer = 1
 physics_layer_0/collision_mask = 6
-sources/0 = SubResource("TileSetAtlasSource_c1biu")
-sources/1 = SubResource("TileSetAtlasSource_d1cae")
-sources/2 = SubResource("TileSetAtlasSource_tbtcb")
-sources/4 = SubResource("TileSetAtlasSource_5aoim")
-sources/5 = SubResource("TileSetAtlasSource_2yljg")
-sources/9 = SubResource("TileSetAtlasSource_1nsve")
-sources/10 = SubResource("TileSetAtlasSource_2lktt")
-sources/13 = SubResource("TileSetAtlasSource_ifqr2")
+sources/0 = SubResource("TileSetAtlasSource_4buge")
+sources/1 = SubResource("TileSetAtlasSource_ifqr2")
+sources/2 = SubResource("TileSetAtlasSource_jjxlj")
+sources/4 = SubResource("TileSetAtlasSource_6lgpx")
+sources/5 = SubResource("TileSetAtlasSource_x8ljh")
+sources/9 = SubResource("TileSetAtlasSource_s4g2s")
+sources/10 = SubResource("TileSetAtlasSource_gwav1")
+sources/13 = SubResource("TileSetAtlasSource_13f2m")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_knj12"]
 shader = ExtResource("8_x8ljh")
@@ -3538,7 +3538,7 @@ shader_parameter/heightOffset = 0.0
 shader_parameter/offset = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iw8g3"]
-size = Vector2(17.75, 23.5)
+size = Vector2(17.75, 26.75)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jkuvt"]
 atlas = ExtResource("10_rg2w0")
@@ -3645,12 +3645,12 @@ position = Vector2(312, 126)
 script = ExtResource("9_s4g2s")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NextLevelDoor"]
-position = Vector2(-111, 20)
+position = Vector2(-80, 27.375)
 shape = SubResource("RectangleShape2D_iw8g3")
 
 [node name="DoorSprite" type="AnimatedSprite2D" parent="NextLevelDoor"]
-position = Vector2(-111, 21)
-scale = Vector2(1.53125, 1.8125)
+position = Vector2(-80.3125, 28.5625)
+scale = Vector2(1.28906, 1.82031)
 sprite_frames = SubResource("SpriteFrames_6fxf4")
 animation = &"locked"
 
@@ -3666,10 +3666,10 @@ scale = Vector2(1.13504, 2.01626)
 shape = SubResource("RectangleShape2D_8f8w2")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
-visible = false
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
-polygon = PackedVector2Array(128, 80, 123, 94, 127, 102, 124, 112, 115, 112, 108, 123, 107, 130, 109, 143, 118, 155, 110, 162, 111, 174, 107, 179, 112, 195, 124, 193, 126, 207, 114, 209, 114, 223, 185, 223, 183, 211, 178, 204, 177, 190, 179, 178, 188, 169, 183, 162, 177, 154, 176, 145, 173, 142, 172, 131, 175, 129, 172, 125, 172, 120, 167, 113, 162, 108, 161, 99, 163, 88, 163, 84, 160, 81, 152, 82, 132, 81, 137, -21, 362, -17, 337, 258, -29, 235, -14, -41, 133, -8)
+position = Vector2(86, 57)
+polygon = PackedVector2Array(-93, -69, -86, -50, 313, -50, 314, 249, 168, 249, 168, 256, 118, 256, 119, 248, -87, 250, -86, -50, -92, -50, -105, 273, 110, 266, 182, 265, 339, 274, 331, -62)
 
 [node name="player" parent="." instance=ExtResource("11_4m0g4")]
 position = Vector2(227, 252)
