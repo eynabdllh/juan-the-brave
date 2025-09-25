@@ -8,7 +8,6 @@ var is_server: bool = false
 var _peer: ENetMultiplayerPeer
 var _spawned_players := {} # peer_id -> Node
 var _active_slippers := {} # owner_peer_id -> Node (server-only)
-
 func _ready() -> void:
 	# Do nothing until menu calls us
 	pass
@@ -24,9 +23,13 @@ func start_local() -> void:
 		multiplayer.multiplayer_peer = _peer
 		is_server = true
 		_connect_mp_signals()
+	# Mark for local coop so world spawns Player 2
+	if has_node("/root/global"):
+		get_node("/root/global").local_coop = true
 	_goto_world()
 
 func start_host() -> void:
+	# Normal host (LAN). No local coop by default
 	if multiplayer.multiplayer_peer:
 		return
 	_peer = ENetMultiplayerPeer.new()
@@ -37,9 +40,12 @@ func start_host() -> void:
 	multiplayer.multiplayer_peer = _peer
 	is_server = true
 	_connect_mp_signals()
+	if has_node("/root/global"):
+		get_node("/root/global").local_coop = false
 	_goto_world()
 
 func start_client(host_ip: String) -> void:
+	# Join LAN host
 	if multiplayer.multiplayer_peer:
 		return
 	if host_ip.is_empty():
@@ -52,13 +58,14 @@ func start_client(host_ip: String) -> void:
 	multiplayer.multiplayer_peer = _peer
 	is_server = false
 	_connect_mp_signals()
+	if has_node("/root/global"):
+		get_node("/root/global").local_coop = false
 	_goto_world()
 
 func _connect_mp_signals() -> void:
 	multiplayer.peer_connected.connect(_on_peer_connected)
 	multiplayer.peer_disconnected.connect(_on_peer_disconnected)
 	multiplayer.connection_failed.connect(_on_connection_failed)
-	multiplayer.server_disconnected.connect(_on_server_disconnected)
 
 func _goto_world() -> void:
 	get_tree().change_scene_to_file("res://scenes/world.tscn")

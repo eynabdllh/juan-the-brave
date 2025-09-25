@@ -20,6 +20,9 @@ var player_start_pos = Vector2(-9, 29)
 var game_first_loadin = true
 var player_has_key = false
 
+# Local multiplayer flag – when true, world spawns a second local player (arrow keys)
+var local_coop: bool = false
+
 # --- NEW: This will store the names of enemies we have killed ---
 var killed_enemies = []
 

@@ -15,6 +15,13 @@ const speed = 100
 var current_dir = "front"
 @export var base_attack_damage: int = 20
 
+# Per-instance input bindings (so P2 can use arrow keys)
+@export var action_left: String = "ui_left"
+@export var action_right: String = "ui_right"
+@export var action_up: String = "ui_up"
+@export var action_down: String = "ui_down"
+@export var use_local_camera: bool = true
+
 # Temporary visual FX state for invincibility (amulet)
 var _invincible_fx_active := false
 var _invincible_fx_tween: Tween
@@ -83,7 +90,7 @@ func handle_input():
     if Input.is_action_just_pressed("attack") and not attack_ip:
         attack()
 
-    var input_vector = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+    var input_vector = Input.get_vector(action_left, action_right, action_up, action_down)
     # Apply global speed multiplier buff if any
     velocity = input_vector.normalized() * speed * (global.player_speed_mult if Engine.is_editor_hint() == false else 1.0)
     _update_speed_trail_direction()
@@ -161,6 +168,11 @@ func _on_hurt_effect_timer_timeout(): $AnimatedSprite2D.modulate = Color.WHITE
 func _on_knockback_timer_timeout(): is_knocked_back = false
 
 func current_camera():
+    if not use_local_camera:
+        if has_node("world_camera"): $world_camera.enabled = false
+        if has_node("doorside_camera"): $doorside_camera.enabled = false
+        if has_node("cemetery_camera"): $cemetery_camera.enabled = false
+        return
     if global.current_scene == "world": $world_camera.enabled = true; $doorside_camera.enabled = false
     elif global.current_scene == "door_side": $world_camera.enabled = false; $doorside_camera.enabled = true
     elif global.current_scene == "map_2": $world_camera.enabled = false; $cemetery_camera.enabled = true

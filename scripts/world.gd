@@ -7,6 +7,7 @@ var enemies_defeated = 0
 
 func _ready():
 	_ensure_status_hud()
+	_ensure_local_coop_actions()
 	
 	var enemies = get_tree().get_nodes_in_group("enemies")
 	total_enemies = enemies.size()
@@ -36,11 +37,14 @@ func _ready():
 	else:
 		$player.position = global.player_exit_doorside_pos
 
+	# --- Local Multiplayer: ensure two players if requested ---
+	if has_node("/root/global") and get_node("/root/global").local_coop:
+		_setup_local_coop()
+
 	# --- NEW: Respawn key if it was dropped previously and not collected ---
 	if global.key_dropped and not global.player_has_key:
 		print("Respawning dropped key at ", global.key_position)
 		spawn_key(global.key_position)
-
 func _on_enemy_defeated(enemy_position: Vector2, enemy_name: String):
 	enemies_defeated += 1
 	print("Enemy defeated! ", enemies_defeated, "/", total_enemies)
@@ -90,3 +94,49 @@ func _ensure_status_hud() -> void:
 			var hud: Node = hud_scene.instantiate()
 			hud.name = "StatusHUD"
 			get_tree().root.add_child(hud)
+
+# --- Local Multiplayer helpers ---
+func _ensure_local_coop_actions() -> void:
+	# Create distinct actions only once
+	var add := func(action: String, keycode: int):
+		if not InputMap.has_action(action):
+			InputMap.add_action(action)
+		var ev := InputEventKey.new()
+		ev.physical_keycode = keycode
+		InputMap.action_add_event(action, ev)
+
+	# P1: WASD
+	add.call("p1_left", KEY_A)
+	add.call("p1_right", KEY_D)
+	add.call("p1_up", KEY_W)
+	add.call("p1_down", KEY_S)
+
+	# P2: Arrow keys
+	add.call("p2_left", KEY_LEFT)
+	add.call("p2_right", KEY_RIGHT)
+	add.call("p2_up", KEY_UP)
+	add.call("p2_down", KEY_DOWN)
+
+func _setup_local_coop() -> void:
+	# Configure existing player as P1 (WASD + with camera)
+	if $player.has_method("set"):
+		$player.action_left = "p1_left"
+		$player.action_right = "p1_right"
+		$player.action_up = "p1_up"
+		$player.action_down = "p1_down"
+		$player.use_local_camera = true
+
+	# Spawn Player 2 (Arrow keys, no camera)
+	var ps: PackedScene = load("res://scenes/player.tscn")
+	if ps:
+		var p2: Node = ps.instantiate()
+		if p2:
+			p2.name = "player2"
+			if p2.has_method("set"):
+				p2.action_left = "p2_left"
+				p2.action_right = "p2_right"
+				p2.action_up = "p2_up"
+				p2.action_down = "p2_down"
+				p2.use_local_camera = false
+			p2.global_position = $player.global_position + Vector2(24, 0)
+			add_child(p2)
