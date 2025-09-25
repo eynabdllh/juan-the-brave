@@ -4,7 +4,7 @@ extends Control
 @onready var settings: Panel = $Settings
 @onready var multiplayer_panel: Panel = $Multiplayer
 
-func _process(delta):
+func _process(_delta):
 	pass
 
 func _ready():
@@ -48,19 +48,37 @@ func _on_mp_back_pressed() -> void:
 	_ready()
 
 func _on_mp_host_pressed() -> void:
-	# Defer to multiplayer manager scene if present; else go straight to world
-	if has_node("/root/MultiplayerManager"):
-		get_node("/root/MultiplayerManager").call_deferred("start_host")
+	var mp := _get_or_create_mp()
+	if mp:
+		mp.call_deferred("start_host")
 	else:
 		get_tree().change_scene_to_file("res://scenes/world.tscn")
 
 func _on_mp_join_pressed() -> void:
 	# Default join to localhost; replace with IP prompt scene if needed
-	if has_node("/root/MultiplayerManager"):
-		get_node("/root/MultiplayerManager").call_deferred("start_client", "127.0.0.1")
+	var mp := _get_or_create_mp()
+	if mp:
+		mp.call_deferred("start_client", "127.0.0.1")
 	else:
 		get_tree().change_scene_to_file("res://scenes/world.tscn")
 
 func _on_mp_local_pressed() -> void:
-	# Enable local co-op by going to world directly; world.gd can spawn P2
-	get_tree().change_scene_to_file("res://scenes/world.tscn")
+	# Start authoritative local multiplayer (create manager if not autoloaded)
+	var mp := _get_or_create_mp()
+	if mp:
+		mp.call_deferred("start_local")
+	else:
+		get_tree().change_scene_to_file("res://scenes/world.tscn")
+func _get_or_create_mp() -> Node:
+	var root := get_tree().root
+	var node := root.get_node_or_null("MultiplayerManager")
+	if node:
+		return node
+	# If the autoload is not set, create an instance manually
+	var script: Script = load("res://scripts/multiplayer_manager.gd")
+	if script == null:
+		return null
+	var inst: Node = script.new()
+	inst.name = "MultiplayerManager"
+	root.add_child(inst)
+	return inst
