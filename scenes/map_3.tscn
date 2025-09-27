@@ -1,6 +1,7 @@
-[gd_scene load_steps=32 format=4 uid="uid://xgt12br4wkyc"]
+[gd_scene load_steps=34 format=4 uid="uid://xgt12br4wkyc"]
 
 [ext_resource type="Texture2D" uid="uid://dfvq04856ga0p" path="res://assets/map3/Ground_rocks.png" id="1_iqnx3"]
+[ext_resource type="Script" uid="uid://b1h3a0rntrbt" path="res://scripts/map_3.gd" id="1_krloe"]
 [ext_resource type="Texture2D" uid="uid://bklk7y21fcbl4" path="res://assets/map3/objects1.png" id="2_xn387"]
 [ext_resource type="Texture2D" uid="uid://bl4j2bfgvuxyr" path="res://assets/map3/Animation1.png" id="3_an2rc"]
 [ext_resource type="Texture2D" uid="uid://dlw43ugb1uvxs" path="res://assets/map3/Details.png" id="4_jl3j3"]
@@ -8257,9 +8258,13 @@ shader_parameter/density = 0.671
 shader_parameter/edge_softness = 0.1
 shader_parameter/screen_size = Vector2(0, 0)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_82fti"]
+size = Vector2(95.625, 32.625)
+
 [node name="Map3" type="Node2D"]
 y_sort_enabled = true
 position = Vector2(-2221, -13)
+script = ExtResource("1_krloe")
 
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true
@@ -8306,10 +8311,10 @@ material = SubResource("ShaderMaterial_7b4kn")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 2209.0
-offset_top = 6.0
-offset_right = 3828.0
-offset_bottom = 672.0
+offset_left = 2222.0
+offset_top = 14.0
+offset_right = 3812.0
+offset_bottom = 654.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.996368, 0.995856)
@@ -8390,3 +8395,14 @@ position = Vector2(3751, 285)
 [node name="InventoryUI" parent="." instance=ExtResource("17_82fti")]
 
 [node name="StatusHUD" parent="." instance=ExtResource("18_krloe")]
+
+[node name="door_side" type="Area2D" parent="."]
+position = Vector2(3227, 1087)
+collision_layer = 8
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="door_side"]
+position = Vector2(345, -1087)
+shape = SubResource("RectangleShape2D_82fti")
+
+[connection signal="body_entered" from="door_side" to="." method="_on_door_side_body_entered"]

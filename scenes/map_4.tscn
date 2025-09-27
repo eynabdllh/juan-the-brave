@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=4 uid="uid://5pxtgalwbbcg"]
+[gd_scene load_steps=33 format=4 uid="uid://5pxtgalwbbcg"]
 
 [ext_resource type="Texture2D" uid="uid://by12y5ynpaymo" path="res://assets/map4/bird_fly_animation.png" id="1_kuiki"]
 [ext_resource type="Texture2D" uid="uid://b2lngrjtnw23o" path="res://assets/map4/bird_jump_animation.png" id="2_4buge"]
@@ -3405,9 +3405,6 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8f8w2"]
 size = Vector2(24.6687, 18.8468)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_6p07s"]
-size = Vector2(32.1477, 51.9325)
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ngkw3"]
 shader = ExtResource("12_aqy83")
 shader_parameter/cloud_color = Color(0.639216, 0.639216, 0.639216, 0.384314)
@@ -3421,6 +3418,7 @@ shader_parameter/screen_size = Vector2(0, 0)
 
 [node name="house" type="Node2D"]
 y_sort_enabled = true
+position = Vector2(0, -2)
 
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true
@@ -3462,6 +3460,7 @@ tile_map_data = PackedByteArray("AAAgAAcACQALAAIAAAAgAAgACQALAAIAAAAgAAkACQALAAI
 tile_set = SubResource("TileSet_w86sr")
 
 [node name="NextLevelDoor" type="StaticBody2D" parent="."]
+z_index = 1
 position = Vector2(312, 126)
 script = ExtResource("9_s4g2s")
 
@@ -3470,8 +3469,8 @@ position = Vector2(-80, 27.375)
 shape = SubResource("RectangleShape2D_iw8g3")
 
 [node name="DoorSprite" type="AnimatedSprite2D" parent="NextLevelDoor"]
-position = Vector2(-80.3125, 28.5625)
-scale = Vector2(1.28906, 1.82031)
+position = Vector2(-80.5, 28.5625)
+scale = Vector2(1.3125, 1.82031)
 sprite_frames = SubResource("SpriteFrames_6fxf4")
 animation = &"locked"
 
@@ -3490,32 +3489,20 @@ shape = SubResource("RectangleShape2D_8f8w2")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 position = Vector2(86, 57)
-polygon = PackedVector2Array(-93, -69, -86, -50, 313, -50, 314, 249, 168, 249, 168, 256, 118, 256, 119, 248, -87, 250, -86, -50, -92, -50, -105, 273, 110, 266, 182, 265, 339, 274, 331, -62)
+polygon = PackedVector2Array(-93, -69, -86, -50, 313, -50, 314, 249, 168, 249, 168, 256, 167, 249, 119, 248, -87, 250, -86, -50, -92, -50, -105, 273, 110, 266, 182, 265, 339, 274, 331, -62)
 
 [node name="player" parent="." instance=ExtResource("11_4m0g4")]
 position = Vector2(227, 298)
 
-[node name="door_exit" type="Area2D" parent="."]
-position = Vector2(-4, -4)
-collision_layer = 8
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="door_exit"]
-position = Vector2(146, 239)
-scale = Vector2(1.57865, 1.07601)
-shape = SubResource("RectangleShape2D_6p07s")
-
 [node name="cloud" type="ColorRect" parent="."]
-visible = false
 material = SubResource("ShaderMaterial_ngkw3")
-offset_left = 4.0
-offset_top = 15.0
-offset_right = 292.0
-offset_bottom = 317.0
+offset_top = 3.0
+offset_right = 400.0
+offset_bottom = 305.0
 script = ExtResource("13_fk82e")
 
 [node name="Area2D" type="Area2D" parent="."]
-position = Vector2(286, 282)
+position = Vector2(400, 304)
 
 [connection signal="body_entered" from="NextLevelDoor/InteractionArea" to="NextLevelDoor" method="_on_interaction_area_body_entered"]
 [connection signal="body_exited" from="NextLevelDoor/InteractionArea" to="NextLevelDoor" method="_on_interaction_area_body_exited"]

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c1rcc3jhg6w2o" path="res://scripts/main_menu.gd" id="1_ekxnf"]
 [ext_resource type="Texture2D" uid="uid://mpfbggjloyrs" path="res://assets/background/main_menu.png" id="2_bqqt6"]
-[ext_resource type="AudioStream" uid="uid://cm2ljbfves4nx" path="res://assets/music/main_menu.mp3" id="3_bqqt6"]
+[ext_resource type="AudioStream" uid="uid://cy1b6us2xqicb" path="res://assets/Dark Forest 1.0/Dark Forest 1.0/Soundtrack/01- Dark Forest.mp3" id="3_8ln24"]
 [ext_resource type="Script" uid="uid://cx7j1x63a26j3" path="res://scripts/audio_control.gd" id="4_wu84c"]
 [ext_resource type="Script" uid="uid://33iyc3sb1puf" path="res://scripts/fullscreen_control.gd" id="5_8ln24"]
 
@@ -137,7 +137,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_oa1go")
 text = "Exit"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_bqqt6")
+stream = ExtResource("3_8ln24")
 autoplay = true
 bus = &"Music"
 

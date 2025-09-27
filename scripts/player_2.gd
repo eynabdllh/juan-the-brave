@@ -36,9 +36,6 @@ func _ready():
 	$AnimatedSprite2D.play("front_idle")
 	$regen.start()
 	interact_prompt.hide()
-	# Ensure attack damage only happens once per attack press
-	if has_node("deal_attack_timer"):
-		$deal_attack_timer.one_shot = true
 	
 	$feedback_bubble.hide() 
 	# Hide in-world healthbar (we use the top-left HUD instead)
@@ -170,10 +167,6 @@ func take_damage(amount, attacker):
 	$HurtSound.play()
 	$AnimatedSprite2D.modulate = Color.RED
 	$HurtEffectTimer.start(0.2)
-
-func _on_hurt_effect_timer_timeout() -> void:
-	# Reset tint after hurt flash
-	$AnimatedSprite2D.modulate = Color.WHITE
 
 func heal(amount: int) -> void:
 	if health <= 0:

@@ -284,7 +284,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_a38lo")
 }],
-"loop": true,
+"loop": false,
 "name": &"death",
 "speed": 5.0
 }, {
@@ -505,7 +505,7 @@ animation = &"front_idle"
 offset = Vector2(0, -15)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(1, -2)
+position = Vector2(2, -1)
 shape = SubResource("CircleShape2D_g2els")
 
 [node name="world_camera" type="Camera2D" parent="."]
@@ -522,7 +522,7 @@ zoom = Vector2(4, 4)
 limit_left = 0
 limit_top = 0
 limit_right = 1168
-limit_bottom = 1440
+limit_bottom = 2000
 limit_smoothed = true
 rotation_smoothing_enabled = true
 
@@ -535,7 +535,17 @@ limit_bottom = 653
 limit_smoothed = true
 rotation_smoothing_enabled = true
 
+[node name="house_camera" type="Camera2D" parent="."]
+zoom = Vector2(4, 4)
+limit_left = 0
+limit_top = 0
+limit_right = 400
+limit_bottom = 304
+limit_smoothed = true
+rotation_smoothing_enabled = true
+
 [node name="player_hitbox" type="Area2D" parent="."]
+visible = false
 collision_mask = 7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="player_hitbox"]
@@ -557,13 +567,31 @@ limit_bottom = 207
 limit_smoothed = true
 rotation_smoothing_enabled = true
 
+[node name="doorside1_camera" type="Camera2D" parent="."]
+zoom = Vector2(4, 4)
+limit_left = 0
+limit_top = 0
+limit_right = 403
+limit_bottom = 328
+limit_smoothed = true
+rotation_smoothing_enabled = true
+
+[node name="doorside2_camera" type="Camera2D" parent="."]
+zoom = Vector2(4, 4)
+limit_left = 0
+limit_top = 0
+limit_right = 284
+limit_bottom = 356
+limit_smoothed = true
+rotation_smoothing_enabled = true
+
 [node name="healthbar" type="ProgressBar" parent="."]
 modulate = Color(0.320798, 0.824011, 0, 1)
 self_modulate = Color(0.036968, 0.66636, 0.0347833, 1)
 offset_left = -8.0
-offset_top = -20.0
+offset_top = -21.0
 offset_right = 182.0
-offset_bottom = 7.0
+offset_bottom = 6.0
 scale = Vector2(0.1, 0.1)
 show_percentage = false
 
@@ -587,6 +615,7 @@ one_shot = true
 one_shot = true
 
 [node name="InteractPrompt" type="AnimatedSprite2D" parent="."]
+z_index = 1
 position = Vector2(1, -26)
 scale = Vector2(1.00293, 0.979347)
 sprite_frames = SubResource("SpriteFrames_nubpm")
@@ -594,13 +623,14 @@ animation = &"pop_up"
 speed_scale = 2.5
 
 [node name="feedback_bubble" type="PanelContainer" parent="."]
+z_index = 1
 anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_top = -25.0
+offset_top = -26.0
 offset_right = 3.0
-offset_bottom = -9.0
+offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.39, 0.39)

@@ -71,15 +71,3 @@ func _ensure_status_hud() -> void:
 			var hud: Node = hud_scene.instantiate()
 			hud.name = "StatusHUD"
 			get_tree().root.add_child(hud)
-
-func _on_door_side_body_entered(body: Node2D) -> void:
-	if body.is_in_group("player"):
-		print("Player has touched the door area. Transitioning to door_side scene.")
-		save_enemy_positions()
-		global.go_to_door_side_1()
-
-func save_enemy_positions():
-	# Snapshot all current alive enemy positions
-	for enemy in get_tree().get_nodes_in_group("enemies"):
-		if is_instance_valid(enemy):
-			global.set_enemy_position(enemy.name, enemy.global_position)
