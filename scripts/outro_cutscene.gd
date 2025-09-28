@@ -64,40 +64,21 @@ func _end_cutscene() -> void:
         print("Restoring music state...")
         AudioServer.set_bus_mute(music_bus_idx, false)
     
-    print("Attempting to change to map_4...")
+    print("Transitioning to the end screen...")
     
-    # Use call_deferred to ensure all cleanup is done before changing scenes
-    call_deferred("_change_to_map4")
+    # Ensure all cleanup is done before changing scenes
+    call_deferred("_go_to_the_end")
 
-func _change_to_map4() -> void:
-    print("Inside _change_to_map4 function")
+func _go_to_the_end() -> void:
+    # Ask next scene to show The End overlay
+    var g := get_node_or_null("/root/global")
+    if g:
+        g.show_end_overlay = true
     
-    # Force process all pending operations
-    get_tree().process_frame
-    
-    # Try loading the scene first to ensure it's valid
-    var scene = load("res://scenes/map_4.tscn")
-    if not scene:
-        print("Error: Failed to load map_4.tscn")
+    # Change to map_4; map_4.gd will handle showing the overlay in _ready()
+    if ResourceLoader.exists("res://scenes/map_4.tscn"):
+        print("[outro] changing scene to map_4; overlay requested via global flag")
+        get_tree().change_scene_to_file("res://scenes/map_4.tscn")
+    else:
+        print("Warning: map_4.tscn not found. Returning to main menu.")
         get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
-        return
-    
-    print("Scene loaded successfully, changing scene...")
-    
-    # Try changing the scene using a packed scene instance
-    var instance = scene.instantiate()
-    if not instance:
-        print("Error: Failed to instantiate map_4")
-        get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
-        return
-    
-    # Get the current scene and queue it for deletion
-    var current_scene = get_tree().current_scene
-    if current_scene:
-        current_scene.queue_free()
-    
-    # Add the new scene
-    get_tree().root.add_child(instance)
-    get_tree().current_scene = instance
-    
-    print("Scene change completed")

@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://bak3lpbbtn65p"]
+[gd_scene load_steps=5 format=3 uid="uid://bak3lpbbtn65p"]
 
 [ext_resource type="Script" uid="uid://ck668e1hext3g" path="res://scripts/intro_cutscene.gd" id="1_8ln24"]
+[ext_resource type="VideoStream" uid="uid://ckmhn2lpha4m5" path="res://assets/videos/ending_cutscene_new.ogv" id="2_juow0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vuduy"]
 bg_color = Color(0.898039, 0.858824, 0.764706, 0.27451)
@@ -34,6 +35,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+stream = ExtResource("2_juow0")
+autoplay = true
+expand = true
 
 [node name="SkipButton" type="Button" parent="."]
 layout_mode = 1

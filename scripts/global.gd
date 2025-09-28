@@ -27,6 +27,9 @@ var local_coop: bool = false
 # --- NEW: This will store the names of enemies we have killed ---
 var killed_enemies = []
 
+# Request to show The End overlay after next scene load
+var show_end_overlay: bool = false
+
 # --- NEW: A function to add a killed enemy to our list ---
 func add_killed_enemy(enemy_name):
     if not killed_enemies.has(enemy_name):
