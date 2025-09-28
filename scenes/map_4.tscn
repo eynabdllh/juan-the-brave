@@ -3428,12 +3428,6 @@ script = ExtResource("13_fk82e")
 [node name="Area2D" type="Area2D" parent="."]
 position = Vector2(400, 304)
 
-[node name="CutsceneLayer" type="CanvasLayer" parent="."]
-
-[node name="CutscenePlayer" type="VideoStreamPlayer" parent="CutsceneLayer"]
-offset_right = 40.0
-offset_bottom = 40.0
-
 [node name="InventoryUI" parent="." instance=ExtResource("14_6p068")]
 
 [node name="StatusHUD" parent="." instance=ExtResource("15_wl1f0")]

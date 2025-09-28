@@ -31,7 +31,13 @@ func _on_start_pressed() -> void:
     if typeof(global) != TYPE_NIL and global.has_method("reset_game_state"):
         global.reset_game_state()
     get_tree().paused = false
-    get_tree().change_scene_to_file("res://scenes/world.tscn")
+    
+    # Stop any playing music from main menu
+    var music_bus_idx = AudioServer.get_bus_index("Music")
+    AudioServer.set_bus_mute(music_bus_idx, true)
+    
+    # Load and show the intro cutscene
+    get_tree().change_scene_to_file("res://scenes/intro_cutscene.tscn")
 
 
 func _on_settings_pressed() -> void:

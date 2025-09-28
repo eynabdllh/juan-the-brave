@@ -2387,6 +2387,7 @@ tile_set = SubResource("TileSet_y1mn2")
 [node name="NextLevelDoor" type="StaticBody2D" parent="."]
 position = Vector2(312, 126)
 script = ExtResource("10_38g42")
+require_key = false
 target_scene = "map_4"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NextLevelDoor"]
@@ -2433,7 +2434,7 @@ offset_bottom = 360.0
 script = ExtResource("14_1bvdi")
 
 [node name="Area2D" type="Area2D" parent="."]
-position = Vector2(240, 114)
+position = Vector2(287, 360)
 
 [node name="StatusHUD" parent="." instance=ExtResource("15_gwav1")]
 

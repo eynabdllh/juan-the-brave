@@ -543,7 +543,7 @@ zoom = Vector2(4, 4)
 limit_left = 0
 limit_top = 0
 limit_right = 400
-limit_bottom = 304
+limit_bottom = 300
 limit_smoothed = true
 rotation_smoothing_enabled = true
 
@@ -570,10 +570,10 @@ rotation_smoothing_enabled = true
 [node name="doorside2_camera" type="Camera2D" parent="."]
 position = Vector2(0, 2)
 zoom = Vector2(4, 4)
-limit_left = 114
-limit_top = 241
-limit_right = 527
-limit_bottom = 435
+limit_left = 0
+limit_top = 0
+limit_right = 287
+limit_bottom = 360
 limit_smoothed = true
 rotation_smoothing_enabled = true
 

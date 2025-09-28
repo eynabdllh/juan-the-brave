@@ -1,6 +1,6 @@
 [gd_scene load_steps=36 format=3 uid="uid://fxncxbncjpyy"]
 
-[ext_resource type="Script" path="res://scripts/aswang.gd" id="1_vhsid"]
+[ext_resource type="Script" uid="uid://th1vy41se78p" path="res://scripts/aswang.gd" id="1_vhsid"]
 [ext_resource type="Texture2D" uid="uid://65wh4i74swig" path="res://assets/characters/enemies/Ghoul Sprite Sheet.png" id="2_1tr5p"]
 [ext_resource type="AudioStream" uid="uid://dct6hhhf2ktyr" path="res://assets/music/enemy_damage.wav" id="4_1igbi"]
 

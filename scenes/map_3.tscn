@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=4 uid="uid://xgt12br4wkyc"]
+[gd_scene load_steps=35 format=4 uid="uid://xgt12br4wkyc"]
 
 [ext_resource type="Texture2D" uid="uid://dfvq04856ga0p" path="res://assets/map3/Ground_rocks.png" id="1_iqnx3"]
 [ext_resource type="Script" uid="uid://b1h3a0rntrbt" path="res://scripts/map_3.gd" id="1_krloe"]
@@ -19,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://caq5jwbsq3xj0" path="res://scenes/chest.tscn" id="16_82fti"]
 [ext_resource type="PackedScene" uid="uid://bpov77kuwgcyw" path="res://scenes/inventory_ui.tscn" id="17_82fti"]
 [ext_resource type="PackedScene" uid="uid://52q3qvla7x8e" path="res://scenes/status_hud.tscn" id="18_krloe"]
+[ext_resource type="PackedScene" uid="uid://8m35sichnvau" path="res://scenes/boss.tscn" id="18_s11mi"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0jfrf"]
 texture = ExtResource("1_iqnx3")
@@ -8332,7 +8333,7 @@ position = Vector2(364, 474.9)
 position = Vector2(854, 62.9)
 
 [node name="aswang4" parent="." instance=ExtResource("15_7b4kn")]
-position = Vector2(1346, 69.9)
+position = Vector2(666, 234)
 
 [node name="aswang5" parent="." instance=ExtResource("15_7b4kn")]
 position = Vector2(1323, 412.9)
@@ -8341,7 +8342,7 @@ position = Vector2(1323, 412.9)
 position = Vector2(835, 493.9)
 
 [node name="aswang7" parent="." instance=ExtResource("15_7b4kn")]
-position = Vector2(1085, 163.9)
+position = Vector2(1107, 181)
 
 [node name="Chest" parent="." instance=ExtResource("16_82fti")]
 position = Vector2(885, 249.9)
@@ -8387,6 +8388,9 @@ position = Vector2(985, 323.9)
 
 [node name="Chest15" parent="." instance=ExtResource("16_82fti")]
 position = Vector2(1530, 272.9)
+
+[node name="boss" parent="." instance=ExtResource("18_s11mi")]
+position = Vector2(1362, 102)
 
 [node name="InventoryUI" parent="." instance=ExtResource("17_82fti")]
 

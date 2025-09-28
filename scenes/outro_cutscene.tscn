@@ -1,0 +1,59 @@
+[gd_scene load_steps=5 format=3 uid="uid://ci1jqn64li7jl"]
+
+[ext_resource type="Script" uid="uid://djspk0372hg0n" path="res://scripts/outro_cutscene.gd" id="1_outro"]
+[ext_resource type="VideoStream" uid="uid://ckmhn2lpha4m5" path="res://assets/videos/ending_cutscene_new.ogv" id="2_taxb5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_skip_btn"]
+bg_color = Color(0.898039, 0.858824, 0.764706, 0.27451)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_skip_btn_normal"]
+bg_color = Color(0.898039, 0.858824, 0.764706, 0.235294)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(0, 0, 0, 0.290196)
+shadow_size = 1
+
+[node name="OutroCutscene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_outro")
+
+[node name="VideoPlayer" type="VideoStreamPlayer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("2_taxb5")
+autoplay = true
+expand = true
+
+[node name="SkipButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -164.0
+offset_top = 9.0
+offset_right = -8.0
+offset_bottom = 46.0
+grow_horizontal = 0
+theme_override_colors/font_hover_color = Color(0.856067, 0.856067, 0.856067, 1)
+theme_override_colors/font_color = Color(1, 0.870588, 0.752941, 1)
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_skip_btn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_skip_btn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_skip_btn")
+theme_override_styles/normal = SubResource("StyleBoxFlat_skip_btn_normal")
+text = "Skip (ESC)"

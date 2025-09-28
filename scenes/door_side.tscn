@@ -550,7 +550,7 @@ position = Vector2(2, -2)
 script = ExtResource("1_djo6v")
 
 [node name="player" parent="." instance=ExtResource("9_dc3vs")]
-position = Vector2(144, 283)
+position = Vector2(140, 280)
 
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true

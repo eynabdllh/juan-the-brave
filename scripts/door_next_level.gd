@@ -137,6 +137,13 @@ func go_to_next_level():
 			_:
 				dest = "world"
 	print("[door] Routing from ", global.current_scene, " to ", dest)
+	
+	# Special case: When going from door_side_2 to map_4, show the outro cutscene first
+	if global.current_scene == "door_side_2" and dest == "map_4":
+		print("Showing outro cutscene before map_4")
+		get_tree().change_scene_to_file("res://scenes/outro_cutscene.tscn")
+		return
+		
 	match dest:
 		"map_2":
 			global.go_to_map_2()
