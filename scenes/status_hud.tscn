@@ -1,10 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://52q3qvla7x8e"]
+[gd_scene load_steps=7 format=3 uid="uid://52q3qvla7x8e"]
 
 [ext_resource type="Script" uid="uid://v8ro8jxjuqyc" path="res://scripts/status_hud.gd" id="1_script"]
 [ext_resource type="FontFile" uid="uid://ceqa1xt1morwi" path="res://assets/font/superstar_memesbruh03.ttf" id="2_ev5tf"]
 [ext_resource type="Texture2D" uid="uid://buoiwygi0ncs0" path="res://assets/characters/skull.png" id="2_skull"]
 [ext_resource type="Texture2D" uid="uid://vaj522st68nb" path="res://assets/objects/key.png" id="3_key"]
-[ext_resource type="Script" uid="uid://cx7j1x63a26j3" path="res://scripts/audio_control.gd" id="4_audio"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar_bg"]
 bg_color = Color(0.1, 0.1, 0.12, 1)
@@ -54,13 +53,6 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_bar_fill")
 step = 1.0
 value = 100.0
 show_percentage = false
-
-[node name="OptionsButton" type="MenuButton" parent="Root/Health/BarRow"]
-custom_minimum_size = Vector2(28, 25)
-layout_mode = 2
-tooltip_text = "Open options"
-text = "Options"
-flat = false
 
 [node name="BottomRow" type="HBoxContainer" parent="Root"]
 layout_mode = 2
@@ -152,64 +144,3 @@ stretch_mode = 5
 [node name="Label2" type="Label" parent="Root/BottomRowP2/EnemiesP2"]
 layout_mode = 2
 text = "0/0"
-
-[node name="OptionsPanel" type="Panel" parent="."]
-visible = false
-offset_left = 20.0
-offset_top = 20.0
-offset_right = 260.0
-offset_bottom = 200.0
-
-[node name="VBox" type="VBoxContainer" parent="OptionsPanel"]
-layout_mode = 0
-offset_left = 12.0
-offset_top = 12.0
-offset_right = 228.0
-offset_bottom = 168.0
-theme_override_constants/separation = 12
-
-[node name="Title" type="Label" parent="OptionsPanel/VBox"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 18
-text = "Options"
-
-[node name="Fullscreen" type="CheckButton" parent="OptionsPanel/VBox"]
-layout_mode = 2
-text = "Fullscreen"
-
-[node name="MusicRow" type="HBoxContainer" parent="OptionsPanel/VBox"]
-layout_mode = 2
-theme_override_constants/separation = 8
-
-[node name="MusicLabel" type="Label" parent="OptionsPanel/VBox/MusicRow"]
-layout_mode = 2
-text = "Music"
-
-[node name="MusicSlider" type="HSlider" parent="OptionsPanel/VBox/MusicRow"]
-layout_mode = 2
-size_flags_horizontal = 3
-max_value = 1.0
-step = 0.05
-value = 1.0
-script = ExtResource("4_audio")
-audio_bus_name = "Music"
-
-[node name="Resume" type="Button" parent="OptionsPanel/VBox"]
-layout_mode = 2
-text = "Resume"
-
-[node name="ExitGame" type="Button" parent="OptionsPanel/VBox"]
-layout_mode = 2
-text = "Exit Game"
-
-[node name="Dim" type="ColorRect" parent="."]
-visible = false
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-color = Color(0, 0, 0, 0.35)
-
-[connection signal="pressed" from="Root/Health/BarRow/OptionsButton" to="." method="_on_options_button_pressed"]
-[connection signal="toggled" from="OptionsPanel/VBox/Fullscreen" to="." method="_on_fullscreen_toggled"]
-[connection signal="pressed" from="OptionsPanel/VBox/Resume" to="." method="_on_options_resume_pressed"]
-[connection signal="pressed" from="OptionsPanel/VBox/ExitGame" to="." method="_on_options_exit_pressed"]

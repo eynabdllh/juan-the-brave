@@ -5225,10 +5225,7 @@ tile_map_data = PackedByteArray("AAABAAkAAwAAAAUAAAAHAAEAAwAAAAUAAAAVAAsAAwAGAAc
 tile_set = SubResource("TileSet_q5onr")
 
 [node name="player" parent="." instance=ExtResource("9_7r4gi")]
-position = Vector2(-9, 29)
-
-[node name="mantis1" parent="." instance=ExtResource("10_w7kh3")]
-position = Vector2(469, 421)
+position = Vector2(32, 63)
 
 [node name="door_side" type="Area2D" parent="."]
 position = Vector2(-113, 1073)
@@ -5240,7 +5237,7 @@ position = Vector2(322, -1090)
 shape = SubResource("RectangleShape2D_w7kh3")
 
 [node name="mantis2" parent="." instance=ExtResource("10_w7kh3")]
-position = Vector2(568, 194)
+position = Vector2(147, 144)
 
 [node name="cloud" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_o8fc1")
@@ -5249,8 +5246,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -38.0
 offset_top = -1.0
-offset_right = 1180.0
-offset_bottom = 1040.0
+offset_right = 1182.0
+offset_bottom = 1043.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.996368, 0.995856)
@@ -5310,27 +5307,6 @@ position = Vector2(804, 974)
 
 [node name="Chest12" parent="." instance=ExtResource("24_ctatt")]
 position = Vector2(-1, 769)
-
-[node name="enemylevel1" parent="." instance=ExtResource("10_w7kh3")]
-position = Vector2(635, 640)
-
-[node name="enemylevel2" parent="." instance=ExtResource("10_w7kh3")]
-position = Vector2(949, 310)
-
-[node name="enemylevel3" parent="." instance=ExtResource("10_w7kh3")]
-position = Vector2(100, 833)
-
-[node name="enemylevel4" parent="." instance=ExtResource("10_w7kh3")]
-position = Vector2(874, 865)
-
-[node name="enemylevel5" parent="." instance=ExtResource("10_w7kh3")]
-position = Vector2(154, 480)
-
-[node name="enemylevel6" parent="." instance=ExtResource("10_w7kh3")]
-position = Vector2(1091, 620)
-
-[node name="enemylevel7" parent="." instance=ExtResource("10_w7kh3")]
-position = Vector2(521, 943)
 
 [connection signal="body_entered" from="door_side" to="." method="_on_door_side_body_entered"]
 [connection signal="body_exited" from="door_side" to="." method="_on_door_side_body_exited"]

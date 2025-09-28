@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cht8eenjxtrsw"]
+
+[ext_resource type="Script" uid="uid://b0rcu0ny4hlt" path="res://scripts/pause_manager.gd" id="1_bw6hj"]
+[ext_resource type="PackedScene" uid="uid://syonb21b3phv" path="res://scenes/pause_menu.tscn" id="1_cpyb4"]
+
+[node name="PauseManager" type="CanvasLayer"]
+layer = 128
+script = ExtResource("1_bw6hj")
+
+[node name="pause_menu" parent="." instance=ExtResource("1_cpyb4")]

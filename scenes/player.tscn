@@ -509,6 +509,7 @@ position = Vector2(2, -1)
 shape = SubResource("CircleShape2D_g2els")
 
 [node name="world_camera" type="Camera2D" parent="."]
+position = Vector2(0, 2)
 zoom = Vector2(4, 4)
 limit_left = 0
 limit_top = 0
@@ -522,11 +523,12 @@ zoom = Vector2(4, 4)
 limit_left = 0
 limit_top = 0
 limit_right = 1168
-limit_bottom = 2000
+limit_bottom = 1439
 limit_smoothed = true
 rotation_smoothing_enabled = true
 
 [node name="myth_camera" type="Camera2D" parent="."]
+position = Vector2(0, 2)
 zoom = Vector2(4, 4)
 limit_left = 0
 limit_top = 0
@@ -536,6 +538,7 @@ limit_smoothed = true
 rotation_smoothing_enabled = true
 
 [node name="house_camera" type="Camera2D" parent="."]
+position = Vector2(0, 2)
 zoom = Vector2(4, 4)
 limit_left = 0
 limit_top = 0
@@ -544,30 +547,18 @@ limit_bottom = 304
 limit_smoothed = true
 rotation_smoothing_enabled = true
 
-[node name="player_hitbox" type="Area2D" parent="."]
-visible = false
-collision_mask = 7
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="player_hitbox"]
-position = Vector2(1, -7)
-shape = SubResource("CircleShape2D_qhqgy")
-
-[node name="attack_cooldown" type="Timer" parent="."]
-wait_time = 0.5
-
-[node name="deal_attack_timer" type="Timer" parent="."]
-wait_time = 0.5
-
 [node name="doorside_camera" type="Camera2D" parent="."]
+position = Vector2(0, 2)
 zoom = Vector2(4, 4)
 limit_left = 0
 limit_top = 0
-limit_right = 286
-limit_bottom = 207
+limit_right = 284
+limit_bottom = 303
 limit_smoothed = true
 rotation_smoothing_enabled = true
 
 [node name="doorside1_camera" type="Camera2D" parent="."]
+position = Vector2(0, 2)
 zoom = Vector2(4, 4)
 limit_left = 0
 limit_top = 0
@@ -577,15 +568,27 @@ limit_smoothed = true
 rotation_smoothing_enabled = true
 
 [node name="doorside2_camera" type="Camera2D" parent="."]
+position = Vector2(0, 2)
 zoom = Vector2(4, 4)
-limit_left = 0
-limit_top = 0
-limit_right = 284
-limit_bottom = 356
+limit_left = 114
+limit_top = 241
+limit_right = 527
+limit_bottom = 435
 limit_smoothed = true
 rotation_smoothing_enabled = true
 
+[node name="player_hitbox" type="Area2D" parent="."]
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player_hitbox"]
+position = Vector2(1, -7)
+shape = SubResource("CircleShape2D_qhqgy")
+
+[node name="deal_attack_timer" type="Timer" parent="."]
+wait_time = 0.5
+
 [node name="healthbar" type="ProgressBar" parent="."]
+visible = false
 modulate = Color(0.320798, 0.824011, 0, 1)
 self_modulate = Color(0.036968, 0.66636, 0.0347833, 1)
 offset_left = -8.0
@@ -642,7 +645,6 @@ theme_override_font_sizes/font_size = 10
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="timeout" from="attack_cooldown" to="." method="_on_attack_cooldown_timeout"]
 [connection signal="timeout" from="deal_attack_timer" to="." method="_on_deal_attack_timer_timeout"]
 [connection signal="timeout" from="regen" to="." method="_on_regen_timeout"]
 [connection signal="timeout" from="HurtEffectTimer" to="." method="_on_hurt_effect_timer_timeout"]

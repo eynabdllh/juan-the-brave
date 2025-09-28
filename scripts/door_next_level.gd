@@ -3,7 +3,7 @@ extends Node2D
 @export var locked_message = "It's locked. I need to find a key."
 @export var unlocked_message = "The door is now open, finally."
 @export var require_key: bool = true
-@export_enum("auto", "map_2", "map_3", "door_side_1", "door_side_2") var target_scene: String = "auto"
+@export_enum("auto", "map_2", "map_3", "map_4", "door_side_1", "door_side_2") var target_scene: String = "auto"
 
 @onready var door_sprite: AnimatedSprite2D = $DoorSprite
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
@@ -142,6 +142,8 @@ func go_to_next_level():
 			global.go_to_map_2()
 		"map_3":
 			global.go_to_map_3()
+		"map_4":
+			global.go_to_map_4()
 		"door_side_1":
 			global.go_to_door_side_1()
 		"door_side_2":

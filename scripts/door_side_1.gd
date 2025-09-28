@@ -1,10 +1,7 @@
 extends Node2D
 
-
-func _on_door_exit_body_entered(body: Node2D) -> void:
-	if not body.is_in_group("player"):
-		return
-	# Save where the player was in this scene, so the destination can restore
-	if has_node("/root/global"):
-		global.set_return_position_for("door_side_1", body.global_position)
-	global.go_to_map_2()
+func _on_door_exit_1_body_entered(body: Node2D) -> void:
+	if body.is_in_group("player"):
+		# Set the player's spawn point for map_2
+		global.next_player_position = Vector2(23, 1237) # The entrance position in map_2
+		global.go_to_map_2()

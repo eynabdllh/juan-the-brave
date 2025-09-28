@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=4 uid="uid://cbxrpywye7xfe"]
+[gd_scene load_steps=47 format=4 uid="uid://cbxrpywye7xfe"]
 
 [ext_resource type="Texture2D" uid="uid://x1dt0xwegn7a" path="res://assets/Graveyard/Graveyard_TileSet.png" id="1_4qgvs"]
 [ext_resource type="Texture2D" uid="uid://dq7jdmau3if5" path="res://assets/map4/walls_floor.png" id="1_a8oty"]
@@ -20,6 +20,8 @@
 [ext_resource type="PackedScene" uid="uid://bq3bs7j40w5n7" path="res://scenes/player.tscn" id="11_4m0g4"]
 [ext_resource type="Shader" uid="uid://c0se7py3qjn2q" path="res://shaders/world.gdshader" id="12_aqy83"]
 [ext_resource type="Script" uid="uid://24wkpl4317uw" path="res://scripts/cloud_controller.gd" id="13_fk82e"]
+[ext_resource type="PackedScene" uid="uid://52q3qvla7x8e" path="res://scenes/status_hud.tscn" id="21_oqjv0"]
+[ext_resource type="PackedScene" uid="uid://bpov77kuwgcyw" path="res://scenes/inventory_ui.tscn" id="22_38g42"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5uwsd"]
 texture = ExtResource("1_a8oty")
@@ -7711,6 +7713,7 @@ tile_set = SubResource("TileSet_aqy83")
 [node name="NextLevelDoor" type="StaticBody2D" parent="."]
 position = Vector2(312, 126)
 script = ExtResource("9_s4g2s")
+target_scene = "map_3"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NextLevelDoor"]
 position = Vector2(-145, 63.75)
@@ -7738,29 +7741,33 @@ shape = SubResource("RectangleShape2D_8f8w2")
 polygon = PackedVector2Array(90, 213, 148, 214, 150, 177, 182, 177, 182, 214, 245, 214, 247, 150, 402, 187, 402, 326, 243, 328, 243, 340, 82, 341, 83, 326, -13, 329, -14, 148, 84, 151, 86, 214, 90, 143, -31, 139, -25, 352, 416, 345, 415, -12, -47, 1, -50, 173, -28, 109, 126, 136)
 
 [node name="player" parent="." instance=ExtResource("11_4m0g4")]
-position = Vector2(166, 255)
+position = Vector2(160, 315)
 
-[node name="door_exit" type="Area2D" parent="."]
+[node name="door_exit1" type="Area2D" parent="."]
 position = Vector2(-4, -4)
 collision_layer = 8
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="door_exit"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="door_exit1"]
 position = Vector2(167, 335)
 scale = Vector2(1.57865, 1.07601)
 shape = SubResource("RectangleShape2D_6p07s")
 
 [node name="cloud" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_ngkw3")
-offset_left = -11.0
+offset_left = -12.0
 offset_top = 9.0
-offset_right = 404.0
+offset_right = 403.0
 offset_bottom = 328.0
 script = ExtResource("13_fk82e")
 
 [node name="Area2D" type="Area2D" parent="."]
 position = Vector2(403, 328)
 
+[node name="StatusHUD" parent="." instance=ExtResource("21_oqjv0")]
+
+[node name="InventoryUI" parent="." instance=ExtResource("22_38g42")]
+
 [connection signal="body_entered" from="NextLevelDoor/InteractionArea" to="NextLevelDoor" method="_on_interaction_area_body_entered"]
 [connection signal="body_exited" from="NextLevelDoor/InteractionArea" to="NextLevelDoor" method="_on_interaction_area_body_exited"]
-[connection signal="body_entered" from="door_exit" to="." method="_on_door_exit_body_entered"]
+[connection signal="body_entered" from="door_exit1" to="." method="_on_door_exit_1_body_entered"]

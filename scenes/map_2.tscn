@@ -6113,6 +6113,7 @@ tile_map_data = PackedByteArray("AAAjAAQACQAOAAsAAAAqAAQACQAOAAsAAAAHAAUACQAOAA8
 tile_set = SubResource("TileSet_wqu2t")
 
 [node name="trees" type="TileMapLayer" parent="TileMap2"]
+visible = false
 modulate = Color(0.858824, 0.615686, 0.909804, 1)
 y_sort_enabled = true
 texture_filter = 1
@@ -6122,7 +6123,7 @@ tile_map_data = PackedByteArray("AAAJACoACwAQAAMAAABEAAcACwAEABIAAABEAAgACwAEABM
 tile_set = SubResource("TileSet_wqu2t")
 
 [node name="player" parent="." instance=ExtResource("19_ynela")]
-position = Vector2(290, 20)
+position = Vector2(291, 32)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(-6, -5)
@@ -6144,7 +6145,7 @@ collision_layer = 8
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="door_side"]
-position = Vector2(110, 158)
+position = Vector2(96, 159)
 shape = SubResource("RectangleShape2D_2iakg")
 
 [node name="zombie" parent="." instance=ExtResource("24_1m8sb")]
@@ -6187,7 +6188,7 @@ offset_bottom = 1440.0
 script = ExtResource("29_lkmhe")
 
 [node name="Area2D" type="Area2D" parent="."]
-position = Vector2(1168, 1439)
+position = Vector2(1168, 1440)
 
 [connection signal="body_entered" from="door_side" to="." method="_on_door_side_body_entered"]
 [connection signal="body_exited" from="door_side" to="." method="_on_door_side_body_exited"]

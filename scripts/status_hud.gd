@@ -103,17 +103,18 @@ func _on_heal_applied(amount: int) -> void:
 	lbl.modulate = Color(0.3, 1.0, 0.3)
 	$Root/Health.add_child(lbl)
 	# Position to the right of the bar
-
-	var bar := $Root/Health/Bar
-
-	lbl.position = bar.position + Vector2(bar.size.x + 8, 0)
+	var bar := health_bar # $Root/Health/BarRow/Bar
+	if is_instance_valid(bar):
+		lbl.position = bar.position + Vector2(bar.size.x + 8, 0)
+	else:
+		lbl.position = Vector2.ZERO
 	var tw := create_tween()
 	tw.tween_property(lbl, "position", lbl.position + Vector2(0, -12), 0.8)
 	tw.parallel().tween_property(lbl, "modulate:a", 0.0, 0.8)
 	tw.tween_callback(Callable(lbl, "queue_free"))
 
 func _get_buff_icon(name: String) -> Texture2D:
-	# Support specific potion variants (potion_speed, potion_damage, potion_invincible)
+	# Support specific potion variants (potion_speed, potion_DAMAGE, potion_INVINCIBLE)
 	if name == "amulet":
 		return load("res://assets/objects/amulet.png")
 	if name == "potion" or name.begins_with("potion_"):

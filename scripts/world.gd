@@ -8,34 +8,37 @@ var enemies_defeated = 0
 func _ready():
 	_ensure_status_hud()
 	_ensure_local_coop_actions()
-	
+
+	# Gather enemies and apply saved state (remove killed, restore positions)
 	var enemies = get_tree().get_nodes_in_group("enemies")
-	total_enemies = enemies.size()
-	
-	if total_enemies == 0:
-		print("No enemies in this level.")
-		# Even if no enemies, respawn a previously dropped key if needed
-		if global.key_dropped and not global.player_has_key:
-			spawn_key(global.key_position)
-		return
-		
+	var alive: Array = []
+	var killed_in_this_scene := 0
 	for enemy in enemies:
+		if global.killed_enemies.has(enemy.name):
+			killed_in_this_scene += 1
+			enemy.queue_free()
+			continue
 		# Restore persisted position if we have one
 		var saved_pos = global.get_enemy_position(enemy.name)
 		if saved_pos != null:
 			enemy.global_position = saved_pos
-		# Always connect the death signal and bind this enemy's name so we know who died.
-		# Note: Bound args are appended AFTER emitted args in Godot 4, so handler signature is (enemy_position, enemy_name)
+		# Connect death signal
 		enemy.died.connect(_on_enemy_defeated.bind(enemy.name))
-		
-	print("Level started with ", total_enemies, " enemies.")
-	global.set_enemies_progress(enemies_defeated, total_enemies)
+		alive.append(enemy)
+
+	total_enemies = alive.size()
+	enemies_defeated = killed_in_this_scene
+	print("Level started with ", total_enemies + enemies_defeated, " enemies (", enemies_defeated, " already defeated).")
+	global.set_enemies_progress(enemies_defeated, total_enemies + enemies_defeated)
 	
 	if global.game_first_loadin:
 		$player.position = global.player_start_pos
-		global.game_first_loadin = false
+		global.game_first_loadin = false # This flag is now used up
 	else:
-		$player.position = global.player_exit_doorside_pos
+		# If we are returning from a door, use the position it set for us
+		if global.next_player_position != Vector2.ZERO:
+			$player.position = global.next_player_position
+			global.next_player_position = Vector2.ZERO # Reset after use
 
 	# --- Local Multiplayer: ensure two players if requested ---
 	if has_node("/root/global") and get_node("/root/global").local_coop:
@@ -78,8 +81,11 @@ func on_key_collected():
 func _on_door_side_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		print("Player has touched the door area. Transitioning to door_side scene.")
-		save_enemy_positions()
-		global.go_to_door_side()
+		# Save current state before transition
+		global.next_player_position = body.global_position  # Save where we are now
+		global.save_game()  # Persist all state (enemies, key, etc.)
+		# Now change scene
+		get_tree().change_scene_to_file("res://scenes/door_side.tscn")
 
 func save_enemy_positions():
 	# Snapshot all current alive enemy positions

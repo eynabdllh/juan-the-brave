@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=4 uid="uid://d4lklloy2ljxv"]
+[gd_scene load_steps=35 format=4 uid="uid://d4lklloy2ljxv"]
 
 [ext_resource type="Script" uid="uid://8bs6swma88et" path="res://scripts/door_side_2.gd" id="1_4buge"]
 [ext_resource type="Texture2D" uid="uid://bl4j2bfgvuxyr" path="res://assets/map3/Animation1.png" id="1_ntog1"]
@@ -14,6 +14,8 @@
 [ext_resource type="PackedScene" uid="uid://bq3bs7j40w5n7" path="res://scenes/player.tscn" id="12_cnlea"]
 [ext_resource type="Shader" uid="uid://c0se7py3qjn2q" path="res://shaders/world.gdshader" id="13_yckye"]
 [ext_resource type="Script" uid="uid://24wkpl4317uw" path="res://scripts/cloud_controller.gd" id="14_1bvdi"]
+[ext_resource type="PackedScene" uid="uid://52q3qvla7x8e" path="res://scenes/status_hud.tscn" id="15_gwav1"]
+[ext_resource type="PackedScene" uid="uid://bpov77kuwgcyw" path="res://scenes/inventory_ui.tscn" id="16_13f2m"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7ld15"]
 texture = ExtResource("1_ntog1")
@@ -2344,9 +2346,12 @@ y_sort_enabled = true
 position = Vector2(1, -40)
 script = ExtResource("1_4buge")
 
+[node name="player" parent="." instance=ExtResource("12_cnlea")]
+position = Vector2(257, 319)
+
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true
-position = Vector2(-246, -39)
+position = Vector2(-243, -35)
 tile_set = SubResource("TileSet_y1mn2")
 format = 2
 layer_0/tile_data = PackedInt32Array(1507360, 851974, 21)
@@ -2382,6 +2387,7 @@ tile_set = SubResource("TileSet_y1mn2")
 [node name="NextLevelDoor" type="StaticBody2D" parent="."]
 position = Vector2(312, 126)
 script = ExtResource("10_38g42")
+target_scene = "map_4"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NextLevelDoor"]
 position = Vector2(-163, 8.5625)
@@ -2408,28 +2414,31 @@ shape = SubResource("RectangleShape2D_8vn5b")
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 polygon = PackedVector2Array(120, 176, 119, 355, 284, 357, 283, 343, 312, 343, 313, 285, 287, 285, 283, 293, 201, 253, 179, 164, 171, 138, 172, 34, 120, 37, 117, 178, -18, 160, -11, 24, 334, 29, 334, 370, -18, 368, -21, 163)
 
-[node name="player" parent="." instance=ExtResource("12_cnlea")]
-position = Vector2(243, 316)
-
-[node name="door_exit" type="Area2D" parent="."]
-position = Vector2(-1, 16)
+[node name="door_exit2" type="Area2D" parent="."]
+position = Vector2(-3, 16)
 collision_layer = 8
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="door_exit"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="door_exit2"]
 position = Vector2(299.813, 299)
 scale = Vector2(1.57865, 1.07601)
 shape = SubResource("RectangleShape2D_k0g04")
 
 [node name="cloud" type="ColorRect" parent="."]
-visible = false
 material = SubResource("ShaderMaterial_dq7nb")
-offset_left = 1.0
-offset_top = 42.0
-offset_right = 283.0
-offset_bottom = 356.0
+offset_left = -1.0
+offset_top = 40.0
+offset_right = 287.0
+offset_bottom = 360.0
 script = ExtResource("14_1bvdi")
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(240, 114)
+
+[node name="StatusHUD" parent="." instance=ExtResource("15_gwav1")]
+
+[node name="InventoryUI" parent="." instance=ExtResource("16_13f2m")]
 
 [connection signal="body_entered" from="NextLevelDoor/InteractionArea" to="NextLevelDoor" method="_on_interaction_area_body_entered"]
 [connection signal="body_exited" from="NextLevelDoor/InteractionArea" to="NextLevelDoor" method="_on_interaction_area_body_exited"]
-[connection signal="body_entered" from="door_exit" to="." method="_on_door_exit_body_entered"]
+[connection signal="body_entered" from="door_exit2" to="." method="_on_door_exit_2_body_entered"]

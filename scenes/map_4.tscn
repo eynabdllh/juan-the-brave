@@ -1,5 +1,6 @@
-[gd_scene load_steps=33 format=4 uid="uid://5pxtgalwbbcg"]
+[gd_scene load_steps=27 format=4 uid="uid://5pxtgalwbbcg"]
 
+[ext_resource type="Script" uid="uid://ddqm10urr782i" path="res://scripts/map_4.gd" id="1_hcsfy"]
 [ext_resource type="Texture2D" uid="uid://by12y5ynpaymo" path="res://assets/map4/bird_fly_animation.png" id="1_kuiki"]
 [ext_resource type="Texture2D" uid="uid://b2lngrjtnw23o" path="res://assets/map4/bird_jump_animation.png" id="2_4buge"]
 [ext_resource type="Texture2D" uid="uid://cig11rge34jbl" path="res://assets/map4/Doors_windows_animation.png" id="3_ifqr2"]
@@ -9,11 +10,11 @@
 [ext_resource type="Texture2D" uid="uid://b6pjups5f7epd" path="res://assets/map4/Trees_animation.png" id="6_jjxlj"]
 [ext_resource type="Texture2D" uid="uid://b1g1g6n4y8s4" path="res://assets/map4/exterior.png" id="7_6lgpx"]
 [ext_resource type="Shader" uid="uid://dpk4soc1oa7ho" path="res://shaders/windy.gdshader" id="8_x8ljh"]
-[ext_resource type="Script" uid="uid://davpjsk45soa4" path="res://scripts/door_next_level.gd" id="9_s4g2s"]
-[ext_resource type="Texture2D" uid="uid://dqpnhohx2knhh" path="res://assets/tilesets/walls/wooden_door_b.png" id="10_rg2w0"]
 [ext_resource type="PackedScene" uid="uid://bq3bs7j40w5n7" path="res://scenes/player.tscn" id="11_4m0g4"]
 [ext_resource type="Shader" uid="uid://c0se7py3qjn2q" path="res://shaders/world.gdshader" id="12_aqy83"]
 [ext_resource type="Script" uid="uid://24wkpl4317uw" path="res://scripts/cloud_controller.gd" id="13_fk82e"]
+[ext_resource type="PackedScene" uid="uid://bpov77kuwgcyw" path="res://scenes/inventory_ui.tscn" id="14_6p068"]
+[ext_resource type="PackedScene" uid="uid://52q3qvla7x8e" path="res://scenes/status_hud.tscn" id="15_wl1f0"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4buge"]
 texture = ExtResource("1_kuiki")
@@ -3353,58 +3354,6 @@ shader_parameter/distortion = 0.0
 shader_parameter/heightOffset = 0.0
 shader_parameter/offset = 0.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_iw8g3"]
-size = Vector2(17.75, 26.75)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jkuvt"]
-atlas = ExtResource("10_rg2w0")
-region = Rect2(0, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_544b5"]
-atlas = ExtResource("10_rg2w0")
-region = Rect2(0, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_luwu5"]
-atlas = ExtResource("10_rg2w0")
-region = Rect2(16, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_okpyg"]
-atlas = ExtResource("10_rg2w0")
-region = Rect2(16, 0, 16, 16)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_6fxf4"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jkuvt")
-}],
-"loop": true,
-"name": &"locked",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_544b5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_luwu5")
-}],
-"loop": false,
-"name": &"opening",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_okpyg")
-}],
-"loop": true,
-"name": &"unlocked",
-"speed": 5.0
-}]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8f8w2"]
-size = Vector2(24.6687, 18.8468)
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ngkw3"]
 shader = ExtResource("12_aqy83")
 shader_parameter/cloud_color = Color(0.639216, 0.639216, 0.639216, 0.384314)
@@ -3419,6 +3368,7 @@ shader_parameter/screen_size = Vector2(0, 0)
 [node name="house" type="Node2D"]
 y_sort_enabled = true
 position = Vector2(0, -2)
+script = ExtResource("1_hcsfy")
 
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true
@@ -3459,32 +3409,6 @@ use_parent_material = true
 tile_map_data = PackedByteArray("AAAgAAcACQALAAIAAAAgAAgACQALAAIAAAAgAAkACQALAAIAAAAgAAoACQALAAIAAAAgAAsACQALAAIAAAAgAAwACQALAAIAAAAgAA0ACQALAAIAAAAgAA8ACQALAAIAAAAfABAACQALAAQAAAAeABAACQAOAAQAAAAaABAACQALAAQAAAAYABAACQALAAQAAAAXABAACQALAAQAAAAVABAACQALAAQAAAAUABAACQALAAQAAAATAA8ACQALAAIAAAATAA4ACQALAAIAAAATAA0ACQALAAIAAAATAAsACQALAAIAAAATAAoACQALAAIAAAATAAkACQALAAIAAAATAAcACQALAAIAAAAUAAYACQALAAQAAAAWAAYACQALAAQAAAAVAAYACQALAAQAAAAXAAYACQALAAQAAAAYAAYACQALAAQAAAAaAAYACQALAAQAAAAbAAYACQALAAQAAAAdAAYACQALAAQAAAAeAAYACQALAAQAAAAfAAYACQALAAQAAAAgAA4ACQALAAIAAAAgABAACQALAAIAAAATAAgACQALAAIAAAATAAYACQALAAIAAAAgAAYACQALAAIAAAAQAAMACQABAA4AAAAQAAQACQABAA8AAAAQAAUACQABABAAAAARAAMACQACAA4AAAARAAQACQACAA8AAAARAAUACQACABAAAAASAAMACQADAA4AAAASAAQACQADAA8AAAASAAUACQADABAAAAARAAYACQAOABUAAAATAAQACQAOABUAAAAQABIACQABABcAAAAiABAACQANABsAAAASAA4ACQANABsAAAAiAAoACQANABsAAAATABEACQACABwAAAAVABEACQACABwAAAAXABEACQACABwAAAAeABEACQACABwAAAAgABEACQACABwAAAAiABEACQACABwAAAAXAAQACQANABsAAAAgAAQACQANABsAAAAcAAUACQAHACAAAAAcAAMACQAHACAAAAAPAAsACQABABcAAAAQAAwACQAMABYAAAAlAAQACQAJABgAAAAkAAUACQAMABYAAAAlAAYACQAMABYAAAAiABMADQABAA0AAAAfABMADQAGAA0AAAAmAAsACQAKACIAAAAlAAwACQAOABUAAAAlAA4ACQABABQAAAAlAA8ACQABABUAAAAmAA4ACQACABQAAAAmAA8ACQACABUAAAAlABAACQABABUAAAAlABEACQABABYAAAAmABAACQACABUAAAAmABEACQACABYAAAAnABAACQADABUAAAAnABEACQADABYAAAAnAA4ACQADABQAAAAnAA8ACQADABUAAAATAAwACQALAAIAAAAZABIACQANADEAAAAiAAwACQALADIAAAASAAkACQALADIAAAAeAAQACQANADEAAAAiAAQACQAOAC8AAAA=")
 tile_set = SubResource("TileSet_w86sr")
 
-[node name="NextLevelDoor" type="StaticBody2D" parent="."]
-z_index = 1
-position = Vector2(312, 126)
-script = ExtResource("9_s4g2s")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="NextLevelDoor"]
-position = Vector2(-80, 27.375)
-shape = SubResource("RectangleShape2D_iw8g3")
-
-[node name="DoorSprite" type="AnimatedSprite2D" parent="NextLevelDoor"]
-position = Vector2(-80.5, 28.5625)
-scale = Vector2(1.3125, 1.82031)
-sprite_frames = SubResource("SpriteFrames_6fxf4")
-animation = &"locked"
-
-[node name="InteractionArea" type="Area2D" parent="NextLevelDoor"]
-visible = false
-position = Vector2(141, 104)
-collision_layer = 8
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="NextLevelDoor/InteractionArea"]
-position = Vector2(3, -1.00003)
-scale = Vector2(1.13504, 2.01626)
-shape = SubResource("RectangleShape2D_8f8w2")
-
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
@@ -3504,5 +3428,12 @@ script = ExtResource("13_fk82e")
 [node name="Area2D" type="Area2D" parent="."]
 position = Vector2(400, 304)
 
-[connection signal="body_entered" from="NextLevelDoor/InteractionArea" to="NextLevelDoor" method="_on_interaction_area_body_entered"]
-[connection signal="body_exited" from="NextLevelDoor/InteractionArea" to="NextLevelDoor" method="_on_interaction_area_body_exited"]
+[node name="CutsceneLayer" type="CanvasLayer" parent="."]
+
+[node name="CutscenePlayer" type="VideoStreamPlayer" parent="CutsceneLayer"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="InventoryUI" parent="." instance=ExtResource("14_6p068")]
+
+[node name="StatusHUD" parent="." instance=ExtResource("15_wl1f0")]

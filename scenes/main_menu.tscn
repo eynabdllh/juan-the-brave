@@ -73,10 +73,10 @@ anchor_left = 0.477
 anchor_top = 0.701
 anchor_right = 0.477
 anchor_bottom = 0.701
-offset_left = -175.504
-offset_top = -88.248
-offset_right = 176.496
-offset_bottom = 88.752
+offset_left = -170.504
+offset_top = -84.248
+offset_right = 181.496
+offset_bottom = 141.752
 grow_horizontal = 2
 grow_vertical = 0
 
@@ -107,6 +107,20 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_8ln24")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_rtw2f")
 theme_override_styles/normal = SubResource("StyleBoxFlat_oa1go")
 text = "Multiplayer"
+
+[node name="load" type="Button" parent="MainButtons"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/hover = SubResource("StyleBoxFlat_8ln24")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_rtw2f")
+theme_override_styles/normal = SubResource("StyleBoxFlat_oa1go")
+text = "Load Game"
 
 [node name="option" type="Button" parent="MainButtons"]
 layout_mode = 2
@@ -328,6 +342,7 @@ text = "Local Multiplayer"
 
 [connection signal="pressed" from="MainButtons/play" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="MainButtons/multiplayer" to="." method="_on_multiplayer_pressed"]
+[connection signal="pressed" from="MainButtons/load" to="." method="_on_load_pressed"]
 [connection signal="pressed" from="MainButtons/option" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="MainButtons/exit" to="." method="_on_exit_pressed"]
 [connection signal="pressed" from="Settings/back" to="." method="_on_back_options_pressed"]
