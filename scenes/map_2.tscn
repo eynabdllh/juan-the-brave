@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=4 uid="uid://222sdfeb63kg"]
+[gd_scene load_steps=53 format=4 uid="uid://222sdfeb63kg"]
 
 [ext_resource type="Texture2D" uid="uid://ubokohidmou7" path="res://assets/tilesets/plains.png" id="1_xrvne"]
 [ext_resource type="Texture2D" uid="uid://dqikcd1mfbhw0" path="res://assets/tilesets/grass.png" id="2_vceer"]
@@ -24,9 +24,11 @@
 [ext_resource type="PackedScene" uid="uid://pqev0pylwnbw" path="res://scenes/skeleton.tscn" id="20_vceer"]
 [ext_resource type="PackedScene" uid="uid://bpov77kuwgcyw" path="res://scenes/inventory_ui.tscn" id="21_oyq3d"]
 [ext_resource type="PackedScene" uid="uid://52q3qvla7x8e" path="res://scenes/status_hud.tscn" id="22_m5rp5"]
-[ext_resource type="Script" path="res://scripts/map_2.gd" id="23_map2"]
+[ext_resource type="Script" uid="uid://bguy5lx5ehe7" path="res://scripts/map_2.gd" id="23_map2"]
 [ext_resource type="PackedScene" uid="uid://caauswebu6usd" path="res://scenes/zombie.tscn" id="24_1m8sb"]
 [ext_resource type="PackedScene" uid="uid://caq5jwbsq3xj0" path="res://scenes/chest.tscn" id="25_6kap0"]
+[ext_resource type="Shader" uid="uid://c0se7py3qjn2q" path="res://shaders/world.gdshader" id="28_n63aa"]
+[ext_resource type="Script" uid="uid://24wkpl4317uw" path="res://scripts/cloud_controller.gd" id="29_lkmhe"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_73udw"]
 texture = ExtResource("1_xrvne")
@@ -6058,6 +6060,20 @@ shader_parameter/distortion = 0.0
 shader_parameter/heightOffset = 0.0
 shader_parameter/offset = 0.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2iakg"]
+size = Vector2(43.3125, 65.3125)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wstye"]
+shader = ExtResource("28_n63aa")
+shader_parameter/cloud_color = Color(0.639216, 0.639216, 0.639216, 0.384314)
+shader_parameter/cloud_speed = 0.1
+shader_parameter/zoom = 5.846
+shader_parameter/pixel_size = 5.075
+shader_parameter/FBM_octaves = 8
+shader_parameter/density = 0.671
+shader_parameter/edge_softness = 0.1
+shader_parameter/screen_size = Vector2(0, 0)
+
 [node name="Map2" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("23_map2")
@@ -6097,6 +6113,7 @@ tile_map_data = PackedByteArray("AAAjAAQACQAOAAsAAAAqAAQACQAOAAsAAAAHAAUACQAOAA8
 tile_set = SubResource("TileSet_wqu2t")
 
 [node name="trees" type="TileMapLayer" parent="TileMap2"]
+visible = false
 modulate = Color(0.858824, 0.615686, 0.909804, 1)
 y_sort_enabled = true
 texture_filter = 1
@@ -6106,7 +6123,7 @@ tile_map_data = PackedByteArray("AAAJACoACwAQAAMAAABEAAcACwAEABIAAABEAAgACwAEABM
 tile_set = SubResource("TileSet_wqu2t")
 
 [node name="player" parent="." instance=ExtResource("19_ynela")]
-position = Vector2(290, 20)
+position = Vector2(291, 32)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(-6, -5)
@@ -6122,47 +6139,17 @@ position = Vector2(473, 71)
 
 [node name="StatusHUD" parent="." instance=ExtResource("22_m5rp5")]
 
+[node name="door_side" type="Area2D" parent="."]
+position = Vector2(-113, 1073)
+collision_layer = 8
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="door_side"]
+position = Vector2(96, 159)
+shape = SubResource("RectangleShape2D_2iakg")
+
 [node name="zombie" parent="." instance=ExtResource("24_1m8sb")]
 position = Vector2(378, 341)
-
-[node name="skeleton2" parent="." instance=ExtResource("20_vceer")]
-position = Vector2(87, 386)
-
-[node name="skeleton3" parent="." instance=ExtResource("20_vceer")]
-position = Vector2(877, 88)
-
-[node name="skeleton4" parent="." instance=ExtResource("20_vceer")]
-position = Vector2(948, 1386)
-
-[node name="skeleton5" parent="." instance=ExtResource("20_vceer")]
-position = Vector2(1107, 212)
-
-[node name="skeleton6" parent="." instance=ExtResource("20_vceer")]
-position = Vector2(250, 725)
-
-[node name="skeleton7" parent="." instance=ExtResource("20_vceer")]
-position = Vector2(695, 617)
-
-[node name="zombie4" parent="." instance=ExtResource("24_1m8sb")]
-position = Vector2(452, 894)
-
-[node name="zombie3" parent="." instance=ExtResource("24_1m8sb")]
-position = Vector2(949, 322)
-
-[node name="zombie2" parent="." instance=ExtResource("24_1m8sb")]
-position = Vector2(1089, 729)
-
-[node name="zombie5" parent="." instance=ExtResource("24_1m8sb")]
-position = Vector2(836, 1167)
-
-[node name="zombie6" parent="." instance=ExtResource("24_1m8sb")]
-position = Vector2(366, 1340)
-
-[node name="zombie7" parent="." instance=ExtResource("24_1m8sb")]
-position = Vector2(136, 966)
-
-[node name="skeleton8" parent="." instance=ExtResource("20_vceer")]
-position = Vector2(797, 879)
 
 [node name="Chest" parent="." instance=ExtResource("25_6kap0")]
 position = Vector2(180, 266)
@@ -6193,3 +6180,15 @@ position = Vector2(1074, 935)
 
 [node name="Chest10" parent="." instance=ExtResource("25_6kap0")]
 position = Vector2(123, 108)
+
+[node name="cloud" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_wstye")
+offset_right = 1167.0
+offset_bottom = 1440.0
+script = ExtResource("29_lkmhe")
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(1168, 1440)
+
+[connection signal="body_entered" from="door_side" to="." method="_on_door_side_body_entered"]
+[connection signal="body_exited" from="door_side" to="." method="_on_door_side_body_exited"]

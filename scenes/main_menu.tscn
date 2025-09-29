@@ -1,40 +1,44 @@
-[gd_scene load_steps=13 format=3 uid="uid://xlx480mlht4a"]
+[gd_scene load_steps=16 format=3 uid="uid://xlx480mlht4a"]
 
 [ext_resource type="Script" uid="uid://c1rcc3jhg6w2o" path="res://scripts/main_menu.gd" id="1_ekxnf"]
-[ext_resource type="Texture2D" uid="uid://mpfbggjloyrs" path="res://assets/background/main_menu.png" id="2_bqqt6"]
-[ext_resource type="AudioStream" uid="uid://cm2ljbfves4nx" path="res://assets/music/main_menu.mp3" id="3_bqqt6"]
+[ext_resource type="Texture2D" uid="uid://b1te18860dan1" path="res://assets/background/bg_2.png" id="2_rtw2f"]
+[ext_resource type="AudioStream" uid="uid://cy1b6us2xqicb" path="res://assets/Dark Forest 1.0/Dark Forest 1.0/Soundtrack/01- Dark Forest.mp3" id="3_8ln24"]
+[ext_resource type="Texture2D" uid="uid://bbd0rld5m2lnv" path="res://assets/background/title.png" id="3_rtw2f"]
 [ext_resource type="Script" uid="uid://cx7j1x63a26j3" path="res://scripts/audio_control.gd" id="4_wu84c"]
 [ext_resource type="Script" uid="uid://33iyc3sb1puf" path="res://scripts/fullscreen_control.gd" id="5_8ln24"]
+[ext_resource type="FontFile" uid="uid://ceqa1xt1morwi" path="res://assets/font/superstar_memesbruh03.ttf" id="5_oa1go"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wu84c"]
-texture = ExtResource("2_bqqt6")
+texture = ExtResource("2_rtw2f")
+texture_margin_top = 99.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ln24"]
-bg_color = Color(1, 1, 1, 1)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
-shadow_size = 5
-shadow_offset = Vector2(0, 3.41)
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_oa1go"]
+texture = ExtResource("3_rtw2f")
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rtw2f"]
-bg_color = Color(1, 1, 1, 1)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
-shadow_size = 5
-shadow_offset = Vector2(0, 3.41)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tbmy8"]
+bg_color = Color(0.898039, 0.858824, 0.764706, 0.27451)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oa1go"]
-bg_color = Color(1, 1, 1, 1)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
-shadow_size = 5
+bg_color = Color(0.898878, 0.86012, 0.763535, 0.235294)
+border_color = Color(0.847474, 0.847474, 0.847474, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(0, 0, 0, 0.290196)
+shadow_size = 1
 shadow_offset = Vector2(0, 3.41)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jk1qb"]
+bg_color = Color(0.898039, 0.858824, 0.764706, 0.27451)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_bqqt6"]
 color = Color(1, 1, 1, 1)
@@ -58,13 +62,28 @@ grow_vertical = 2
 script = ExtResource("1_ekxnf")
 
 [node name="Background" type="Panel" parent="."]
+texture_filter = 1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = -1.0
+offset_right = -2.0
+offset_bottom = -1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_wu84c")
+
+[node name="Title" type="Panel" parent="."]
+modulate = Color(0.745022, 0.814139, 0.803484, 0.976471)
+layout_mode = 0
+offset_left = 46.0
+offset_top = -162.0
+offset_right = 893.0
+offset_bottom = 359.0
+scale = Vector2(1.195, 1.195)
+theme_override_styles/panel = SubResource("StyleBoxTexture_oa1go")
 
 [node name="MainButtons" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -73,57 +92,71 @@ anchor_left = 0.477
 anchor_top = 0.701
 anchor_right = 0.477
 anchor_bottom = 0.701
-offset_left = -175.504
-offset_top = -88.248
-offset_right = 176.496
-offset_bottom = 88.752
+offset_left = -159.504
+offset_top = -156.248
+offset_right = 208.496
+offset_bottom = 117.752
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_constants/separation = 8
 
 [node name="play" type="Button" parent="MainButtons"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
-theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.893983, 0.88519, 0.872447, 1)
+theme_override_colors/font_hover_color = Color(0.900296, 0.917543, 0.907882, 1)
+theme_override_colors/font_color = Color(1, 0.870588, 0.752941, 1)
 theme_override_font_sizes/font_size = 30
-theme_override_styles/hover = SubResource("StyleBoxFlat_8ln24")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_rtw2f")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_tbmy8")
 theme_override_styles/normal = SubResource("StyleBoxFlat_oa1go")
 text = "Start Game"
+
+[node name="multiplayer" type="Button" parent="MainButtons"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_hover_pressed_color = Color(0.893983, 0.88519, 0.872447, 1)
+theme_override_colors/font_hover_color = Color(0.900296, 0.917543, 0.907882, 1)
+theme_override_colors/font_color = Color(1, 0.870588, 0.752941, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_tbmy8")
+theme_override_styles/normal = SubResource("StyleBoxFlat_oa1go")
+text = "Multiplayer"
+
+[node name="load" type="Button" parent="MainButtons"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_hover_pressed_color = Color(0.893983, 0.88519, 0.872447, 1)
+theme_override_colors/font_hover_color = Color(0.900296, 0.917543, 0.907882, 1)
+theme_override_colors/font_color = Color(1, 0.870588, 0.752941, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_tbmy8")
+theme_override_styles/normal = SubResource("StyleBoxFlat_oa1go")
+text = "Load Game"
 
 [node name="option" type="Button" parent="MainButtons"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
-theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.893983, 0.88519, 0.872447, 1)
+theme_override_colors/font_hover_color = Color(0.900296, 0.917543, 0.907882, 1)
+theme_override_colors/font_color = Color(1, 0.868821, 0.751388, 1)
 theme_override_font_sizes/font_size = 30
-theme_override_styles/hover = SubResource("StyleBoxFlat_8ln24")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_rtw2f")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_tbmy8")
 theme_override_styles/normal = SubResource("StyleBoxFlat_oa1go")
 text = "Option"
 
 [node name="exit" type="Button" parent="MainButtons"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
-theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.893983, 0.88519, 0.872447, 1)
+theme_override_colors/font_hover_color = Color(0.900296, 0.917543, 0.907882, 1)
+theme_override_colors/font_color = Color(1, 0.870588, 0.752941, 1)
 theme_override_font_sizes/font_size = 30
-theme_override_styles/hover = SubResource("StyleBoxFlat_8ln24")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_rtw2f")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_tbmy8")
 theme_override_styles/normal = SubResource("StyleBoxFlat_oa1go")
 text = "Exit"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_bqqt6")
+stream = ExtResource("3_8ln24")
 autoplay = true
 bus = &"Music"
 
@@ -147,30 +180,29 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -253.5
-offset_right = 253.5
-offset_bottom = 78.0
+offset_left = -254.5
+offset_top = 15.0
+offset_right = 252.5
+offset_bottom = 93.0
 grow_horizontal = 2
-theme_override_font_sizes/font_size = 30
+theme_override_fonts/font = ExtResource("5_oa1go")
+theme_override_font_sizes/font_size = 48
 text = "Options"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="back" type="Button" parent="Settings"]
 layout_mode = 0
-offset_left = 73.0
-offset_top = 381.0
-offset_right = 422.0
-offset_bottom = 441.0
+offset_left = 84.0
+offset_top = 366.0
+offset_right = 433.0
+offset_bottom = 426.0
 size_flags_vertical = 3
-theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
-theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.894118, 0.886275, 0.870588, 1)
+theme_override_colors/font_hover_color = Color(0.894118, 0.886275, 0.870588, 1)
+theme_override_colors/font_color = Color(1, 0.870588, 0.752941, 1)
 theme_override_font_sizes/font_size = 30
-theme_override_styles/hover = SubResource("StyleBoxFlat_8ln24")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_rtw2f")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_jk1qb")
 theme_override_styles/normal = SubResource("StyleBoxFlat_oa1go")
 text = "Back"
 
@@ -215,9 +247,102 @@ theme_override_font_sizes/font_size = 30
 text = "Fullscreen"
 script = ExtResource("5_8ln24")
 
+[node name="Multiplayer" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.486
+anchor_top = 0.518
+anchor_right = 0.486
+anchor_bottom = 0.518
+offset_left = -252.872
+offset_top = -222.664
+offset_right = 258.128
+offset_bottom = 236.336
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Multiplayer"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -254.5
+offset_top = 27.0
+offset_right = 252.5
+offset_bottom = 105.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("5_oa1go")
+theme_override_font_sizes/font_size = 48
+text = "Multiplayer"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="back" type="Button" parent="Multiplayer"]
+layout_mode = 0
+offset_left = 82.0
+offset_top = 365.0
+offset_right = 431.0
+offset_bottom = 425.0
+size_flags_vertical = 3
+theme_override_colors/font_hover_pressed_color = Color(0.894118, 0.886275, 0.870588, 1)
+theme_override_colors/font_hover_color = Color(0.894118, 0.886275, 0.870588, 1)
+theme_override_colors/font_color = Color(1, 0.870588, 0.752941, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_jk1qb")
+theme_override_styles/normal = SubResource("StyleBoxFlat_oa1go")
+text = "Back"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Multiplayer"]
+layout_mode = 0
+offset_left = 74.0
+offset_top = 170.0
+offset_right = 439.0
+offset_bottom = 326.0
+theme_override_constants/separation = 24
+
+[node name="Host" type="Button" parent="Multiplayer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_hover_pressed_color = Color(0.894118, 0.886275, 0.870588, 1)
+theme_override_colors/font_hover_color = Color(0.894118, 0.886275, 0.870588, 1)
+theme_override_colors/font_color = Color(1, 0.870588, 0.752941, 1)
+theme_override_font_sizes/font_size = 26
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_jk1qb")
+theme_override_styles/normal = SubResource("StyleBoxFlat_oa1go")
+text = "Host"
+
+[node name="Join" type="Button" parent="Multiplayer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_hover_pressed_color = Color(0.894118, 0.886275, 0.870588, 1)
+theme_override_colors/font_hover_color = Color(0.894118, 0.886275, 0.870588, 1)
+theme_override_colors/font_color = Color(1, 0.870588, 0.752941, 1)
+theme_override_font_sizes/font_size = 26
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_jk1qb")
+theme_override_styles/normal = SubResource("StyleBoxFlat_oa1go")
+text = "Join"
+
+[node name="Local" type="Button" parent="Multiplayer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_hover_pressed_color = Color(0.894118, 0.886275, 0.870588, 1)
+theme_override_colors/font_hover_color = Color(0.894118, 0.886275, 0.870588, 1)
+theme_override_colors/font_color = Color(1, 0.870588, 0.752941, 1)
+theme_override_font_sizes/font_size = 26
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_jk1qb")
+theme_override_styles/normal = SubResource("StyleBoxFlat_oa1go")
+text = "Local Multiplayer"
+
 [connection signal="pressed" from="MainButtons/play" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="MainButtons/multiplayer" to="." method="_on_multiplayer_pressed"]
+[connection signal="pressed" from="MainButtons/load" to="." method="_on_load_pressed"]
 [connection signal="pressed" from="MainButtons/option" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="MainButtons/exit" to="." method="_on_exit_pressed"]
 [connection signal="pressed" from="Settings/back" to="." method="_on_back_options_pressed"]
 [connection signal="value_changed" from="Settings/VBoxContainer/AudioControl" to="Settings/VBoxContainer/AudioControl" method="_on_value_changed"]
 [connection signal="toggled" from="Settings/VBoxContainer/FullscreenControl" to="." method="_on_fullscreen_control_toggled"]
+[connection signal="pressed" from="Multiplayer/back" to="." method="_on_mp_back_pressed"]
+[connection signal="pressed" from="Multiplayer/VBoxContainer/Host" to="." method="_on_mp_host_pressed"]
+[connection signal="pressed" from="Multiplayer/VBoxContainer/Join" to="." method="_on_mp_join_pressed"]
+[connection signal="pressed" from="Multiplayer/VBoxContainer/Local" to="." method="_on_mp_local_pressed"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=4 uid="uid://dvbvkflvwjrdb"]
+[gd_scene load_steps=39 format=4 uid="uid://dvbvkflvwjrdb"]
 
 [ext_resource type="Script" uid="uid://noslk6bfhew7" path="res://scripts/door_side.gd" id="1_djo6v"]
 [ext_resource type="Texture2D" uid="uid://ubokohidmou7" path="res://assets/tilesets/plains.png" id="1_j7tj3"]
@@ -15,6 +15,8 @@
 [ext_resource type="Texture2D" uid="uid://dqpnhohx2knhh" path="res://assets/tilesets/walls/wooden_door_b.png" id="13_3w5t1"]
 [ext_resource type="Shader" uid="uid://c0se7py3qjn2q" path="res://shaders/world.gdshader" id="13_5o52e"]
 [ext_resource type="Script" uid="uid://24wkpl4317uw" path="res://scripts/cloud_controller.gd" id="14_af4fb"]
+[ext_resource type="PackedScene" uid="uid://52q3qvla7x8e" path="res://scenes/status_hud.tscn" id="16_544b5"]
+[ext_resource type="PackedScene" uid="uid://bpov77kuwgcyw" path="res://scenes/inventory_ui.tscn" id="17_luwu5"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jkuvt"]
 texture = ExtResource("1_j7tj3")
@@ -543,11 +545,16 @@ shader_parameter/edge_softness = 0.1
 shader_parameter/screen_size = Vector2(0, 0)
 
 [node name="door_side" type="Node2D"]
+y_sort_enabled = true
 position = Vector2(2, -2)
 script = ExtResource("1_djo6v")
 
+[node name="player" parent="." instance=ExtResource("9_dc3vs")]
+position = Vector2(140, 280)
+
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true
+position = Vector2(-2, 2)
 tile_set = SubResource("TileSet_ufimf")
 format = 2
 layer_0/tile_data = PackedInt32Array(262152, 131080, 5, 262153, 131080, 5)
@@ -581,7 +588,10 @@ tile_map_data = PackedByteArray("AAAAAAAAAwAAAAUAAAAAAAIAAwAIAAYAAAAAAAUAAwAAAAU
 tile_set = SubResource("TileSet_ufimf")
 
 [node name="NextLevelDoor" type="StaticBody2D" parent="."]
+y_sort_enabled = true
+position = Vector2(-2, 3)
 script = ExtResource("11_hbr7d")
+target_scene = "map_2"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NextLevelDoor"]
 position = Vector2(144, 91)
@@ -606,32 +616,33 @@ shape = SubResource("RectangleShape2D_3w5t1")
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
-polygon = PackedVector2Array(128, 80, 123, 94, 127, 102, 124, 112, 115, 112, 108, 123, 107, 130, 109, 143, 118, 155, 110, 162, 111, 174, 107, 179, 112, 195, 124, 193, 126, 207, 114, 209, 119, 295, 174, 296, 183, 211, 178, 204, 177, 190, 179, 178, 188, 169, 183, 162, 177, 154, 176, 145, 173, 142, 172, 131, 175, 129, 172, 125, 172, 120, 167, 113, 162, 108, 161, 99, 163, 88, 163, 84, 160, 81, 152, 82, 132, 81, 137, -21, 362, -17, 310, 328, -21, 328, -14, -41, 133, -8)
-
-[node name="player" parent="." instance=ExtResource("9_dc3vs")]
-position = Vector2(143, 200)
+polygon = PackedVector2Array(128, 80, 123, 94, 127, 102, 124, 112, 115, 112, 108, 123, 107, 130, 109, 143, 118, 155, 110, 162, 111, 174, 107, 179, 112, 195, 124, 193, 126, 207, 114, 209, 120, 306, 171, 306, 183, 211, 178, 204, 177, 190, 179, 178, 188, 169, 183, 162, 177, 154, 176, 145, 173, 142, 172, 131, 175, 129, 172, 125, 172, 120, 167, 113, 162, 108, 161, 99, 163, 88, 163, 84, 160, 81, 152, 82, 132, 81, 137, -21, 362, -17, 310, 328, -21, 328, -14, -41, 133, -8)
 
 [node name="door_exit" type="Area2D" parent="."]
-position = Vector2(-4, -4)
+y_sort_enabled = true
+position = Vector2(-3, -12)
 collision_layer = 8
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="door_exit"]
-position = Vector2(146, 239)
+position = Vector2(145, 337)
 scale = Vector2(1.57865, 1.07601)
 shape = SubResource("RectangleShape2D_hbr7d")
 
 [node name="cloud" type="ColorRect" parent="."]
-visible = false
 material = SubResource("ShaderMaterial_af4fb")
-offset_left = 4.0
-offset_top = 15.0
-offset_right = 292.0
-offset_bottom = 317.0
+offset_left = -2.0
+offset_top = 2.0
+offset_right = 288.0
+offset_bottom = 306.0
 script = ExtResource("14_af4fb")
 
 [node name="Area2D" type="Area2D" parent="."]
-position = Vector2(172, 131)
+position = Vector2(284, 303)
+
+[node name="StatusHUD" parent="." instance=ExtResource("16_544b5")]
+
+[node name="InventoryUI" parent="." instance=ExtResource("17_luwu5")]
 
 [connection signal="body_entered" from="NextLevelDoor/InteractionArea" to="NextLevelDoor" method="_on_interaction_area_body_entered"]
 [connection signal="body_exited" from="NextLevelDoor/InteractionArea" to="NextLevelDoor" method="_on_interaction_area_body_exited"]

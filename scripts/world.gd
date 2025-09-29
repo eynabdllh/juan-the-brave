@@ -7,40 +7,47 @@ var enemies_defeated = 0
 
 func _ready():
 	_ensure_status_hud()
-	
+	_ensure_local_coop_actions()
+
+	# Gather enemies and apply saved state (remove killed, restore positions)
 	var enemies = get_tree().get_nodes_in_group("enemies")
-	total_enemies = enemies.size()
-	
-	if total_enemies == 0:
-		print("No enemies in this level.")
-		# Even if no enemies, respawn a previously dropped key if needed
-		if global.key_dropped and not global.player_has_key:
-			spawn_key(global.key_position)
-		return
-		
+	var alive: Array = []
+	var killed_in_this_scene := 0
 	for enemy in enemies:
+		if global.killed_enemies.has(enemy.name):
+			killed_in_this_scene += 1
+			enemy.queue_free()
+			continue
 		# Restore persisted position if we have one
 		var saved_pos = global.get_enemy_position(enemy.name)
 		if saved_pos != null:
 			enemy.global_position = saved_pos
-		# Always connect the death signal and bind this enemy's name so we know who died.
-		# Note: Bound args are appended AFTER emitted args in Godot 4, so handler signature is (enemy_position, enemy_name)
+		# Connect death signal
 		enemy.died.connect(_on_enemy_defeated.bind(enemy.name))
-		
-	print("Level started with ", total_enemies, " enemies.")
-	global.set_enemies_progress(enemies_defeated, total_enemies)
+		alive.append(enemy)
+
+	total_enemies = alive.size()
+	enemies_defeated = killed_in_this_scene
+	print("Level started with ", total_enemies + enemies_defeated, " enemies (", enemies_defeated, " already defeated).")
+	global.set_enemies_progress(enemies_defeated, total_enemies + enemies_defeated)
 	
 	if global.game_first_loadin:
 		$player.position = global.player_start_pos
-		global.game_first_loadin = false
+		global.game_first_loadin = false # This flag is now used up
 	else:
-		$player.position = global.player_exit_doorside_pos
+		# If we are returning from a door, use the position it set for us
+		if global.next_player_position != Vector2.ZERO:
+			$player.position = global.next_player_position
+			global.next_player_position = Vector2.ZERO # Reset after use
+
+	# --- Local Multiplayer: ensure two players if requested ---
+	if has_node("/root/global") and get_node("/root/global").local_coop:
+		_setup_local_coop()
 
 	# --- NEW: Respawn key if it was dropped previously and not collected ---
 	if global.key_dropped and not global.player_has_key:
 		print("Respawning dropped key at ", global.key_position)
 		spawn_key(global.key_position)
-
 func _on_enemy_defeated(enemy_position: Vector2, enemy_name: String):
 	enemies_defeated += 1
 	print("Enemy defeated! ", enemies_defeated, "/", total_enemies)
@@ -74,8 +81,11 @@ func on_key_collected():
 func _on_door_side_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		print("Player has touched the door area. Transitioning to door_side scene.")
-		save_enemy_positions()
-		global.go_to_door_side()
+		# Save current state before transition
+		global.next_player_position = body.global_position  # Save where we are now
+		global.save_game()  # Persist all state (enemies, key, etc.)
+		# Now change scene
+		get_tree().change_scene_to_file("res://scenes/door_side.tscn")
 
 func save_enemy_positions():
 	# Snapshot all current alive enemy positions
@@ -90,3 +100,49 @@ func _ensure_status_hud() -> void:
 			var hud: Node = hud_scene.instantiate()
 			hud.name = "StatusHUD"
 			get_tree().root.add_child(hud)
+
+# --- Local Multiplayer helpers ---
+func _ensure_local_coop_actions() -> void:
+	# Create distinct actions only once
+	var add := func(action: String, keycode: int):
+		if not InputMap.has_action(action):
+			InputMap.add_action(action)
+		var ev := InputEventKey.new()
+		ev.physical_keycode = keycode
+		InputMap.action_add_event(action, ev)
+
+	# P1: WASD
+	add.call("p1_left", KEY_A)
+	add.call("p1_right", KEY_D)
+	add.call("p1_up", KEY_W)
+	add.call("p1_down", KEY_S)
+
+	# P2: Arrow keys
+	add.call("p2_left", KEY_LEFT)
+	add.call("p2_right", KEY_RIGHT)
+	add.call("p2_up", KEY_UP)
+	add.call("p2_down", KEY_DOWN)
+
+func _setup_local_coop() -> void:
+	# Configure existing player as P1 (WASD + with camera)
+	if $player.has_method("set"):
+		$player.action_left = "p1_left"
+		$player.action_right = "p1_right"
+		$player.action_up = "p1_up"
+		$player.action_down = "p1_down"
+		$player.use_local_camera = true
+
+	# Spawn Player 2 (Arrow keys, no camera)
+	var ps: PackedScene = load("res://scenes/player.tscn")
+	if ps:
+		var p2: Node = ps.instantiate()
+		if p2:
+			p2.name = "player2"
+			if p2.has_method("set"):
+				p2.action_left = "p2_left"
+				p2.action_right = "p2_right"
+				p2.action_up = "p2_up"
+				p2.action_down = "p2_down"
+				p2.use_local_camera = false
+			p2.global_position = $player.global_position + Vector2(24, 0)
+			add_child(p2)

@@ -20,6 +20,7 @@ corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 
 [node name="StatusHUD" type="CanvasLayer"]
+layer = 100
 script = ExtResource("1_script")
 
 [node name="Root" type="MarginContainer" parent="."]
@@ -27,6 +28,7 @@ offset_left = 8.0
 offset_top = 8.0
 offset_right = 508.0
 offset_bottom = 169.785
+mouse_filter = 2
 theme_override_constants/margin_left = 15
 
 [node name="Health" type="VBoxContainer" parent="Root"]
@@ -38,9 +40,14 @@ theme_override_fonts/font = ExtResource("2_ev5tf")
 theme_override_font_sizes/font_size = 22
 text = "Juan"
 
-[node name="Bar" type="ProgressBar" parent="Root/Health"]
+[node name="BarRow" type="HBoxContainer" parent="Root/Health"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Bar" type="ProgressBar" parent="Root/Health/BarRow"]
 custom_minimum_size = Vector2(200, 25)
 layout_mode = 2
+size_flags_horizontal = 3
 theme_override_styles/background = SubResource("StyleBoxFlat_bar_bg")
 theme_override_styles/fill = SubResource("StyleBoxFlat_bar_fill")
 step = 1.0
@@ -99,3 +106,41 @@ theme_override_constants/shadow_offset_x = 2
 theme_override_constants/shadow_offset_y = 1
 theme_override_constants/shadow_outline_size = 0
 text = "Effect 10s"
+
+[node name="HealthP2" type="VBoxContainer" parent="Root"]
+visible = false
+layout_mode = 2
+
+[node name="NameP2" type="Label" parent="Root/HealthP2"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ev5tf")
+theme_override_font_sizes/font_size = 18
+text = "JUAN P2"
+
+[node name="BarP2" type="ProgressBar" parent="Root/HealthP2"]
+custom_minimum_size = Vector2(160, 18)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_bar_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_bar_fill")
+step = 1.0
+value = 100.0
+show_percentage = false
+
+[node name="BottomRowP2" type="HBoxContainer" parent="Root"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="EnemiesP2" type="HBoxContainer" parent="Root/BottomRowP2"]
+layout_mode = 2
+
+[node name="Icon2" type="TextureRect" parent="Root/BottomRowP2/EnemiesP2"]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+texture = ExtResource("2_skull")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label2" type="Label" parent="Root/BottomRowP2/EnemiesP2"]
+layout_mode = 2
+text = "0/0"

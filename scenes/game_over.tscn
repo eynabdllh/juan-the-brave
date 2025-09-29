@@ -1,0 +1,66 @@
+[gd_scene load_steps=4 format=3 uid="uid://m2dg7fearh4e"]
+
+[ext_resource type="Script" uid="uid://ce7l2owygoxoi" path="res://scripts/game_over.gd" id="1_vgm8o"]
+[ext_resource type="Texture2D" uid="uid://ci62hvgabloyq" path="res://assets/background/blood.png" id="2_tbwuq"]
+[ext_resource type="FontFile" uid="uid://ceqa1xt1morwi" path="res://assets/font/superstar_memesbruh03.ttf" id="3_racf3"]
+
+[node name="GameOver" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vgm8o")
+
+[node name="Dim" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
+
+[node name="BloodOverlay" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_tbwuq")
+stretch_mode = 6
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 2
+offset_left = 402.0
+offset_top = 178.0
+offset_right = 747.0
+offset_bottom = 258.0
+theme_override_fonts/font = ExtResource("3_racf3")
+theme_override_font_sizes/font_size = 80
+text = "GAME OVER"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Center" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Center"]
+layout_mode = 2
+alignment = 1
+
+[node name="RestartButton" type="Button" parent="Center/VBoxContainer"]
+layout_mode = 2
+text = "RESTART"
+
+[node name="ExitButton" type="Button" parent="Center/VBoxContainer"]
+layout_mode = 2
+text = "EXIT"

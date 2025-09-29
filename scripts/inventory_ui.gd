@@ -63,7 +63,9 @@ func _refresh_all(counts: Dictionary) -> void:
 		if slot == null:
 			continue
 		var item: String = ORDER[i]
-		var icon = Inventory.ICONS.get(item, null)
+		# Use the Inventory autoload node (do not reference a global class symbol)
+		var inv = get_node_or_null("/root/Inventory")
+		var icon = inv.ICONS.get(item, null) if inv else null
 		var icon_node: TextureRect = slot.get_node_or_null("Icon")
 		if icon_node and icon:
 			# Do not change layout; respect whatever you set in the scene.
