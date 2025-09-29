@@ -632,7 +632,7 @@ script = ExtResource("1_wqpjq")
 position = Vector2(2.38419e-07, -16)
 scale = Vector2(1.79688, 1.78125)
 sprite_frames = SubResource("SpriteFrames_c0bne")
-animation = &"front_attack"
+animation = &"side_walk"
 
 [node name="detection_area" type="Area2D" parent="."]
 collision_layer = 2
@@ -680,3 +680,11 @@ one_shot = true
 
 [node name="HurtSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("6_0onds")
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="body_entered" from="detection_area" to="." method="_on_detection_area_body_entered"]
+[connection signal="body_exited" from="detection_area" to="." method="_on_detection_area_body_exited"]
+[connection signal="timeout" from="take_damage_cooldown" to="." method="_on_take_damage_cooldown_timeout"]
+[connection signal="timeout" from="EnemyAttackTimer" to="." method="_on_enemy_attack_timer_timeout"]
+[connection signal="timeout" from="HurtEffectTimer" to="." method="_on_hurt_effect_timer_timeout"]
+[connection signal="timeout" from="KnockbackTimer" to="." method="_on_knockback_timer_timeout"]

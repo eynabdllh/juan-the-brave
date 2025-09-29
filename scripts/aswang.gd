@@ -2,9 +2,9 @@ extends "res://scripts/base_enemy.gd"
 
 # Boss-specific stats
 @export var _b_speed: float = 40.0
-@export var _b_damage: int = 20
+@export var _b_damage: int = 8
 @export var _b_rate: float = 1.5
-@export var _b_health: int = 200
+@export var _b_health: int = 100
 @export var _b_knockback: float = 160.0
 
 func _ready() -> void:

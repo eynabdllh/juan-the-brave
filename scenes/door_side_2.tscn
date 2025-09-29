@@ -2347,7 +2347,7 @@ position = Vector2(1, -40)
 script = ExtResource("1_4buge")
 
 [node name="player" parent="." instance=ExtResource("12_cnlea")]
-position = Vector2(153, 309)
+position = Vector2(149, 329)
 
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true
@@ -2381,7 +2381,7 @@ y_sort_enabled = true
 texture_filter = 1
 material = SubResource("ShaderMaterial_682p0")
 use_parent_material = true
-tile_map_data = PackedByteArray("AAAQAAUAAAAAAAgAABAQAAkAAAAAAAgAABAfAAQAAAAAAAgAAAAfAAgAAAAAAAgAABAgAA0AAAAAAAgAAAAUAAQAAAAAAAgAABAUAAgAAAAAAAgAAAAcAAQAAAAAAAgAAAAcAAkAAAAAAAgAABAVAAsAAAAAAAgAAAAQAA0ABwAfABUAAAAQAA4ABwAfABYAAAARAA0ABwAgABUAAAARAA4ABwAgABYAAAARAA8ABwAjABYAAAASAAwABwAhABQAAAASAA0ABwAhABUAAAASAA4ABwAhABYAAAASAA8ABwAkABYAAAATAA0ABwAiABUAAAATAA4ABwAiABYAAAARABAABwAjABcAAAARABIAAAAAAAgAABASABAABwAjABYAAAASABEABwAjABcAAAATABAABwAkABYAAAATABEABwAkABcAAAAcABMAAAAAAAgAAAA=")
+tile_map_data = PackedByteArray("AAAQAAUAAAAAAAgAABAQAAkAAAAAAAgAABAfAAQAAAAAAAgAAAAfAAgAAAAAAAgAABAgAA0AAAAAAAgAAAAUAAQAAAAAAAgAABAUAAgAAAAAAAgAAAAcAAQAAAAAAAgAAAAcAAkAAAAAAAgAABAVAAsAAAAAAAgAAAAQAA0ABwAfABUAAAAQAA4ABwAfABYAAAARAA0ABwAgABUAAAARAA4ABwAgABYAAAARAA8ABwAjABYAAAASAAwABwAhABQAAAASAA0ABwAhABUAAAASAA4ABwAhABYAAAASAA8ABwAkABYAAAATAA0ABwAiABUAAAATAA4ABwAiABYAAAARABAABwAjABcAAAARABIAAAAAAAgAABASABAABwAjABYAAAASABEABwAjABcAAAATABAABwAkABYAAAATABEABwAkABcAAAA=")
 tile_set = SubResource("TileSet_y1mn2")
 
 [node name="NextLevelDoor" type="StaticBody2D" parent="."]
@@ -2391,17 +2391,17 @@ require_key = false
 target_scene = "map_4"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NextLevelDoor"]
-position = Vector2(-163, 8.5625)
+position = Vector2(-161, 8)
 shape = SubResource("RectangleShape2D_q7gdj")
 
 [node name="DoorSprite" type="AnimatedSprite2D" parent="NextLevelDoor"]
-position = Vector2(-164, 8)
+position = Vector2(-162, 8)
 scale = Vector2(2.5, 2.39063)
 sprite_frames = SubResource("SpriteFrames_40mj1")
 animation = &"locked"
 
 [node name="InteractionArea" type="Area2D" parent="NextLevelDoor"]
-position = Vector2(141, 104)
+position = Vector2(143, 104)
 collision_layer = 8
 collision_mask = 2
 
@@ -2413,10 +2413,10 @@ shape = SubResource("RectangleShape2D_8vn5b")
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
-polygon = PackedVector2Array(120, 176, 119, 355, 284, 357, 283, 343, 312, 343, 181, 335, 184, 300, 185, 276, 180, 255, 179, 164, 171, 138, 172, 34, 120, 37, 117, 178, -18, 160, -11, 24, 334, 29, 334, 370, -18, 368, -21, 163)
+polygon = PackedVector2Array(-2, 39, -1, 360, 126, 342, 127, 376, 176, 374, 178, 340, 288, 342, 288, 38, 0, 40, -1, 26, 308, 29, 309, 363, 175, 390, -27, 385, -37, 4)
 
 [node name="door_exit2" type="Area2D" parent="."]
-position = Vector2(-3, 16)
+position = Vector2(4, 30)
 collision_layer = 8
 collision_mask = 2
 
@@ -2434,7 +2434,7 @@ offset_bottom = 360.0
 script = ExtResource("14_1bvdi")
 
 [node name="Area2D" type="Area2D" parent="."]
-position = Vector2(287, 360)
+position = Vector2(286, 337)
 
 [node name="StatusHUD" parent="." instance=ExtResource("15_gwav1")]
 

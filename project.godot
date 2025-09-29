@@ -23,9 +23,11 @@ MainMenu="*res://scenes/main_menu.tscn"
 InventoryUI="*res://scripts/inventory_ui.gd"
 Inventory="*res://scripts/inventory.gd"
 PauseManager="*res://scenes/pause_manager.tscn"
+network="*res://scripts/network.gd"
 
 [display]
 
+window/size/mode=2
 window/stretch/mode="canvas_items"
 
 [input]

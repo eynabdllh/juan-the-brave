@@ -1,5 +1,38 @@
 extends Node
 
+signal inventory_changed(player_id, items)
+
+var inventories = {}
+
+func register_player(player_id):
+	if not inventories.has(player_id):
+		inventories[player_id] = []
+	inventory_changed.emit(player_id, inventories[player_id])
+
+func unregister_player(player_id):
+	if inventories.has(player_id):
+		inventories.erase(player_id)
+
+@rpc("call_local", "reliable")
+func add_item_for(player_id, item_name):
+	if not inventories.has(player_id):
+		register_player(player_id)
+	inventories[player_id].append(item_name)
+	inventory_changed.emit(player_id, inventories[player_id])
+
+@rpc("call_local", "reliable")
+func remove_item_for(player_id, item_name):
+	if inventories.has(player_id):
+		var index = inventories[player_id].find(item_name)
+		if index != -1:
+			inventories[player_id].remove_at(index)
+			inventory_changed.emit(player_id, inventories[player_id])
+
+func get_items_for(player_id):
+	if inventories.has(player_id):
+		return inventories[player_id]
+	return []
+
 # Inventory singleton: manages 3 item types: potion, bread, amulet
 # Expose signals so UI can react
 signal item_added(item: String, new_count: int)

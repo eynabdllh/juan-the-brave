@@ -46,18 +46,23 @@ func _ready():
 		var g = get_node("/root/global")
 		if g.has_method("set_player_health"):
 			g.set_player_health(health)
-	# If this is Player 2, also update the secondary HUD bar directly
-	var hud := get_tree().root.get_node_or_null("StatusHUD")
-	if hud and self.name == "player2" and hud.has_method("set_player2_health"):
-		hud.set_player2_health(health)
 	# Prepare speed trail (created lazily on first use)
 	
+	# Initialize per-player health in game_state (authority only)
+	var gs := get_node_or_null("/root/game_state")
+	if gs and is_multiplayer_authority():
+		var pid := int(name) if name.is_valid_int() else multiplayer.get_unique_id()
+		gs.rpc("update_health", pid, health)
+
+func _enter_tree():
+	print("[Player2] _enter_tree: name='", name, "' name.to_int()=", name.to_int(), " my_id=", multiplayer.get_unique_id())
+	set_multiplayer_authority(name.to_int())
+	print("[Player2] Authority set to: ", get_multiplayer_authority())
 func show_monologue(message: String):
 	feedback_label.text = message
 	# We now show the PARENT bubble, which contains the label.
 	$feedback_bubble.show() 
 	feedback_timer.start(2.5)
-
 func _on_feedback_timer_timeout():
 	# We hide the PARENT bubble when the timer is done.
 	$feedback_bubble.hide()
@@ -67,7 +72,8 @@ func _physics_process(delta):
 		move_and_slide() 
 		return
 		
-	handle_input()
+	if is_multiplayer_authority():
+		handle_input()
 	current_camera()
 	update_health()
 	move_and_slide()
@@ -91,10 +97,18 @@ func hide_interact_prompt():
 	interact_prompt.hide()
 	
 func handle_input():
+	# Only process input if this peer has authority over this player
+	if not is_multiplayer_authority():
+		return
+	
+	# Debug: confirm input is being processed
+	var input_vector = Input.get_vector(action_left, action_right, action_up, action_down)
+	if input_vector.length() > 0:
+		print("[Player2] Processing input: ", input_vector, " authority=", get_multiplayer_authority())
+		
 	if Input.is_action_just_pressed("attack") and not attack_ip:
 		attack()
 
-	var input_vector = Input.get_vector(action_left, action_right, action_up, action_down)
 	# Apply global speed multiplier buff if any
 	velocity = input_vector.normalized() * speed * (global.player_speed_mult if Engine.is_editor_hint() == false else 1.0)
 	_update_speed_trail_direction()
@@ -158,6 +172,10 @@ func take_damage(amount, attacker):
 		return
 	health -= amount
 	print("Player took damage, health is now: ", health)
+	var gs := get_node_or_null("/root/game_state")
+	if gs and is_multiplayer_authority():
+		var pid := int(name) if name.is_valid_int() else multiplayer.get_unique_id()
+		gs.rpc("update_health", pid, health)
 
 	is_knocked_back = true
 	var knockback_direction = (global_position - attacker.global_position).normalized()
@@ -172,6 +190,10 @@ func heal(amount: int) -> void:
 	if health <= 0:
 		return
 	health = min(health + amount, 100)
+	var gs := get_node_or_null("/root/game_state")
+	if gs and is_multiplayer_authority():
+		var pid := int(name) if name.is_valid_int() else multiplayer.get_unique_id()
+		gs.rpc("update_health", pid, health)
 func _on_knockback_timer_timeout(): is_knocked_back = false
 
 func current_camera():

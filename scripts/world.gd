@@ -7,7 +7,9 @@ var enemies_defeated = 0
 
 func _ready():
 	_ensure_status_hud()
-	_ensure_local_coop_actions()
+	# No multiplayer - just ensure the default player exists
+	if not has_node("player"):
+		print("No default player found in scene")
 
 	# Gather enemies and apply saved state (remove killed, restore positions)
 	var enemies = get_tree().get_nodes_in_group("enemies")
@@ -40,7 +42,8 @@ func _ready():
 			$player.position = global.next_player_position
 			global.next_player_position = Vector2.ZERO # Reset after use
 
-	# --- Local Multiplayer: ensure two players if requested ---
+	# --- Local Multiplayer (Keyboard) setup ---
+	_ensure_local_coop_actions()
 	if has_node("/root/global") and get_node("/root/global").local_coop:
 		_setup_local_coop()
 
@@ -94,12 +97,23 @@ func save_enemy_positions():
 			global.set_enemy_position(enemy.name, enemy.global_position)
 
 func _ensure_status_hud() -> void:
+	# Create HUD for single player game
 	if get_tree().root.get_node_or_null("StatusHUD") == null:
 		var hud_scene: PackedScene = load("res://scenes/status_hud.tscn")
 		if hud_scene != null:
 			var hud: Node = hud_scene.instantiate()
 			hud.name = "StatusHUD"
 			get_tree().root.add_child(hud)
+
+func _ensure_player_manager() -> void:
+	if get_node_or_null("PlayerManager") != null:
+		return
+	var script: Script = load("res://scripts/player_manager.gd")
+	if script == null:
+		return
+	var pm: Node = script.new()
+	pm.name = "PlayerManager"
+	add_child(pm)
 
 # --- Local Multiplayer helpers ---
 func _ensure_local_coop_actions() -> void:

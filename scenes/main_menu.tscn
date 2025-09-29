@@ -334,6 +334,10 @@ theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_jk1qb")
 theme_override_styles/normal = SubResource("StyleBoxFlat_oa1go")
 text = "Local Multiplayer"
 
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("uid://bq3bs7j40w5n7")
+spawn_path = NodePath("..")
+
 [connection signal="pressed" from="MainButtons/play" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="MainButtons/multiplayer" to="." method="_on_multiplayer_pressed"]
 [connection signal="pressed" from="MainButtons/load" to="." method="_on_load_pressed"]

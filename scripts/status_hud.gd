@@ -1,5 +1,7 @@
 extends CanvasLayer
 
+@export var player_id: int = 1
+
 @onready var health_bar: ProgressBar = $Root/Health/BarRow/Bar
 @onready var player_name: Label = $Root/Health/Name
 @onready var enemies_icon: TextureRect = $Root/BottomRow/Enemies/Icon
@@ -7,9 +9,6 @@ extends CanvasLayer
 @onready var key_icon: TextureRect = $Root/BottomRow/Key/Icon
 @onready var buffs_row: HBoxContainer = $Root/BottomRow/Buffs
 @onready var buff_template: HBoxContainer = $Root/BottomRow/Buffs/BuffTemplate
-@onready var _options_panel: Panel = $OptionsPanel
-@onready var _fullscreen_toggle: CheckButton = $OptionsPanel/VBox/Fullscreen
-@onready var _music_slider: HSlider = $OptionsPanel/VBox/MusicRow/MusicSlider
 @onready var _dim: ColorRect = $Dim
 
 var _buff_widgets := {} # name -> {container, label, info}
@@ -17,16 +16,7 @@ var _buff_widgets := {} # name -> {container, label, info}
 func _ready():
 	# Static config
 	player_name.text = "Juan"
-
-	# Initialize options UI to reflect current state
-	if is_instance_valid(_fullscreen_toggle):
-		_fullscreen_toggle.button_pressed = (DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN)
-	if is_instance_valid(_music_slider):
-		var bus_idx := AudioServer.get_bus_index("Music")
-		if bus_idx >= 0:
-			var db := AudioServer.get_bus_volume_db(bus_idx)
-			_music_slider.value = db_to_linear(db)
-	# Subscribe to global signals
+		# Subscribe to global signals (shared bottom row)
 	if has_node("/root/global"):
 		var g = get_node("/root/global")
 		g.player_health_changed.connect(_on_health_changed)
@@ -39,9 +29,30 @@ func _ready():
 		# Initialize from current values if accessible
 		_on_key_changed(g.player_has_key)
 
+	# Subscribe to game_state for per-player health
+	var gs := get_node_or_null("/root/game_state")
+	if gs:
+		gs.player_health_changed.connect(_on_player_health_changed)
+		gs.player_max_health_changed.connect(_on_player_max_health_changed)
+		# Initialize
+		var h = gs.get_health(player_id)
+		if h > 0:
+			_on_health_changed(h)
+
 func _on_health_changed(value: int) -> void:
 	if is_instance_valid(health_bar):
 		health_bar.value = value
+
+func _on_player_health_changed(pid: int, value: int) -> void:
+	if pid != player_id:
+		return
+	_on_health_changed(value)
+
+func _on_player_max_health_changed(pid: int, maxv: int) -> void:
+	if pid != player_id:
+		return
+	if is_instance_valid(health_bar):
+		health_bar.max_value = maxv
 
 func _on_enemies_changed(defeated: int, total: int) -> void:
 	if is_instance_valid(enemies_label):
@@ -123,35 +134,3 @@ func _get_buff_icon(name: String) -> Texture2D:
 
 func _format_buff_label(info: String, secs: int) -> String:
 	return "%s %ds" % [info, secs]
-
-# --- Options (cog) ---
-func _on_options_button_pressed() -> void:
-	if _options_panel:
-		var show := not _options_panel.visible
-		_options_panel.visible = show
-		if _dim:
-			_dim.visible = show
-
-func _on_fullscreen_toggled(toggled_on: bool) -> void:
-	if toggled_on:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
-	else:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-
-func _on_options_back_pressed() -> void:
-	if _options_panel:
-		_options_panel.visible = false
-	if _dim:
-		_dim.visible = false
-
-func _on_options_resume_pressed() -> void:
-	# Alias for Back behavior (resume game)
-	_on_options_back_pressed()
-
-func _unhandled_input(event: InputEvent) -> void:
-	if not _options_panel or not _options_panel.visible:
-		return
-	if event is InputEventKey and event.pressed and not event.echo:
-		var key := event as InputEventKey
-		if key.keycode == KEY_ESCAPE:
-			_on_options_back_pressed()

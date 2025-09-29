@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://bak3lpbbtn65p"]
 
 [ext_resource type="Script" uid="uid://ck668e1hext3g" path="res://scripts/intro_cutscene.gd" id="1_8ln24"]
-[ext_resource type="VideoStream" uid="uid://ckmhn2lpha4m5" path="res://assets/videos/ending_cutscene_new.ogv" id="2_juow0"]
+[ext_resource type="VideoStream" uid="uid://dv2ydj2mi77vh" path="res://assets/videos/intro_cutscene.ogv" id="2_juow0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vuduy"]
 bg_color = Color(0.898039, 0.858824, 0.764706, 0.27451)

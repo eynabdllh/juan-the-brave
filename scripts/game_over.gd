@@ -1,7 +1,7 @@
 extends Control
 
-@onready var restart_button: Button = $Center/VBoxContainer/RestartButton
-@onready var exit_button: Button = $Center/VBoxContainer/ExitButton
+@onready var restart_button: Button = $VBoxContainer/RestartButton
+@onready var exit_button: Button = $VBoxContainer/ExitButton
 @onready var blood_overlay: TextureRect = $BloodOverlay
 @onready var dim: ColorRect = $Dim
 

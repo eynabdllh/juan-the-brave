@@ -5818,13 +5818,19 @@ position = Vector2(96, 159)
 shape = SubResource("RectangleShape2D_2iakg")
 
 [node name="zombie" parent="." instance=ExtResource("24_1m8sb")]
-position = Vector2(378, 341)
+position = Vector2(396, 292)
+
+[node name="zombie2" parent="." instance=ExtResource("24_1m8sb")]
+position = Vector2(133, 1097)
+
+[node name="skeleton2" parent="." instance=ExtResource("20_vceer")]
+position = Vector2(521, 561)
 
 [node name="Chest" parent="." instance=ExtResource("25_6kap0")]
-position = Vector2(180, 266)
+position = Vector2(242, 247)
 
 [node name="Chest2" parent="." instance=ExtResource("25_6kap0")]
-position = Vector2(287, 538)
+position = Vector2(289, 546)
 
 [node name="Chest3" parent="." instance=ExtResource("25_6kap0")]
 position = Vector2(732, 49)

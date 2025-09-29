@@ -1,149 +1,186 @@
-extends "res://scripts/base_enemy.gd"
+# In file: game/scripts/boss.gd
+# This script is a direct adaptation of the working skeleton.gd logic.
 
-# Boss-specific stats
-@export var _b_speed: float = 40.0
-@export var _b_damage: int = 20
-@export var _b_rate: float = 1.5
-@export var _b_health: int = 200
-@export var _b_knockback: float = 160.0
+extends CharacterBody2D
 
-func _ready() -> void:
-    speed = _b_speed
-    attack_damage = _b_damage
-    attack_rate = _b_rate
-    max_health = _b_health
-    knockback_speed = _b_knockback
-    super._ready()
+signal died(enemy_position)
 
-# Animation name hooks
-func _anim_name_idle() -> String: return "idle"
-func _anim_name_walk_side() -> String: return "side_walk"
-func _anim_name_walk_front() -> String: return "front_walk"
-func _anim_name_walk_back() -> String: return "back_walk"
-func _anim_name_attack_side() -> String: return "side_attack"
-func _anim_name_attack_front() -> String: return "front_attack"
-func _anim_name_attack_back() -> String: return "back_attack"
+# --- Boss-Specific Stats (Tweak these in the Inspector) ---
+@export var speed: float = 25.0         # Slow, as requested
+@export var attack_damage: int = 10      # Hits hard
+@export var attack_rate: float = 2.0       # Slower, more deliberate attacks
+@export var max_health: int = 200        # Very durable
+@export var knockback_speed: float = 40.0 # Resists knockback
 
-# Override to ensure player is detected when attacking
-func _physics_process(delta: float) -> void:
-    if not is_alive or is_knocked_back:
-        move_and_slide()
-        return
-        
-    # Find player in hitbox if we don't have one
-    if player == null or not is_instance_valid(player):
-        player = _find_player_in_hitbox()
-    
-    super._physics_process(delta)
+# --- State Variables ---
+var player: CharacterBody2D = null
+var health: int
+var can_be_damaged: bool = true
+var can_attack: bool = true
+var is_attacking: bool = false
+var is_knocked_back: bool = false
+var is_alive: bool = true
+var last_walk_animation: String = "front_idle" # Start with a safe default
 
-# Override attack to use proper animations
-func _attack_player() -> void:
-    if not can_attack or is_attacking or not is_instance_valid(player):
-        return
-        
-    velocity = Vector2.ZERO
-    is_attacking = true
-    can_attack = false
-    
-    var anim := $AnimatedSprite2D
-    var attack_anim = _anim_name_attack_side()
-    
-    # Determine attack direction based on player position
-    var direction = (player.global_position - global_position).normalized()
-    if abs(direction.x) > abs(direction.y):
-        # Side attack
-        attack_anim = _anim_name_attack_side()
-        anim.flip_h = (direction.x < 0)
-    else:
-        # Vertical attack
-        attack_anim = _anim_name_attack_front() if direction.y > 0 else _anim_name_attack_back()
-    
-    # Play attack animation
-    anim.play(attack_anim)
-    
-    # Apply damage if player is in range
-    if player and player.has_method("take_damage"):
-        player.take_damage(attack_damage, self)
-    
-    # Wait for attack animation to finish
-    await get_tree().create_timer(0.5).timeout
-    is_attacking = false
-    
-    # Start attack cooldown
-    if has_node("EnemyAttackTimer"):
-        $EnemyAttackTimer.start(attack_rate)
-    else:
-        # Fallback if timer doesn't exist
-        await get_tree().create_timer(attack_rate).timeout
-        can_attack = true
+func _ready():
+	# Check if this enemy was already killed in a previous session
+	if global.killed_enemies.has(self.name):
+		queue_free()
+		return
 
-# Override chase to ensure proper animation updates
-func _chase_player() -> void:
-    if not is_instance_valid(player):
-        _idle()
-        return
-        
-    var direction = (player.global_position - global_position).normalized()
-    velocity = direction * speed
-    
-    var anim := $AnimatedSprite2D
-    if abs(direction.x) > abs(direction.y):
-        # Moving horizontally
-        last_walk_animation = _anim_name_walk_side()
-        anim.flip_h = (direction.x < 0)
-    else:
-        # Moving vertically
-        last_walk_animation = _anim_name_walk_front() if direction.y > 0 else _anim_name_walk_back()
-    
-    if not is_attacking:  # Don't override attack animation
-        anim.play(last_walk_animation)
+	health = max_health
+	if has_node("healthbar"):
+		$healthbar.max_value = health
+		$healthbar.value = health
+	
+	idle() # Set the initial state
 
-# Override take_damage to make boss more resilient
-func take_damage(amount: int, attacker: Node2D) -> void:
-    if not can_be_damaged or not is_alive:
-        return
-    
-    # Boss takes slightly reduced damage
-    var reduced_amount = int(amount * 0.8)
-    super.take_damage(reduced_amount, attacker)
-    
-    # Visual feedback
-    if has_node("AnimatedSprite2D"):
-        $AnimatedSprite2D.modulate = Color(1, 0.5, 0.5)  # Lighter red flash for boss
-        if has_node("HurtEffectTimer"):
-            $HurtEffectTimer.start(0.15)
-    
-    # Make sure boss is aware of the player when hit
-    if attacker and attacker.is_in_group("player"):
-        player = attacker
+func _physics_process(_delta):
+	if not is_alive or is_attacking or is_knocked_back:
+		move_and_slide()
+		return
+		
+	var target_in_hitbox = find_player_in_hitbox()
+	if target_in_hitbox:
+		player = target_in_hitbox
+		
+	if player != null and target_in_hitbox and can_attack:
+		attack_player()
+	elif player != null:
+		chase_player()
+	else:
+		idle()
+		
+	update_health()
+	move_and_slide()
 
-# Death handling with boss-specific effects
-func die() -> void:
-    if not is_alive:
-        return
-        
-    is_alive = false
-    velocity = Vector2.ZERO
-    
-    if has_node("CollisionShape2D"):
-        $CollisionShape2D.set_deferred("disabled", true)
-    if has_node("/root/global") and global.has_method("add_killed_enemy"):
-        global.add_killed_enemy(self.name)
-        
-    emit_signal("died", global_position)
-    _update_health()
-    
-    await get_tree().process_frame
-    
-    # Play death animation if available
-    var anim: AnimatedSprite2D = $AnimatedSprite2D
-    if is_instance_valid(anim):
-        var death_anim = "front_death"
-        if anim.sprite_frames and anim.sprite_frames.has_animation(death_anim):
-            anim.play(death_anim)
-            await anim.animation_finished
-        elif anim.sprite_frames and anim.sprite_frames.has_animation("death"):
-            anim.play("death")
-            await anim.animation_finished
-    
-    queue_free()
+func find_player_in_hitbox() -> CharacterBody2D:
+	for body in $enemy_hitbox.get_overlapping_bodies():
+		if body.is_in_group("player"):
+			return body
+	return null
+
+func chase_player():
+	var direction = (player.position - position).normalized()
+	velocity = direction * speed
+	var anim := $AnimatedSprite2D
+	
+	# This logic is the same as the skeleton's
+	if abs(direction.x) > abs(direction.y):
+		last_walk_animation = "side_walk"
+		anim.flip_h = (direction.x < 0) # Flip the sprite for left movement
+	else:
+		last_walk_animation = "front_walk" if direction.y > 0 else "back_walk"
+		anim.flip_h = false # Front/back animations are not flipped
+	
+	anim.play(last_walk_animation)
+
+func attack_player():
+	velocity = Vector2.ZERO
+	is_attacking = true
+	can_attack = false
+	var anim := $AnimatedSprite2D
+	
+	# Play the correct attack animation based on the last direction
+	if "side" in last_walk_animation:
+		anim.play("side_attack")
+	elif "back" in last_walk_animation:
+		anim.play("back_attack")
+	else:
+		anim.play("front_attack")
+		
+	# Deal damage after a short delay to sync with the animation
+	await get_tree().create_timer(0.4).timeout
+	if is_instance_valid(player) and player.has_method("take_damage"):
+		player.take_damage(attack_damage, self)
+
+func idle():
+	velocity = Vector2.ZERO
+	var anim := $AnimatedSprite2D
+	
+	# Play the correct idle animation based on the last direction
+	var idle_name := "front_idle"
+	if "side" in last_walk_animation:
+		idle_name = "side_idle"
+	elif "back" in last_walk_animation:
+		idle_name = "back_idle"
+		
+	if anim.animation != idle_name:
+		anim.play(idle_name)
+
+func take_damage(amount, attacker):
+	if not can_be_damaged or not is_alive:
+		return
+		
+	can_be_damaged = false
+	health -= amount
+	is_knocked_back = true
+	
+	var knockback_direction = (global_position - attacker.global_position).normalized()
+	velocity = knockback_direction * knockback_speed
+	
+	$KnockbackTimer.start(0.15)
+	$AnimatedSprite2D.modulate = Color.RED
+	$HurtEffectTimer.start(0.2)
+	$HurtSound.play()
+	$take_damage_cooldown.start()
+	
+	if health <= 0:
+		die()
+
+func die():
+	if not is_alive:
+		return
+		
+	is_alive = false
+	velocity = Vector2.ZERO
+	$CollisionShape2D.set_deferred("disabled", true)
+	global.add_killed_enemy(self.name)
+	emit_signal("died", global_position)
+	update_health()
+	
+	await get_tree().process_frame
+	
+	var anim: AnimatedSprite2D = $AnimatedSprite2D
+	var death_anim_name := "front_death"
+	if "side" in last_walk_animation:
+		death_anim_name = "side_death"
+	elif "back" in last_walk_animation:
+		death_anim_name = "back_death"
+	
+	anim.play(death_anim_name)
+	await anim.animation_finished
+	queue_free()
+
+# --- Signal Connections ---
+
+func _on_animated_sprite_2d_animation_finished():
+	if "attack" in $AnimatedSprite2D.animation:
+		is_attacking = false
+		$EnemyAttackTimer.start(attack_rate)
+
+func _on_detection_area_body_entered(body: Node2D):
+	if body.is_in_group("player"):
+		player = body
+
+func _on_detection_area_body_exited(body: Node2D):
+	if body == player:
+		player = null
+
+func _on_knockback_timer_timeout():
+	is_knocked_back = false
+	velocity = Vector2.ZERO
+
+func _on_hurt_effect_timer_timeout():
+	$AnimatedSprite2D.modulate = Color.WHITE
+
+func _on_take_damage_cooldown_timeout():
+	can_be_damaged = true
+
+func _on_enemy_attack_timer_timeout():
+	can_attack = true
+
+func update_health():
+	if has_node("healthbar"):
+		$healthbar.value = health
+		$healthbar.visible = health < max_health

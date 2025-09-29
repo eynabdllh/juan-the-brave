@@ -7643,7 +7643,7 @@ animations = [{
 size = Vector2(26.4308, 17.8548)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6p07s"]
-size = Vector2(101.59, 15.7991)
+size = Vector2(37.4331, 72.2577)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ngkw3"]
 shader = ExtResource("12_aqy83")
@@ -7726,9 +7726,14 @@ scale = Vector2(4.06494, 4.25879)
 
 [node name="DoorSprite2" type="AnimatedSprite2D" parent="NextLevelDoor"]
 position = Vector2(-145, 63.75)
-scale = Vector2(2.125, 3.3125)
 
 [node name="DoorSprite3" type="AnimatedSprite2D" parent="NextLevelDoor"]
+position = Vector2(-145, 63.75)
+scale = Vector2(2.125, 3.3125)
+
+[node name="DoorSprite4" type="AnimatedSprite2D" parent="NextLevelDoor"]
+
+[node name="DoorSprite5" type="AnimatedSprite2D" parent="NextLevelDoor"]
 position = Vector2(-145.75, 63.25)
 scale = Vector2(1.53125, 1.78125)
 sprite_frames = SubResource("SpriteFrames_6fxf4")
@@ -7747,23 +7752,23 @@ shape = SubResource("RectangleShape2D_8f8w2")
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
-position = Vector2(0, -2)
-polygon = PackedVector2Array(71, 316, 148, 214, 150, 177, 182, 177, 182, 214, 252, 371, 253, 22, 402, 187, 402, 326, 397, 413, 395, 545, 291, 500, 79, 514, 75, 327, -15, 546, -19, 223, 62, 225, 86, 214, 90, 143, -31, 139, -47, 582, 426, 586, 415, -12, -47, 1, -50, 173, -28, 109, 76, 19)
+polygon = PackedVector2Array(83, 116, 86, 6, 246, 7, 247, 118, 402, 163, 401, 402, 461, 403, 461, 485, 405, 485, 402, 551, -14, 551, -14, 138, 82, 114, -29, -5, -29, 571, 487, 564, 479, -20, -27, -8)
 
 [node name="player" parent="." instance=ExtResource("11_4m0g4")]
-position = Vector2(322, 454)
+position = Vector2(373, 450)
 
 [node name="door_exit1" type="Area2D" parent="."]
-position = Vector2(-4, -4)
+position = Vector2(328, 116)
 collision_layer = 8
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="door_exit1"]
-position = Vector2(167, 335)
+position = Vector2(96.4531, 328.125)
 scale = Vector2(1.57865, 1.07601)
 shape = SubResource("RectangleShape2D_6p07s")
 
 [node name="cloud" type="ColorRect" parent="."]
+visible = false
 material = SubResource("ShaderMaterial_ngkw3")
 offset_left = -21.0
 offset_top = 71.0
@@ -7772,11 +7777,16 @@ offset_bottom = 548.0
 script = ExtResource("13_fk82e")
 
 [node name="Area2D" type="Area2D" parent="."]
-position = Vector2(403, 328)
+position = Vector2(401, 549)
 
 [node name="StatusHUD" parent="." instance=ExtResource("21_oqjv0")]
 
 [node name="InventoryUI" parent="." instance=ExtResource("22_38g42")]
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D2"]
+polygon = PackedVector2Array(148, 211, 149, 167, 182, 168, 183, 212, 244, 212, 245, 41, 84, 42, 87, 211)
 
 [connection signal="body_entered" from="NextLevelDoor/InteractionArea" to="NextLevelDoor" method="_on_interaction_area_body_entered"]
 [connection signal="body_exited" from="NextLevelDoor/InteractionArea" to="NextLevelDoor" method="_on_interaction_area_body_exited"]

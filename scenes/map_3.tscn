@@ -8323,68 +8323,56 @@ position = Vector2(3, -14)
 position = Vector2(-1982, 804.9)
 polygon = PackedVector2Array(2028, -893, 1979, -790, 3563, -790, 3565, -432, 3563, -150, 3555, -150, 1979, -151, 1979, -790, 1890, -210, 1966, -54, 2311, -51, 3617, -50, 3640, -455, 3589, -855)
 
-[node name="aswang" parent="." instance=ExtResource("15_7b4kn")]
-position = Vector2(239, 286.9)
-
 [node name="aswang2" parent="." instance=ExtResource("15_7b4kn")]
-position = Vector2(364, 474.9)
-
-[node name="aswang3" parent="." instance=ExtResource("15_7b4kn")]
-position = Vector2(854, 62.9)
+position = Vector2(372, 462)
 
 [node name="aswang4" parent="." instance=ExtResource("15_7b4kn")]
-position = Vector2(666, 234)
-
-[node name="aswang5" parent="." instance=ExtResource("15_7b4kn")]
-position = Vector2(1323, 412.9)
+position = Vector2(680, 200)
 
 [node name="aswang6" parent="." instance=ExtResource("15_7b4kn")]
 position = Vector2(835, 493.9)
 
-[node name="aswang7" parent="." instance=ExtResource("15_7b4kn")]
-position = Vector2(1107, 181)
-
 [node name="Chest" parent="." instance=ExtResource("16_82fti")]
-position = Vector2(885, 249.9)
+position = Vector2(872, 263)
 
 [node name="Chest2" parent="." instance=ExtResource("16_82fti")]
-position = Vector2(110, 438.9)
+position = Vector2(150, 424)
 
 [node name="Chest3" parent="." instance=ExtResource("16_82fti")]
-position = Vector2(123, 104.9)
+position = Vector2(181, 200)
 
 [node name="Chest4" parent="." instance=ExtResource("16_82fti")]
-position = Vector2(497, 467.9)
+position = Vector2(595, 391)
 
 [node name="Chest5" parent="." instance=ExtResource("16_82fti")]
-position = Vector2(586, 197.9)
+position = Vector2(900, 358)
 
 [node name="Chest6" parent="." instance=ExtResource("16_82fti")]
-position = Vector2(434, 102.9)
+position = Vector2(681, 300)
 
 [node name="Chest7" parent="." instance=ExtResource("16_82fti")]
-position = Vector2(749, 368.9)
+position = Vector2(765, 386)
 
 [node name="Chest8" parent="." instance=ExtResource("16_82fti")]
-position = Vector2(1021, 241.9)
+position = Vector2(1035, 263)
 
 [node name="Chest9" parent="." instance=ExtResource("16_82fti")]
-position = Vector2(694, 64.9)
+position = Vector2(802, 78)
 
 [node name="Chest10" parent="." instance=ExtResource("16_82fti")]
-position = Vector2(1227, 96.9)
+position = Vector2(1248, 123)
 
 [node name="Chest11" parent="." instance=ExtResource("16_82fti")]
-position = Vector2(1460, 185.9)
+position = Vector2(1452, 205)
 
 [node name="Chest12" parent="." instance=ExtResource("16_82fti")]
-position = Vector2(1418, 404.9)
+position = Vector2(1436, 350)
 
 [node name="Chest13" parent="." instance=ExtResource("16_82fti")]
 position = Vector2(1209, 260.9)
 
 [node name="Chest14" parent="." instance=ExtResource("16_82fti")]
-position = Vector2(985, 323.9)
+position = Vector2(1421, 459)
 
 [node name="Chest15" parent="." instance=ExtResource("16_82fti")]
 position = Vector2(1530, 272.9)

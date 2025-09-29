@@ -12,6 +12,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_vgm8o")
+metadata/_edit_horizontal_guides_ = [-370.0]
+metadata/_edit_vertical_guides_ = [573.0]
 
 [node name="Dim" type="ColorRect" parent="."]
 layout_mode = 1
@@ -35,32 +37,30 @@ stretch_mode = 6
 
 [node name="Title" type="Label" parent="."]
 layout_mode = 2
-offset_left = 402.0
-offset_top = 178.0
-offset_right = 747.0
-offset_bottom = 258.0
+offset_left = 327.0
+offset_top = 157.0
+offset_right = 672.0
+offset_bottom = 237.0
+scale = Vector2(1.45, 1.45)
 theme_override_fonts/font = ExtResource("3_racf3")
 theme_override_font_sizes/font_size = 80
 text = "GAME OVER"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Center" type="CenterContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Center"]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
+offset_left = 452.0
+offset_top = 309.0
+offset_right = 605.0
+offset_bottom = 409.0
+scale = Vector2(1.655, 1.655)
 alignment = 1
 
-[node name="RestartButton" type="Button" parent="Center/VBoxContainer"]
+[node name="RestartButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "RESTART"
 
-[node name="ExitButton" type="Button" parent="Center/VBoxContainer"]
+[node name="ExitButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "EXIT"

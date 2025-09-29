@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=3 uid="uid://bq3bs7j40w5n7"]
+[gd_scene load_steps=69 format=3 uid="uid://bq3bs7j40w5n7"]
 
 [ext_resource type="Script" uid="uid://dcd24g8m5fo81" path="res://scripts/player.gd" id="1_g2els"]
 [ext_resource type="Texture2D" uid="uid://rwd4lgj61wfx" path="res://assets/characters/player.png" id="2_qhqgy"]
@@ -491,6 +491,11 @@ border_width_right = 1
 border_width_bottom = 1
 border_color = Color(0.277607, 0.1912, 0.125635, 1)
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_dqkch"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
 [node name="player" type="CharacterBody2D" groups=["player"]]
 y_sort_enabled = true
 position = Vector2(0, -2)
@@ -562,8 +567,8 @@ position = Vector2(0, 2)
 zoom = Vector2(4, 4)
 limit_left = 0
 limit_top = 0
-limit_right = 403
-limit_bottom = 328
+limit_right = 401
+limit_bottom = 549
 limit_smoothed = true
 rotation_smoothing_enabled = true
 
@@ -572,8 +577,8 @@ position = Vector2(0, 2)
 zoom = Vector2(4, 4)
 limit_left = 0
 limit_top = 0
-limit_right = 287
-limit_bottom = 360
+limit_right = 286
+limit_bottom = 337
 limit_smoothed = true
 rotation_smoothing_enabled = true
 
@@ -644,6 +649,9 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 10
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_dqkch")
 
 [connection signal="timeout" from="deal_attack_timer" to="." method="_on_deal_attack_timer_timeout"]
 [connection signal="timeout" from="regen" to="." method="_on_regen_timeout"]

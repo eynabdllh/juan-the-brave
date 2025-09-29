@@ -5308,5 +5308,11 @@ position = Vector2(804, 974)
 [node name="Chest12" parent="." instance=ExtResource("24_ctatt")]
 position = Vector2(-1, 769)
 
+[node name="enemylevel2" parent="." instance=ExtResource("10_w7kh3")]
+position = Vector2(310, 88)
+
+[node name="enemylevel1" parent="." instance=ExtResource("10_w7kh3")]
+position = Vector2(627, 88)
+
 [connection signal="body_entered" from="door_side" to="." method="_on_door_side_body_entered"]
 [connection signal="body_exited" from="door_side" to="." method="_on_door_side_body_exited"]
