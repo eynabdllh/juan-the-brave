@@ -1,4 +1,3 @@
-# BaseEnemy: shared enemy behavior for ground-based melee enemies
 extends CharacterBody2D
 
 # Signals

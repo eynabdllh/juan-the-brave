@@ -12,7 +12,7 @@ func _ready():
 		global.next_player_position = Vector2.ZERO # Reset after use
 	else:
 		# Fallback for testing
-		$player.position = Vector2(130, 300)
+		$player.position = Vector2(149, 329)
 
 	setup_camera_limits()
 

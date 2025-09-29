@@ -6,8 +6,15 @@ extends Control
 # Store the original audio bus state
 var was_music_muted: bool = false
 
+# Store references to hidden UI elements
+var hidden_status_hud: Node = null
+var hidden_inventory: Node = null
+
 func _ready() -> void:
 	print("Outro cutscene ready")
+	
+	# Hide status HUD and inventory during cutscene
+	_hide_gameplay_ui()
 	
 	# Ensure the viewport is properly set up
 	get_viewport().transparent_bg = true
@@ -82,3 +89,29 @@ func _go_to_the_end() -> void:
 	else:
 		print("Warning: map_4.tscn not found. Returning to main menu.")
 		get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+
+func _hide_gameplay_ui() -> void:
+	print("Hiding gameplay UI elements...")
+	
+	# Hide status HUD
+	var root := get_tree().root
+	hidden_status_hud = root.get_node_or_null("StatusHUD")
+	if hidden_status_hud and hidden_status_hud is CanvasItem:
+		hidden_status_hud.visible = false
+		print("Status HUD hidden")
+	
+	# Hide inventory if it exists
+	hidden_inventory = root.get_node_or_null("Inventory")
+	if hidden_inventory and hidden_inventory is CanvasItem:
+		hidden_inventory.visible = false
+		print("Inventory hidden")
+	
+	# Also check for any other UI elements that might be visible
+	var current_scene := get_tree().current_scene
+	if current_scene:
+		# Hide any UI nodes in the current scene that might be gameplay-related
+		for child in current_scene.get_children():
+			if child.name.to_lower().contains("hud") or child.name.to_lower().contains("ui"):
+				if child is CanvasItem:
+					child.visible = false
+					print("Hidden UI element: ", child.name)

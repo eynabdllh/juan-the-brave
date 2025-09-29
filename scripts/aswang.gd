@@ -1,6 +1,6 @@
 extends "res://scripts/base_enemy.gd"
 
-# Boss-specific stats
+# Aswang stats
 @export var _b_speed: float = 40.0
 @export var _b_damage: int = 8
 @export var _b_rate: float = 1.5
@@ -69,7 +69,7 @@ func take_damage(amount: int, attacker: Node2D) -> void:
 	
 	# Visual feedback
 	if has_node("AnimatedSprite2D"):
-		$AnimatedSprite2D.modulate = Color(1, 0.5, 0.5)  # Lighter red flash for boss
+		$AnimatedSprite2D.modulate = Color(1, 0.5, 0.5)  
 		if has_node("HurtEffectTimer"):
 			$HurtEffectTimer.start(0.15)
 

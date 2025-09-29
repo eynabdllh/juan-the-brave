@@ -1,16 +1,13 @@
-# In file: game/scripts/boss.gd
-# This script is a direct adaptation of the working skeleton.gd logic.
-
 extends CharacterBody2D
 
 signal died(enemy_position)
 
 # --- Boss-Specific Stats (Tweak these in the Inspector) ---
-@export var speed: float = 25.0         # Slow, as requested
-@export var attack_damage: int = 10      # Hits hard
-@export var attack_rate: float = 2.0       # Slower, more deliberate attacks
-@export var max_health: int = 200        # Very durable
-@export var knockback_speed: float = 40.0 # Resists knockback
+@export var speed: float = 25.0        
+@export var attack_damage: int = 10      
+@export var attack_rate: float = 2.0      
+@export var max_health: int = 200        
+@export var knockback_speed: float = 40.0 
 
 # --- State Variables ---
 var player: CharacterBody2D = null
@@ -20,10 +17,9 @@ var can_attack: bool = true
 var is_attacking: bool = false
 var is_knocked_back: bool = false
 var is_alive: bool = true
-var last_walk_animation: String = "front_idle" # Start with a safe default
+var last_walk_animation: String = "front_idle"
 
 func _ready():
-	# Check if this enemy was already killed in a previous session
 	if global.killed_enemies.has(self.name):
 		queue_free()
 		return
@@ -33,7 +29,7 @@ func _ready():
 		$healthbar.max_value = health
 		$healthbar.value = health
 	
-	idle() # Set the initial state
+	idle() 
 
 func _physics_process(_delta):
 	if not is_alive or is_attacking or is_knocked_back:
